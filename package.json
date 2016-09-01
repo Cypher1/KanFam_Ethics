@@ -1,5 +1,5 @@
 {
-  "name": "simple_todos",
+  "name": "kanfam",
   "private": true,
   "scripts": {
     "start": "meteor run"
