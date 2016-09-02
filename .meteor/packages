@@ -22,3 +22,5 @@ reactive-dict
 accounts-ui
 accounts-password
 practicalmeteor:mocha
+accounts-facebook
+accounts-google
