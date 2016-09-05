@@ -7,6 +7,10 @@ import { Tasks } from '../api/tasks.js';
 import './task.js';
 import './body.html';
 
+Template.registerHelper('user', function() {
+    return Meteor.user().username || Meteor.user().profile.name;
+});
+
 Template.body.onCreated(function bodyOnCreated() {
     this.state = new ReactiveDict();
     Meteor.subscribe('tasks');
