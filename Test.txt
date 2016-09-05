@@ -1,1 +1,3 @@
 Git Test File
+
+Just to check things are set up correctly
