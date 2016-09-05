@@ -7,7 +7,12 @@ export const Tasks = new Mongo.Collection('tasks');
 if (Meteor.isServer) {
     // This code only runs on the server
     Meteor.publish('tasks', function tasksPublication() {
-        return Tasks.find();
+        let publicTasks = {private: {$ne: true}};
+        if(!this.userId){
+            return Tasks.find(publicTasks);
+        }
+        let myTasks = {owner: this.userId};
+        return Tasks.find({$or: [myTasks, publicTasks]});
     });
 }
 
