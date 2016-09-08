@@ -4,6 +4,11 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 
 import { Tasks } from '../api/tasks.js';
 
+import './mainLayout.html';
+import './landingpage.html';
+import './navbar.html';
+import './navlist.html';
+import './footer.html';
 import './task.js';
 import './body.html';
 

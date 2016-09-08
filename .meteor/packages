@@ -25,3 +25,5 @@ practicalmeteor:mocha
 accounts-facebook
 accounts-google
 materialize:materialize
+kadira:flow-router
+kadira:blaze-layout
