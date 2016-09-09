@@ -5,12 +5,8 @@ import { ReactiveDict } from 'meteor/reactive-dict';
 import { Tasks } from '../api/tasks.js';
 
 import './mainLayout.html';
-import './landingpage.html';
-import './navbar.html';
-import './navlist.html';
-import './footer.html';
-import './task.js';
 import './body.html';
+import './templates/templates.js';
 
 Template.registerHelper('user', function() {
     return Meteor.user().username || Meteor.user().profile.name;

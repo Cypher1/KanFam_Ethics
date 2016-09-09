@@ -1,0 +1,23 @@
+<template name="navbar">
+  <header>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="#!" class="brand-logo">KanFam</a>
+        <a href="#" data-activates="side-nav" id="side-nav-activate" class="button-collapse"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li>
+            <form>
+              <input id="search" type="search" placeholder="Search" required>
+            </form>
+          </li>
+          {{> navlist}}
+          {{> loginButtons}}
+        </ul>
+        <ul class="side-nav" id="side-nav">
+          {{> navlist}}
+          {{> loginButtons}}
+        </ul>
+      </div>
+    </nav>
+  </header>
+</template>
