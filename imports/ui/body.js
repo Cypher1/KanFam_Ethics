@@ -7,6 +7,7 @@ import { Tasks } from '../api/tasks.js';
 import './mainLayout.html';
 import './body.html';
 import './templates/templates.js';
+import './pages/pages.js';
 
 Template.registerHelper('user', function() {
     return Meteor.user().username || Meteor.user().profile.name;

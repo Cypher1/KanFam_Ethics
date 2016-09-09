@@ -1,5 +1,3 @@
-
-import './landingpage.html';
 import './navbar.js';
 import './navlist.html';
 import './task.html';
