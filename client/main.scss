@@ -16,6 +16,11 @@ $link-color: color("light-blue", "darken-1") !default;
 $success-color: color("green", "base") !default;
 $error-color: color("red", "base") !default;
 
+// import main scss file
+@import "{poetic:materialize-scss}/sass/materialize.scss";
+
+// Overrides
+
 /* Set footer to flex */
 body {
     display: flex;
@@ -27,5 +32,7 @@ main {
     flex: 1 0 auto;
 };
 
-// import main scss file
-@import "{poetic:materialize-scss}/sass/materialize.scss";
+.center {
+    width: 50%;
+    margin:0 auto !important;
+}
