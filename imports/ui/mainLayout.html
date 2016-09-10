@@ -1,5 +1,9 @@
 <template name="mainLayout">
   {{> navbar }}
-  {{> Template.dynamic template=content}}
+  <body>
+    <main>
+    {{> Template.dynamic template=content}}
+    </main>
+  </body>
   {{> footer }}
 </template>

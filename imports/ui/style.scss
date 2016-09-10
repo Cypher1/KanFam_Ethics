@@ -1,0 +1,48 @@
+@import "{poetic:materialize-scss}/sass/components/_color.scss";
+
+$navbar-font-color: color("shades", "white");
+$sidenav-font-color: $navbar-font-color;
+
+$primary-color: color("blue-grey", "darken-1");
+$sidenav-bg-color: $primary-color;
+$primary-color-light: false;
+$primary-color-dark: false;
+
+$nav-padding: 2%;
+
+@if not $primary-color-light {
+    $primary-color-light: lighten($primary-color, 15%);
+}
+@if not $primary-color-dark {
+    $primary-color-dark: darken($primary-color, 15%);
+}
+
+$secondary-color: color("teal", "lighten-1");
+$link-color: color("light-blue", "darken-1");
+
+$success-color: color("green", "base");
+$error-color: color("red", "base");
+
+/* Import main materialize scss */
+@import "{poetic:materialize-scss}/sass/materialize.scss";
+
+/* Overrides */
+/* Set footer to flex */
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+};
+
+main {
+    flex: 1 0 auto;
+};
+
+.rotated {
+    transform: rotate(270deg);
+}
+
+.nav-wrapper {
+    padding-left: $nav-padding;
+    padding-right: $nav-padding;
+};

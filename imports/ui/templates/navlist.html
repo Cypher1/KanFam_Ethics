@@ -1,0 +1,8 @@
+<template name="navlist">
+  {{#if currentUser }}
+  <li><a href="/dashboard"><i class="material-icons right">dashboard</i>Dash</a></li>
+  <li><a href="/logout"><i class="material-icons right rotated">file_upload</i>Logout</a></li>
+  {{else}}
+  <li><a href="/login"><i class="material-icons right rotated">file_download</i>Login</a></li>
+  {{/if}}
+</template>
