@@ -27,15 +27,27 @@ $error-color: color("red", "base");
 @import "{poetic:materialize-scss}/sass/materialize.scss";
 
 /* Overrides */
+/* Set footer to flex */
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+};
+
+main {
+    flex: 1 0 auto;
+};
+
+.parallax img {
+    @media #{$small-and-down} { max-width: 200%; }
+    @media #{$medium-and-up} { width: 100%; }
+}
+
 .rotated {
     transform: rotate(270deg);
-};
+}
 
 .nav-wrapper {
     padding-left: $nav-padding;
     padding-right: $nav-padding;
-};
-
-.parallax img {
-    width: 100%;
 };
