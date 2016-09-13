@@ -1,17 +1,43 @@
 <template name="task">
-  <li class="{{#if check}}checked{{/if}} {{#if private}}private{{/if}}">
-    <input type="checkbox" checked="{{checked}}" class="toggle-checked" />
-    {{#if isOwner}}
-    <button class="toggle-private">
-      {{#if private}}
-      Private
-      {{else}}
-      Public
-      {{/if}}
-    </button>
-    {{/if}}
-    <span class="text">{{text}}</span>
-    <span class="right"><strong>({{username}})</strong></span>
-    <button class="delete">&times;</button>
-  </li>
+  <li class="{{#if checked}}checked{{/if}} {{#if private}}private{{/if}}">
+  
+    
+    <ul class="collapsible popout" data-collapsible="accordion">
+    <li>
+      <div class="collapsible-header black-text center"><button class="delete grey-text left white" align-left style="border:none;height:10px">&times;</button>{{text}}<i class="tiny material-icons right red-text">mode_edit</i></div>
+      <div class="collapsible-body white black-text">
+           <p>
+
+
+              <form class="new-note" id="tNotes">
+               <input name="text" type="text" style="word-break: normal;" placeholder="  add notes..."/>
+             </form>
+
+              {{#if isOwner}}
+              <div class="switch">
+                <label>
+                    Private
+                  <input class="toggle-private right" type="checkbox">
+                  <span class="lever"></span>
+                    Public
+                </label>
+              </div>
+                {{/if}}
+
+          </p>
+          
+      </div>
+    </li>
+    </ul>
+                  
+
+</li>
 </template>
+
+
+
+
+
+
+
+

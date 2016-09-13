@@ -15,35 +15,63 @@ if (Meteor.isServer) {
         return Tasks.find({$or: [myTasks, publicTasks]});
     });
 }
-
+//can do methods for new collection in here
 Meteor.methods({
     'tasks.insert'(text) {
         check(text, String);
-
+        console.log("in tasks.insert method");
         // Make sure the user is logged in before inserting a task
         if (!this.userId) {
             throw new Meteor.Error('not-authorized');
         }
 
         let user = Meteor.users.findOne(this.userId);
+        let identifier = user.username;
 
+        if (!identifier){
+            if(user.profile) {
+            identifier = user.profile.name;
+            } else {
+                identifier = user.email;
+            }
+        }
+        //insert into TaskInfo collection with task id and user id
         Tasks.insert({
             text,
             createdAt: new Date(),
             owner: this.userId,
-            username: user.username || user.profile.name,
+            username: identifier,
+            taskNotes: "",
+   
         });
     },
     'tasks.remove'(taskId) {
         check(taskId, String);
         const task = Tasks.findOne(taskId);
+
         if (task.private && task.owner !== this.userId) {
             // If the task is private, make sure only the owner can delete it
             throw new Meteor.Error('not-authorized');
         }
         Tasks.remove(taskId);
     },
+    'tasks.addNote'(taskId,notes){
+
+        check(taskId,String);
+
+        const task= Tasks.findOne(taskId);
+        if (task.private && task.owner !== this.userId) {
+            // If the task is private, make sure only the owner can add notes it
+            throw new Meteor.Error('not-authorized');
+        }
+        console.log(taskId);
+        Tasks.update(taskId,{$set: { taskNotes: notes} });
+        console.log(notes);
+
+    },
     'tasks.setChecked'(taskId, setChecked) {
+       
+       console.log("in setChecked");
         check(taskId, String);
         check(setChecked, Boolean);
 
@@ -52,7 +80,7 @@ Meteor.methods({
             // If the task is private, make sure only the owner can delete it
             throw new Meteor.Error('not-authorized');
         }
-
+         console.log(taskId);
         Tasks.update(taskId, { $set: { checked: setChecked } });
     },
     'tasks.setPrivate'(taskId, setToPrivate) {
@@ -64,7 +92,18 @@ Meteor.methods({
         if (task.owner !== this.userId) {
             throw new Meteor.Error('not-authorized');
         }
-
+        console.log(taskId);
         Tasks.update(taskId, { $set: { private: setToPrivate } });
     },
 });
+
+
+
+
+
+
+
+
+
+
+
