@@ -8,7 +8,6 @@ import '../../api/tasks.js'
 import './list.html';
 
 
-
 Template.list.rendered = function() {
 this.$('.dropdown-button').dropdown({
     inDuration: 300,
@@ -19,8 +18,6 @@ this.$('.dropdown-button').dropdown({
     belowOrigin: false // Displays dropdown below the button
 });
  };
-
-
 
 Template.registerHelper('user', function() {
     return Meteor.user().username || Meteor.user().profile.name;
