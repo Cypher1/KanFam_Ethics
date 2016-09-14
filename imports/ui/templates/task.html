@@ -4,20 +4,24 @@
     
     <ul class="collapsible popout" data-collapsible="accordion">
     <li>
-      <div class="collapsible-header black-text center"><button class="delete grey-text left white" align-left style="border:none;height:10px">&times;</button>{{text}}<i class="tiny material-icons right red-text">mode_edit</i></div>
+      <div class="collapsible-header black-text "><button class="delete grey-text left white" align-left style="border:none;line-height:10px;width:3px;position:relative" align="left">&times;</button>{{text}}</div>
       <div class="collapsible-body white black-text">
            <p>
 
-
               <form class="new-note" id="tNotes">
-               <input name="text" type="text" style="word-break: normal;" placeholder="  add notes..."/>
+               <input name="text" type="text" value="{{taskNotes}}" placeholder="  add notes..."/>
              </form>
+
+
+
+
+
 
               {{#if isOwner}}
               <div class="switch">
                 <label>
                     Private
-                  <input class="toggle-private right" type="checkbox">
+                  <input class="toggle-private right" type="checkbox" checked="{{private}}">
                   <span class="lever"></span>
                     Public
                 </label>

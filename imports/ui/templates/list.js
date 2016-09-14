@@ -6,7 +6,7 @@ import { Tasks } from '../../api/tasks.js';
 import './task.js';
 import '../../api/tasks.js'
 import './list.html';
-import './modal.js';
+
 
 
 Template.list.rendered = function() {
@@ -72,19 +72,7 @@ Template.list.events({
     // Clear form
     target.text.value = '';
   },
-   'submit .new-note'(event) { 
-      // Prevent default browser form submit
-      event.preventDefault();
-
-      // Get value from form element
-      const target = event.target;
-      const note = target.text.value;
-      //console.log(note);
-       target.text.value = note;
-
-      // Insert a task into the collection
-      Meteor.call('tasks.addNote', this._id, note);
-    },
+   
  'change .hide-completed input'(event, instance) {
       instance.state.set('hideCompleted', event.target.checked);
   },
