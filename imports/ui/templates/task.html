@@ -1,6 +1,6 @@
 <template name="task">
 <li class="{{#if checked}}checked{{/if}} {{#if private}}private{{/if}} {{#if todo}}todo{{/if}} {{#if doing}}doing{{/if}} {{#if checking}}checking{{/if}} {{#if done}}done{{/if}}">
-    
+
     <ul class="collapsible popout" data-collapsible="accordion">
     <li>
       <div class="collapsible-header black-text">          
@@ -62,6 +62,8 @@
                     </form>
                 </div>
 
+                <!--   <plaintext class="grey-text text-darken-1" style="font-family:Helvetica font-size:13px;">Due:</plaintext> -->
+                <input style="border:none;" type="date" class="datepicker">
             <br>
 
               {{#if isOwner}}
