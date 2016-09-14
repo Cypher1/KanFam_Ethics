@@ -1,21 +1,76 @@
 <template name="task">
-  <li class="{{#if checked}}checked{{/if}} {{#if private}}private{{/if}}">
-  
+  <li class="{{#if checked}}checked{{/if}} {{#if private}}private{{/if}} {{#if todo}}todo{{/if}} {{#if doing}}doing{{/if}} {{#if checking}}checking{{/if}} {{#if done}}done{{/if}}">
+    {{notes}}
     
     <ul class="collapsible popout" data-collapsible="accordion">
     <li>
-      <div class="collapsible-header black-text "><button class="delete grey-text left white" align-left style="border:none;line-height:10px;width:3px;position:relative" align="left">&times;</button>{{text}}</div>
+      <div class="collapsible-header black-text">          
+             
+             <div style="overflow: hidden;">
+             <form class="edit-task" id="eTask" >
+              
+              <button type="button" class="delete grey-text left white" style="border:none;padding-top:0px;margin:0px;height:3px;position:relative;top:-10px;left:-6.5px">&times;</button>
+              
+              <input style="border-bottom:none;border:none;padding-top:0px;margin-top:10px;margin-left:6px;" name="text" type="text" value="{{text}}"/>
+             
+             </form>
+              </div>
+      
+      </div>
       <div class="collapsible-body white black-text">
            <p>
 
-              <form class="new-note" id="tNotes">
-               <input name="text" type="text" value="{{taskNotes}}" placeholder="  add notes..."/>
-             </form>
+
+           <plaintext style="font-size:10px;"> Todo    Doing   Checking  Done</plaintext> 
+          <div style="font-size:0px">
+    
+          {{#if todo}}
+            <button class="blue lighten-4  blue-text text-lighten-4 toggle-todo" checked="{{todo}}" style="-webkit-border-top-left-radius:5px;-webkit-border-bottom-left-radius:5px;height:12px;font-size:3px;border-color:#bbdefb;">buttonbuttonbuttonbutton</button>
+          {{else}}
+            <button class="grey lighten-2 grey-text text-lighten-2 toggle-todo" checked="{{todo}}" style="-webkit-border-top-left-radius:5px;-webkit-border-bottom-left-radius:5px;height:12px;font-size:3px;border-color:#e0e0e0;">buttonbuttonbuttonbutton</button>
+          {{/if}}
+
+          {{#if doing}}
+            In Progres
+            <button class="toggle-doing blue lighten-3 blue-text text-lighten-3" checked="{{doing}}" style="box-shadow:none;height:12px;font-size:3px;border-color:#90caf9;" >buttonbuttonbuttonbutton</button>
+          {{else}}
+             In Progress
+            <button class="toggle-doing grey lighten-2 grey-text text-lighten-2" checked="{{doing}}" style="height:12px;font-size:3px;border-color:#e0e0e0;" >buttonbuttonbuttonbutton</button>
+          {{/if}}
+  
+          {{#if checking}}
+           <button class="toggle-checking blue darken-2 blue-text text-darken-2" checked="{{checking}}" style="height:12px;font-size:3px;border-color:#1976d2;">buttonbuttonbuttonbutton</button>
+          {{else}}
+            <button class="toggle-checking grey lighten-2 grey-text text-lighten-2" checked="{{checking}}" style="height:12px;font-size:3px;border-color:#e0e0e0;" >buttonbuttonbuttonbutton</button>
+          {{/if}}
+
+          {{#if done}}
+            <button class="toggle-done blue darken-4 blue-text text-darken-4" checked="{{done}}"  style="-webkit-border-top-right-radius:5px;-webkit-border-bottom-right-radius:5px;height:12px;font-size:3px;border-color:#0d47a1;">buttonbuttonbuttonbutton</button>
+          {{else}}
+            <button class="toggle-done grey lighten-2 grey-text text-lighten-2" checked="{{done}}" style="-webkit-border-top-right-radius:5px;-webkit-border-bottom-right-radius:5px;height:12px;font-size:3px;border-color:#e0e0e0;" >buttonbuttonbuttonbutton</button>
+          {{/if}}
+          </div>
 
 
+            <br>
+            <br>
 
+                
+                 <div class="card-panel">
+                    <textarea class=" grey-text text-darken-2" form="tNotes" name="tname" id="ta" rows="10" cols="14" value="{{taskNotes}}" placeholder="add notes..." style="resize:none;border:none;"></textarea>
+               
+                  <form class="new-note" id="tNotes">
+                  <button class="button white" style="border:none;padding:0px;" type="submit" name="action">
+                  <i class="small material-icons right teal-text" style="position:relative;left:240px;top:20px;">send</i>
+                  </button>
+                </form>
+                </div>
 
+         <!--      <input style="border-bottom: none;max-width:150px;word-wrap:break-word;" name="text" type="text" value="{{taskNotes}}" placeholder="  add notes..."/> -->
+           
 
+              <br>
+              <br>
 
               {{#if isOwner}}
               <div class="switch">

@@ -42,6 +42,10 @@ Meteor.methods({
             owner: this.userId,
             username: identifier,
             taskNotes: "",
+           // todo:false,
+           // doing: false,
+           // checking: false,
+          //  done: false,
    
         });
     },
@@ -95,7 +99,83 @@ Meteor.methods({
         console.log(taskId);
         Tasks.update(taskId, { $set: { private: setToPrivate } });
     },
+    'tasks.setTodo'(taskId, setTodo){
+
+        console.log("in setTodo");
+        check(taskId,String);
+        check(setTodo,Boolean);
+
+        const task = Tasks.findOne(taskId);
+        if (task.private && task.owner !== this.userId) {
+            // If the task is private, make sure only the owner can delete it
+            throw new Meteor.Error('not-authorized');
+        }
+        console.log(setTodo);
+        Tasks.update(taskId, { $set: { todo: setTodo } });
+    },
+    'tasks.setDoing'(taskId, setDoing){
+
+        console.log("in setDoing");
+        check(taskId,String);
+        check(setDoing,Boolean);
+
+        const task = Tasks.findOne(taskId);
+        if (task.private && task.owner !== this.userId) {
+            // If the task is private, make sure only the owner can delete it
+            throw new Meteor.Error('not-authorized');
+        }
+        console.log(setDoing);
+        Tasks.update(taskId, { $set: { doing: setDoing } });
+    },
+    'tasks.setChecking'(taskId, setChecking){
+
+        console.log("in setChecking");
+        check(taskId,String);
+        check(setChecking,Boolean);
+
+        const task = Tasks.findOne(taskId);
+        if (task.private && task.owner !== this.userId) {
+            // If the task is private, make sure only the owner can delete it
+            throw new Meteor.Error('not-authorized');
+        }
+        console.log(setChecking);
+        Tasks.update(taskId, { $set: { checking: setChecking } });
+    },
+    'tasks.setDone'(taskId, setDone){
+
+        console.log("in setDone");
+        check(taskId,String);
+        check(setDone,Boolean);
+
+        const task = Tasks.findOne(taskId);
+        if (task.private && task.owner !== this.userId) {
+            // If the task is private, make sure only the owner can delete it
+            throw new Meteor.Error('not-authorized');
+        }
+        console.log(setDone);
+        Tasks.update(taskId, { $set: { done: setDone } });
+    },
+    'tasks.editTask'(taskId,edit){
+
+        check(taskId,String);
+
+        const task= Tasks.findOne(taskId);
+        if (task.private && task.owner !== this.userId) {
+            // If the task is private, make sure only the owner can add notes it
+            throw new Meteor.Error('not-authorized');
+        }
+        console.log(taskId);
+        Tasks.update(taskId,{$set: { text: edit} });
+        console.log(edit);
+
+    }
 });
+
+
+
+
+
+
 
 
 

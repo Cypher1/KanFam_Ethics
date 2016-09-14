@@ -42,14 +42,14 @@ Template.list.helpers({
         if (instance.state.get('hideCompleted')) {
            
             // If hide completed is checked, filter tasks
-            filter.checked = { $ne: true };
+            filter.done = { $ne: true };
             console.log('hiding completed');
         }
         // sort by date newest first
         return Tasks.find(filter, {sort: {createdAt: -1}});
     },
     incompleteTasksCount() {
-        return Tasks.find({ checked: { $ne: true } }).count();
+        return Tasks.find({ done: { $ne: true } }).count();
     },
     tasksCount() {
         return Tasks.find({}).count();
@@ -75,10 +75,11 @@ Template.list.events({
    
  'change .hide-completed input'(event, instance) {
       instance.state.set('hideCompleted', event.target.checked);
+
   },
   'submit .new-list'(event){
     event.preventDefault();
-  }
+  },
 });
 
 
