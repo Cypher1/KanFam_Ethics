@@ -17,7 +17,7 @@ if (Meteor.isServer) {
 }
 //can do methods for new collection in here
 Meteor.methods({
-    'tasks.insert'(text) {
+    'tasks.insert'(text, task_list_id) {
         check(text, String);
         console.log("in tasks.insert method");
         // Make sure the user is logged in before inserting a task
@@ -42,6 +42,7 @@ Meteor.methods({
             owner: this.userId,
             username: identifier,
             taskNotes: "",
+            parent: task_list_id,
            // todo:false,
            // doing: false,
            // checking: false,

@@ -6,12 +6,12 @@ export const TaskList = new Mongo.Collection('task_list');
 
 if (Meteor.isServer) {
     // This code only runs on the server
-    Meteor.publish('task_list', function groupsPublication() {
-        let publicGroups = {private: {$ne: true}};
+    Meteor.publish('task_list', function TaskListsPublication() {
+        let publicTaskLists = {private: {$ne: true}};
         if(!this.userId) {
-            return Groups.find(publicGroups);
+            return TaskList.find(publicTaskLists);
         }
-        let myGroups = {owner: this.userId};
-        return Groups.find({$or: [myGroups, publicGroups]});
+        let myLists = {owner: this.userId};
+        return TaskList.find({$or: [myTasLists, publicTaskLists]});
     });
 }
