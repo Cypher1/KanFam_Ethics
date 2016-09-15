@@ -1,17 +1,85 @@
 <template name="task">
-  <li class="{{#if check}}checked{{/if}} {{#if private}}private{{/if}}">
-    <input type="checkbox" checked="{{checked}}" class="toggle-checked" />
-    {{#if isOwner}}
-    <button class="toggle-private">
-      {{#if private}}
-      Private
-      {{else}}
-      Public
-      {{/if}}
-    </button>
-    {{/if}}
-    <span class="text">{{text}}</span>
-    <span class="right"><strong>({{username}})</strong></span>
-    <button class="delete">&times;</button>
-  </li>
+<li class="{{#if checked}}checked{{/if}} {{#if private}}private{{/if}} {{#if todo}}todo{{/if}} {{#if doing}}doing{{/if}} {{#if checking}}checking{{/if}} {{#if done}}done{{/if}}">
+
+    <ul class="collapsible popout" data-collapsible="accordion">
+    <li>
+      <div class="collapsible-header black-text" style="height:60px;">          
+             
+            <div style="overflow: hidden;">
+             <form class="edit-task" id="eTask" >
+              
+              <button type="button" class="delete grey-text left white" style="border:none;padding-top:0px;margin:0px;height:3px;position:relative;top:-10px;left:-6.5px">&times;</button>
+              
+              <input style="border-bottom:none;border:none;padding-top:0px;margin-top:10px;margin-left:6px;" name="text" type="text" value="{{text}}"/>
+             
+             </form>
+            </div>
+      
+      </div>
+      <div class="collapsible-body white black-text">
+           <p>
+
+
+          <plaintext style="font-size:10px;font-family:Helvetica"> Todo           Doing        Checking      Done</plaintext> 
+          
+          <div style="font-size:0px;position:relative;float:none;display:block;max-width: 100%;">
+    
+          {{#if todo}}
+            <button class="blue lighten-4  blue-text text-lighten-4 toggle-todo" checked="{{todo}}" style="-webkit-border-top-left-radius:5px;-webkit-border-bottom-left-radius:5px;height:16px;font-size:3px;border-color:#bbdefb;width:50px;"></button>
+          {{else}}
+            <button class="grey lighten-2 grey-text text-lighten-2 toggle-todo" checked="{{todo}}" style="-webkit-border-top-left-radius:5px;-webkit-border-bottom-left-radius:5px;height:16px;font-size:3px;border-color:#e0e0e0;width:50px;"></button>
+          {{/if}}
+
+            <button class="toggle-doing {{#if doing}}blue lighten-3{{else}}grey lighten-2{{/if}}" checked="{{doing}}" style="box-shadow:none;height:16px;font-size:3px;{{#if doing}}border-color:#90caf9{{else}}border-color:#e0e0e0{{/if}};width:50px;"></button>
+  
+          {{#if checking}}
+           <button class="toggle-checking blue darken-2 blue-text text-darken-2" checked="{{checking}}" style="height:16px;font-size:3px;border-color:#1976d2;width:50px;"></button>
+          {{else}}
+            <button class="toggle-checking grey lighten-2 grey-text text-lighten-2" checked="{{checking}}" style="height:16px;font-size:3px;border-color:#e0e0e0;width:50px;"></button>
+          {{/if}}
+
+          {{#if done}}
+            <button class="toggle-done blue darken-4 blue-text text-darken-4" checked="{{done}}"  style="-webkit-border-top-right-radius:5px;-webkit-border-bottom-right-radius:5px;height:16px;font-size:3px;border-color:#0d47a1;width:50px;"></button>
+          {{else}}
+            <button class="toggle-done grey lighten-2 grey-text text-lighten-2" checked="{{done}}" style="-webkit-border-top-right-radius:5px;-webkit-border-bottom-right-radius:5px;height:16px;font-size:3px;border-color:#e0e0e0;width:50px;"></button>
+          {{/if}}
+  
+          </div>
+            <br>
+                 <div class="card-panel">
+               
+                    <form class="new-note" id="tNotes">
+                        <textarea class="materialize-textarea" name="text" value="{{taskNotes}}" placeholder="  add notes..." style="border:none;word-break: break-all;"></textarea> 
+                          <button class="btn waves-effect waves-light" type="submit" name="action">Save
+                          <i class="material-icons right">send</i>
+                          </button>
+      
+                    </form>
+                </div>
+
+                {{notes}}
+
+                <!--   <plaintext class="grey-text text-darken-1" style="font-family:Helvetica font-size:13px;">Due:</plaintext> 
+                <input style="border:none;" type="date" class="datepicker">-->
+            <br>
+
+              {{#if isOwner}}
+              <div class="switch">
+                <label>
+                    Private
+                  <input class="toggle-private right" type="checkbox" checked="{{private}}">
+                  <span class="lever"></span>
+                    Public
+                </label>
+              </div>
+                {{/if}}
+
+          </p>
+          
+      </div>
+    </li>
+    </ul>
+                  
+
+</li>
 </template>
