@@ -3,3 +3,5 @@ import './navlist.html';
 import './task.html';
 import './task.js';
 import './footer.html';
+import './list.js';
+import './list.html';
