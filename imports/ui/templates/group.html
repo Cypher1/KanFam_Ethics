@@ -1,3 +1,30 @@
-<template name="group_info">
-
+<template name="group">
+    <div class="card">
+        <div class="card-stacked">
+            <div class="card-content">
+                <span class="card-title">
+                    Name{{name}}
+                    <img class="right z-depth-1" src="/resources/house.jpg" width="60" height="60">
+                </span>
+                <div class="row">
+                    <div class="col s5">Add a description{{description}}</div>
+                </div>
+                <div class="row">
+                    <div class="col s4">
+                        <a href="/groups/{{_id}}">Go to group</a>
+                    </div>
+                    <div class="col right">
+                        {{#if muted}}
+                        <a><i class="material-icons">volume_off</i></a>
+                        {{else}}
+                        <a><i class="material-icons">volume_up</i></a>
+                        {{/if}}
+                    </div>
+                </div>
+                <div class="progress no-margin">
+                    <div class="determinate" style="width: {{done_tasks_percentage}}.999%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
