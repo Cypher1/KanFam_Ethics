@@ -46,7 +46,11 @@ Template.task.events({
 
       // Get value from form element
       const target = event.target;
-      const note = document.getElementById("ta").value;
+      //const note = document.getElementById("ta").value;
+      console.log("in new-note:");
+      console.log(note);
+     // document.getElementById("ta").value = "";
+     const note = event.target.text.value;
 
       // Insert a task into the collection
       Meteor.call('tasks.addNote', this._id, note);
@@ -89,8 +93,3 @@ Template.task.events({
 
 
 });
-
-
-
-
-

@@ -80,15 +80,3 @@ Template.list.events({
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-

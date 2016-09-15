@@ -68,9 +68,11 @@ Meteor.methods({
             // If the task is private, make sure only the owner can add notes it
             throw new Meteor.Error('not-authorized');
         }
+        console.log("in addNote");
         console.log(taskId);
-        Tasks.update(taskId,{$set: { taskNotes: notes} });
         console.log(notes);
+        Tasks.update(taskId,{$set: { taskNotes: notes} });
+       
 
     },
     'tasks.setChecked'(taskId, setChecked) {
@@ -170,17 +172,6 @@ Meteor.methods({
 
     }
 });
-
-
-
-
-
-
-
-
-
-
-
 
 
 
