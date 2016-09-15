@@ -1,7 +1,10 @@
 <template name="dashboard">
- <div class="container">
- 	
- 	<h1>Dashboard</h1>
-
- </div>
+  <div class="container">
+    <h2 class="header">Dashboard</h2>
+    <!-- TODO First task is just so that I can see what I'm doing -->
+    {{> task_list}}
+    {{#each task_list}}
+    {{> task_list}}
+    {{/each}}
+  </div>
 </template>

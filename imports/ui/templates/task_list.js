@@ -5,10 +5,10 @@ import { Tasks } from '../../api/tasks.js';
 
 import './task.js';
 import '../../api/tasks.js'
-import './list.html';
+import './task_list.html';
 
 
-Template.list.rendered = function() {
+Template.task_list.rendered = function() {
 this.$('.dropdown-button').dropdown({
     inDuration: 300,
     outDuration: 225,
@@ -23,13 +23,13 @@ Template.registerHelper('user', function() {
     return Meteor.user().username || Meteor.user().profile.name;
 });
 
-Template.list.onCreated(function bodyOnCreated() {
+Template.task_list.onCreated(function bodyOnCreated() {
     this.state = new ReactiveDict();
     Meteor.subscribe('tasks');
 });
 
 
-Template.list.helpers({
+Template.task_list.helpers({
 
     tasks () {
 
@@ -54,7 +54,7 @@ Template.list.helpers({
 });
 
 
-Template.list.events({
+Template.task_list.events({
     'submit .new-task'(event) { 
     // Prevent default browser form submit
     event.preventDefault();

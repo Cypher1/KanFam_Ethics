@@ -1,3 +1,4 @@
+import './navlist.js';
 import './navbar.html';
 
 Template.navbar.onRendered(function(){
