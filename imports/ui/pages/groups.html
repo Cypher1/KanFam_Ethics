@@ -1,0 +1,10 @@
+<template name="groups">
+  <div class="container">
+    <h2 class="header">Groups</h2>
+    <!-- TODO First group is just so that I can see what I'm doing -->
+    {{> group}}
+    {{#each group}}
+    {{> group}}
+    {{/each}}
+  </div>
+</template>

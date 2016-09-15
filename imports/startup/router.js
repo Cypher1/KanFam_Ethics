@@ -52,6 +52,13 @@ privateRoutes.route('/dashboard', {
     }
 })
 
+privateRoutes.route('/groups', {
+    name: 'groups',
+    action: function () {
+        BlazeLayout.render('mainLayout', {content: 'groups'})
+    }
+})
+
 privateRoutes.route('/logout', {
     name: 'logout',
     action: function() {
