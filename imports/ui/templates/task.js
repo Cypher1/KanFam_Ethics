@@ -10,15 +10,6 @@ Template.task.helpers({
     isOwner() {
         return this.owner === Meteor.userId();
     },    
-    notes(){
-  
-        let user = Meteor.users.findOne(this.userId);
-        //
-        var findCollection = Tasks.findOne({_id: this._id});
-        console.log(findCollection);
-       // return Tasks.findOne({owner: this.userID, _id: this._id}).taskNotes;
-    },
-
 
 });
 
@@ -26,6 +17,12 @@ Template.task.onRendered(function(){
     $('.collapsible').collapsible({
        // A setting that changes the collapsible behavior to expandable instead of the default accordion style
     });
+    $('.datepicker').pickadate({
+    selectMonths: true, // Creates a dropdown to control month
+    selectYears: 15,// Creates a dropdown of 15 years to control year
+    autoclose: true,
+  });
+      
 });
 
 
@@ -46,30 +43,27 @@ Template.task.events({
 
       // Get value from form element
       const target = event.target;
-      //const note = document.getElementById("ta").value;
-      console.log("in new-note:");
-      console.log(note);
-     // document.getElementById("ta").value = "";
-     const note = event.target.text.value;
+      const note = event.target.text.value;
 
       // Insert a task into the collection
       Meteor.call('tasks.addNote', this._id, note);
     },
     'click .toggle-todo'(){
 
+        if(!this.doing && !this.checking && !this.done){
          Meteor.call('tasks.setTodo',this._id, !this.todo);
+       }
     
     },
     'click .toggle-doing'(){
 
-      if(this.todo){
+      if(this.todo && !this.checking && !this.done){
         Meteor.call('tasks.setDoing',this._id, !this.doing);
       }
-
     },
     'click .toggle-checking'(){
 
-      if(this.todo && this.doing){
+      if(this.todo && this.doing && !this.done){
        Meteor.call('tasks.setChecking',this._id, !this.checking);
       }
     },
@@ -89,7 +83,22 @@ Template.task.events({
 
       // Insert a task into the collection
       Meteor.call('tasks.editTask', this._id, edit);
+    },
+    'click .incProgress'(event){
+
+      event.preventDefault();
+      Meteor.call('tasks.progress',this._id);
+
+    },
+    'submit .due-date'(event){
+
+      console.log("submit in due date");
+      const dueDate = document.getElementById("dd");
+      event.preventDefault();
+      Meteor.call('tasks.setDueDate',this._id,dueDate);
     }
-
-
 });
+
+
+
+

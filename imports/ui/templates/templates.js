@@ -5,3 +5,4 @@ import './task.js';
 import './task_list.js';
 import './group.js';
 import './group_page.js';
+import './all_lists.js';

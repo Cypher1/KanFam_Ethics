@@ -1,0 +1,14 @@
+<template name="all_lists">
+<div style="display:inline">
+
+	 <button class="new-list btn waves-effect waves-light green accent-4" value="List Name" name="action"><i class="material-icons right">view_list</i>Create List</button>
+	               
+    <br>
+ 	{{tn}} 
+   	<div >
+    {{#each lists}}
+   	 {{> task_list}}
+    {{/each}}
+    </div>
+</div>
+</template>

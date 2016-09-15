@@ -42,12 +42,8 @@ Meteor.methods({
             owner: this.userId,
             username: identifier,
             taskNotes: "",
-            parent: task_list_id,
-           // todo:false,
-           // doing: false,
-           // checking: false,
-          //  done: false,
-   
+            parent: task_list_id,   
+            progress: 0,
         });
     },
     'tasks.remove'(taskId) {
@@ -167,12 +163,34 @@ Meteor.methods({
             // If the task is private, make sure only the owner can add notes it
             throw new Meteor.Error('not-authorized');
         }
-        console.log(taskId);
         Tasks.update(taskId,{$set: { text: edit} });
-        console.log(edit);
+    },
+    'tasks.deleteWithList'(listId){
+
+        check(listId,String);
+        Tasks.remove({parent: listId});
+    },
+    'tasks.setDueDate'(taskId,dueDate){
+
+        check(taskId,String);
+        if (task.private && task.owner !== this.userId) {
+            // If the task is private, make sure only the owner can add notes it
+            throw new Meteor.Error('not-authorized');
+        }
+        Tasks.update(taskId,{$set: {dueDate: dueDate}});
+
 
     }
 });
+
+
+
+
+
+
+
+
+
 
 
 
