@@ -1,7 +1,7 @@
 <template name="navlist">
   {{#if currentUser }}
   <li class="{{isActiveRoute 'dashboard'}}"><a href="/dashboard"><i class="material-icons right">dashboard</i>Dash</a></li>
-  <li class="{{isActiveRoute 'groups'}}"><a href="/groups"><i class="material-icons right">group</i>Groups</a></li>
+  <li class="{{isActiveRoute regex='^groups|group_page'}}"><a href="/groups"><i class="material-icons right">group</i>Groups</a></li>
   <li><a href="/logout"><i class="material-icons right rotated">file_upload</i>Logout</a></li>
   {{else}}
   <li class="{{isActiveRoute 'login'}}"><a href="/login"><i class="material-icons right rotated">file_download</i>Login</a></li>
