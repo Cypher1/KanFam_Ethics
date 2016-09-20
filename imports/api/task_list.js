@@ -59,6 +59,7 @@ Meteor.methods({
     },  
     'task_list.remove'(listId) {
        
+        console.log(listId);
         check(listId, String);
         const list = TaskList.findOne(listId);
 

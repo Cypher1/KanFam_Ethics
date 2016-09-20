@@ -29,6 +29,18 @@ Template.task_list.onCreated(function bodyOnCreated() {
     Meteor.subscribe('tasks');
 });
 
+Template.task_list.onRendered(function() {
+  this.$('.modal-trigger').leanModal({
+      dismissible: false, // Modal can be dismissed by clicking outside of the modal
+      opacity: 0.5, // Opacity of modal background
+      in_duration: 300, // Transition in duration
+      out_duration: 200, // Transition out duration
+      starting_top: '4%', // Starting top style attribute
+      ending_top: '10%', // Ending top style attribute
+  });
+});
+
+
 
 Template.task_list.helpers({
 

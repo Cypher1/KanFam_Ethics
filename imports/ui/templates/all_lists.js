@@ -37,7 +37,7 @@ Template.all_lists.helpers({
 Template.all_lists.events({
 
   'submit .new-list'(event) { 
-    
+
       // Prevent default browser form submit
       event.preventDefault();
         
@@ -59,10 +59,32 @@ Template.all_lists.events({
   'click .delete-list'(event){
 
   		event.preventDefault();
-  		//Delete list
-  		Meteor.call('task_list.remove', this._id);
-  		//Delete tasks in that list
-  		Meteor.call('tasks.deleteWithList',this._id);
+
+           var id = this._id;
+           var lName = this.listName;
+         // console.log(id);
+      swal({
+        html:true,
+        title: "<h5>Delete Confirmation<h5>",
+        text: "Are you sure you want to delete the list " +lName + "?",
+        confirmButtonColor: '#0097a7',
+        confirmButtonText: 'Yes',
+        showCancelButton: true,
+        cancelButtonText: "No",
+        closeOnConfirm: true,
+        closeOnCancel: true,
+     },
+     function(isConfirm){
+        console.log(id);
+        if(isConfirm){
+          //Delete list
+          Meteor.call('task_list.remove', id);
+          //Delete tasks in that list
+          Meteor.call('tasks.deleteWithList',id);
+        }
+     });
+    
+
   }
 
 });

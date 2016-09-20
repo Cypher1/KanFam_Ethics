@@ -1,7 +1,7 @@
 <template name="task_list">
 
 
-    <div class="col s50" style="display:flex;flex-direction:column">
+    <div class="col s50">
         <div class="col s50">
             <div class="card blue-grey">
                 <div class="card-content white-text text-grey lighten-2">
@@ -12,7 +12,7 @@
          <a class='dropdown-button align right white-text' data-activates='{{this._id}}'><i class="tiny material-icons align right">view_headline</i></a>
 
           <ul id='{{this._id}}' class='dropdown-content'>
-           
+            
             <label class="hide-completed" style="font-size:14px;"><li class="teal-text text-lighten-1" style="padding-top:10%;padding-left:6.2%;padding-right:2.5%;"><input type="checkbox"/>Hide Complete</li></label>
           
             <li class="divider"></li>
@@ -20,6 +20,7 @@
             <label class="delete-list" style="font-size:15px;"><li class="teal-text text-lighten-1" style="padding-top:10%;padding-left:10%;padding-right:2.5%;"><input type="checkbox"/>Delete List</li></label>
            
             <li class="divider"></li>
+
           </ul>
           <ul>
           {{#if currentUser}}
