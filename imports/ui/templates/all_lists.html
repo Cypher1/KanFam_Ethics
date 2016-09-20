@@ -1,8 +1,21 @@
 <template name="all_lists">
 <div style="display:inline">
 
-	 <button class="new-list btn waves-effect waves-light green accent-4" value="List Name" name="action"><i class="material-icons right">view_list</i>Create List</button>
-	               
+	<div class="row">
+      <div class="col s5 m9">
+        <div class="card-panel white" style="height:100px;">
+	        <form class="new-list">
+		       	<input style="font-size:16px;display:inline;float:left;width:75%;display:block;" id="newList" name="text" type="text" placeholder="Create new list" required oninvalid="this.setCustomValidity('Please enter a list name')" oninput="setCustomValidity('')"/>
+		       	<br>
+		        <button class="btn waves-effect waves-light" style="display:block;float:right;position:relative;vertical-align:baseline;height:40px;padding-left:15px;padding-right:15px;margin-left:0px;text-align:center;" type="submit">Create 
+		         <i class="tiny material-icons right">add</i>
+		        </button>
+	        </form>
+        </div>
+      </div>
+    </div>
+            
+	<!-- -->               
     <br>
    	<div >
     {{#each lists}}

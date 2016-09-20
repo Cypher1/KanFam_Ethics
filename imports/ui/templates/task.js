@@ -42,7 +42,6 @@ Template.task.events({
       event.preventDefault();
 
       // Get value from form element
-      const target = event.target;
       const note = event.target.text.value;
 
       // Insert a task into the collection

@@ -36,8 +36,9 @@ Meteor.methods({
                 identifier = user.email;
             }
         }
+        console.log("in task insert api");
         TaskList.insert({
-        	listName: "",
+        	listName: listName,
         	createdAt: new Date(),
             owner: this.userId,
             username: identifier,

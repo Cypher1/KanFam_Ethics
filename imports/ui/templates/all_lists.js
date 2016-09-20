@@ -35,13 +35,18 @@ Template.all_lists.helpers({
 });
 
 Template.all_lists.events({
-   
-    'click .new-list'(event) { 
-    // Prevent default browser form submit
-    event.preventDefault();
-    console.log("in submit .new-list");
 
-    Meteor.call('task_list.insert',"");
+  'submit .new-list'(event) { 
+    
+      // Prevent default browser form submit
+      event.preventDefault();
+        
+      console.log("in submit .new-list");
+       
+      const listName = event.target.text.value;
+
+      Meteor.call('task_list.insert',listName);
+      event.target.text.value = '';
 
  },
  'submit .setListName'(event){
