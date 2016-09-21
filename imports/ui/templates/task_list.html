@@ -1,10 +1,10 @@
 <template name="task_list">
 
 
-    <div class="col s50">
-        <div class="col s50">
-            <div class="card blue-grey">
-                <div class="card-content white-text text-grey lighten-2">
+    
+        <div class="col s10 m5">
+            <div class="card blue-grey ">
+                <div class="card-content white-text text-grey lighten-1">
           <form class="setListName" style="display:inline-block;">
           <input style="border-bottom:none;border:none;padding-top:0px;font-size:18px;" name="text" type="text" placeholder="click to enter list title" required oninvalid="this.setCustomValidity('Please enter a list name')" oninput="setCustomValidity('')" value="{{listName}}"/>
           </form>
@@ -36,9 +36,8 @@
               </ul>
 
           </div>
-        </div>
-      </div>
+      
     </div>
-
+</div>
 
 </template>

@@ -9,8 +9,22 @@ import './task.html';
 Template.task.helpers({
     isOwner() {
         return this.owner === Meteor.userId();
-    },    
-
+    }, 
+    doing(){
+      if(this.progress >= 2){
+        return true;
+      }
+    },
+    checking(){
+      if(this.progress >= 3){
+        return true;
+      }
+    },
+    done(){
+      if(this.progress >=4){
+        return true;
+      }
+    }
 });
 
 Template.task.onRendered(function(){
@@ -27,10 +41,8 @@ Template.task.onRendered(function(){
 
 
 Template.task.events({
-    'click .toggle-checked'() {
-        // Set the checked property to the opposite of its current value
-        Meteor.call('tasks.setChecked', this._id, !this.checked);
-    },
+
+
     'click .delete'() {
         Meteor.call('tasks.remove', this._id);
     },
@@ -47,29 +59,33 @@ Template.task.events({
       // Insert a task into the collection
       Meteor.call('tasks.addNote', this._id, note);
     },
-    'click .toggle-todo'(){
-
-        if(!this.doing && !this.checking && !this.done){
-         Meteor.call('tasks.setTodo',this._id, !this.todo);
-       }
-    
-    },
     'click .toggle-doing'(){
 
-      if(this.todo && !this.checking && !this.done){
-        Meteor.call('tasks.setDoing',this._id, !this.doing);
+      if(this.progress == 1){
+        this.progress++;
+      }else if(this.progress == 2){
+        this.progress--;
       }
+       Meteor.call('tasks.setProgress',this._id, this.progress);
     },
     'click .toggle-checking'(){
 
-      if(this.todo && this.doing && !this.done){
-       Meteor.call('tasks.setChecking',this._id, !this.checking);
+      if(this.progress == 2){
+        this.progress++;
+      }else if(this.progress == 3){
+        this.progress--;
       }
+       Meteor.call('tasks.setProgress',this._id, this.progress);
+      
     },
     'click .toggle-done'(){
-      if(this.todo && this.doing && this.checking){
-        Meteor.call('tasks.setDone',this._id, !this.done);
+
+      if(this.progress == 3){
+        this.progress++;
+      }else if(this.progress == 4){
+        this.progress--;
       }
+        Meteor.call('tasks.setProgress',this._id, this.progress);
     },
     'submit .edit-task'(event){
        // Prevent default browser form submit
@@ -82,12 +98,6 @@ Template.task.events({
 
       // Insert a task into the collection
       Meteor.call('tasks.editTask', this._id, edit);
-    },
-    'click .incProgress'(event){
-
-      event.preventDefault();
-      Meteor.call('tasks.progress',this._id);
-
     },
     'submit .due-date'(event){
 

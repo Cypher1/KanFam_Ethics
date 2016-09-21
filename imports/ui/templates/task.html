@@ -25,7 +25,7 @@
           
           <div style="font-size:0px;position:relative;float:none;display:block;">
           
-          <button class="btn toggle-todo {{#if todo}}enabled{{else}}disabled{{/if}} blue lighten-4 black-text" checked="{{todo}}" style="-webkit-border-top-left-radius:5px;-webkit-border-bottom-left-radius:5px;height:16px;"></button>
+          <button class="btn enabled blue lighten-4 black-text" checked="{{todo}}" style="-webkit-border-top-left-radius:5px;-webkit-border-bottom-left-radius:5px;height:16px;"></button>
 
           <button class="btn toggle-doing {{#if doing}}enabled{{else}}disabled{{/if}} blue lighten-2 black-text" checked="{{doing}}" style="height:16px;font-size:3px;"></button>
 
@@ -39,7 +39,7 @@
                
                     <form class="new-note" id="tNotes">
                         <textarea class="materialize-textarea" name="text" value="{{taskNotes}}" placeholder="  add notes..." style="border:none;word-break: break-all;"></textarea> 
-                          <button class="btn waves-effect waves-light" type="submit" name="action" style="padding-left:5px;padding-right:5px;">
+                          <button class="btn waves-effect waves-light cyan darken-2" type="submit" name="action" style="padding-left:5px;padding-right:5px;">
                           <i class="material-icons center">send</i>
                           </button>
       

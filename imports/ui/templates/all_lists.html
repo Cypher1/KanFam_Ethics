@@ -4,13 +4,20 @@
 	<div class="row">
       <div class="col m9">
         <div class="card-panel white" style="height:100px;position:absolute;width:45%;width-min:45%;">
+	      
+        <div class="row">
+        	<div class="col m9">
 	        <form class="new-list">
-		       	<input style="font-size:16px;display:inline;float:left;width:60%;width-min:60%px;display:block;position:absolute;" id="newList" name="text" type="text" placeholder="Create new list" required oninvalid="this.setCustomValidity('Please enter a list name')" oninput="setCustomValidity('')"/>
-		       	<br>
-		        <button class="btn waves-effect waves-light cyan darken-2" style="display:block;float:right;position:absolute;vertical-align:baseline;height:40px;padding-left:15px;padding-right:15px;left:70%;text-align:center;" type="submit">Create 
-		         <i class="tiny material-icons right">add</i>
-		        </button>
-	        </form>
+			       	<input style="font-size:16px;display:inline;float:left;width:60%;display:block;position:absolute;" id="newList" name="text" type="text" placeholder="Create new list" required oninvalid="this.setCustomValidity('Please enter a list name')" oninput="setCustomValidity('')"/>
+			       	<br>
+			        <button class="btn waves-effect waves-light cyan darken-2" style="display:block;float:right;position:absolute;vertical-align:baseline;height:40px;padding-left:15px;padding-right:15px;left:70%;text-align:center;" type="submit">Create 
+			         <i class="tiny material-icons right">add</i>
+			        </button>
+			 </form>
+			</div>
+		</div>
+	
+	 
         </div>
       </div>
     </div>
@@ -22,11 +29,11 @@
     <br>
     <br>
 
-     <div class="row">
+
     {{#each lists}}
    	 {{> task_list}}
     {{/each}}
-     </div>
+
 
 
 </div>

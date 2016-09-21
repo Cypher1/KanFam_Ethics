@@ -43,7 +43,7 @@ Meteor.methods({
             username: identifier,
             taskNotes: "",
             parent: task_list_id,   
-            progress: 0,
+            progress: 1,
         });
     },
     'tasks.remove'(taskId) {
@@ -69,22 +69,6 @@ Meteor.methods({
         console.log(taskId);
         console.log(notes);
         Tasks.update(taskId,{$set: { taskNotes: notes} });
-       
-
-    },
-    'tasks.setChecked'(taskId, setChecked) {
-       
-       console.log("in setChecked");
-        check(taskId, String);
-        check(setChecked, Boolean);
-
-        const task = Tasks.findOne(taskId);
-        if (task.private && task.owner !== this.userId) {
-            // If the task is private, make sure only the owner can delete it
-            throw new Meteor.Error('not-authorized');
-        }
-         console.log(taskId);
-        Tasks.update(taskId, { $set: { checked: setChecked } });
     },
     'tasks.setPrivate'(taskId, setToPrivate) {
         check(taskId, String);
@@ -97,62 +81,6 @@ Meteor.methods({
         }
         console.log(taskId);
         Tasks.update(taskId, { $set: { private: setToPrivate } });
-    },
-    'tasks.setTodo'(taskId, setTodo){
-
-        console.log("in setTodo");
-        check(taskId,String);
-        check(setTodo,Boolean);
-
-        const task = Tasks.findOne(taskId);
-        if (task.private && task.owner !== this.userId) {
-            // If the task is private, make sure only the owner can delete it
-            throw new Meteor.Error('not-authorized');
-        }
-        console.log(setTodo);
-        Tasks.update(taskId, { $set: { todo: setTodo } });
-    },
-    'tasks.setDoing'(taskId, setDoing){
-
-        console.log("in setDoing");
-        check(taskId,String);
-        check(setDoing,Boolean);
-
-        const task = Tasks.findOne(taskId);
-        if (task.private && task.owner !== this.userId) {
-            // If the task is private, make sure only the owner can delete it
-            throw new Meteor.Error('not-authorized');
-        }
-        console.log(setDoing);
-        Tasks.update(taskId, { $set: { doing: setDoing } });
-    },
-    'tasks.setChecking'(taskId, setChecking){
-
-        console.log("in setChecking");
-        check(taskId,String);
-        check(setChecking,Boolean);
-
-        const task = Tasks.findOne(taskId);
-        if (task.private && task.owner !== this.userId) {
-            // If the task is private, make sure only the owner can delete it
-            throw new Meteor.Error('not-authorized');
-        }
-        console.log(setChecking);
-        Tasks.update(taskId, { $set: { checking: setChecking } });
-    },
-    'tasks.setDone'(taskId, setDone){
-
-        console.log("in setDone");
-        check(taskId,String);
-        check(setDone,Boolean);
-
-        const task = Tasks.findOne(taskId);
-        if (task.private && task.owner !== this.userId) {
-            // If the task is private, make sure only the owner can delete it
-            throw new Meteor.Error('not-authorized');
-        }
-        console.log(setDone);
-        Tasks.update(taskId, { $set: { done: setDone } });
     },
     'tasks.editTask'(taskId,edit){
 
@@ -178,7 +106,18 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
         Tasks.update(taskId,{$set: {dueDate: dueDate}});
+    },
+    'tasks.setProgress'(taskId,progress){
 
+        console.log("in set progress");
+        check(taskId,String);
+       // check(progress,Integer);
+        const task = Tasks.findOne(taskId);
+        if (task.private && task.owner !== this.userId) {
+            throw new Meteor.Error('not-authorized');
+        }
+        console.log(progress);
+        Tasks.update(taskId,{$set:{progress: progress}});
 
     }
 });

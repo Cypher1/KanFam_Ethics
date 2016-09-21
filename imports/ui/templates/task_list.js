@@ -52,8 +52,8 @@ Template.task_list.helpers({
         if (instance.state.get('hideCompleted')) {
            
             // If hide completed is checked, filter tasks
-            filter.done =  {$ne: true};
-            return Tasks.find({parent: this._id, done: {$ne : true}},{sort:{createdAt:-1}});
+            filter.progress =  {$ne: 4};
+            return Tasks.find({parent: this._id, progress: {$ne : 4}},{sort:{createdAt:-1}});
         }
         // sort by date newest first
         return Tasks.find({parent: this._id},{sort:{createdAt:-1}})
@@ -85,9 +85,7 @@ Template.task_list.events({
   },
    
  'change .hide-completed input'(event, instance) {
-        console.log("in hide completed");
       instance.state.set('hideCompleted', event.target.checked);
-
 
   },'submit .edit-task'(event){
        // Prevent default browser form submit
