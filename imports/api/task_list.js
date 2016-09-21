@@ -58,8 +58,6 @@ Meteor.methods({
         TaskList.update(listId,{$set: { listName: listName} });
     },  
     'task_list.remove'(listId) {
-       
-        console.log(listId);
         check(listId, String);
         const list = TaskList.findOne(listId);
 

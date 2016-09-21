@@ -9,6 +9,11 @@ import './task.html';
 Template.task.helpers({
     isOwner() {
         return this.owner === Meteor.userId();
+    },
+    todo(){
+      if(this.progress >= 1){
+        return true;
+      }
     }, 
     doing(){
       if(this.progress >= 2){
@@ -24,7 +29,27 @@ Template.task.helpers({
       if(this.progress >=4){
         return true;
       }
-    }
+    },
+    todoLabel(){
+      if(this.progress == 1){
+        return true;
+      }
+    }, 
+    doingLabel(){
+      if(this.progress == 2){
+        return true;
+      }
+    },
+    checkingLabel(){
+      if(this.progress == 3){
+        return true;
+      }
+    },
+    doneLabel(){
+      if(this.progress == 4){
+        return true;
+      }
+    },
 });
 
 Template.task.onRendered(function(){
@@ -45,9 +70,6 @@ Template.task.events({
 
     'click .delete'() {
         Meteor.call('tasks.remove', this._id);
-    },
-    'click .toggle-private'() {
-        Meteor.call('tasks.setPrivate', this._id, !this.private);
     },
     'submit .new-note'(event) { 
       // Prevent default browser form submit
@@ -99,11 +121,11 @@ Template.task.events({
       // Insert a task into the collection
       Meteor.call('tasks.editTask', this._id, edit);
     },
-    'submit .due-date'(event){
+    'selectOnClose .due-date'(event){
 
-      console.log("submit in due date");
-      const dueDate = document.getElementById("dd");
       event.preventDefault();
+      const dueDate = document.getElementById("dd");
+
       Meteor.call('tasks.setDueDate',this._id,dueDate);
     }
 });

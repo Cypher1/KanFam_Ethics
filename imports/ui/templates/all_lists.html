@@ -1,40 +1,28 @@
 <template name="all_lists">
 <div style="display:inline;">
 
-	<div class="row">
-      <div class="col m9">
-        <div class="card-panel white" style="height:100px;position:absolute;width:45%;width-min:45%;">
-	      
-        <div class="row">
-        	<div class="col m9">
-	        <form class="new-list">
-			       	<input style="font-size:16px;display:inline;float:left;width:60%;display:block;position:absolute;" id="newList" name="text" type="text" placeholder="Create new list" required oninvalid="this.setCustomValidity('Please enter a list name')" oninput="setCustomValidity('')"/>
+    <div class="row" style="min-width:300px;">
+        <div class="col s10 m5">
+            <div class="card white" style="width:600px;position:relative;left:45%;right:50%;margin-bottom:0px;padding-bottom:0px;">
+                <div class="card-content black-text">
+	        		<form class="new-list" style="display:inline-block;width:100%;">
+			       	<input style="font-size:16px;float:left;width:62%;" id="newList" name="text" type="text" placeholder="Create new list" required oninvalid="this.setCustomValidity('Please enter a list name')" oninput="setCustomValidity('')"/>
 			       	<br>
-			        <button class="btn waves-effect waves-light cyan darken-2" style="display:block;float:right;position:absolute;vertical-align:baseline;height:40px;padding-left:15px;padding-right:15px;left:70%;text-align:center;" type="submit">Create 
+			        <button class="btn waves-effect waves-light cyan darken-2" style="display:block;float:right;position:absolute;vertical-align:baseline;height:40px;padding-left:15px;padding-right:15px;left:65%;text-align:center;" type="submit">Create 
 			         <i class="tiny material-icons right">add</i>
 			        </button>
-			 </form>
-			</div>
-		</div>
-	
-	 
+			 </form>	
         </div>
       </div>
-    </div>
-            
+    </div> 
+  </div>       
     <br>
     <br>
     <br>
     <br>
-    <br>
-    <br>
-
-
     {{#each lists}}
    	 {{> task_list}}
     {{/each}}
-
-
 
 </div>
 </template>

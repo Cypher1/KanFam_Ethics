@@ -25,26 +25,14 @@ Template.all_lists.helpers({
         let filter = {};
         return TaskList.find();
     }, 
-    tn(){ //just to see collection in console
-  
-        let user = Meteor.users.findOne(this.userId);
-        console.log("in tn");
-        var findCollection = TaskList.find().fetch();
-        console.log(findCollection);
-    },
 });
 
 Template.all_lists.events({
 
   'submit .new-list'(event) { 
 
-      // Prevent default browser form submit
-      event.preventDefault();
-        
-      console.log("in submit .new-list");
-       
+      event.preventDefault();       
       const listName = event.target.text.value;
-
       Meteor.call('task_list.insert',listName);
       event.target.text.value = '';
 
@@ -62,7 +50,7 @@ Template.all_lists.events({
 
            var id = this._id;
            var lName = this.listName;
-         // console.log(id);
+      //creates confimation alert
       swal({
         html:true,
         title: "<h5>Delete Confirmation<h5>",
@@ -74,8 +62,7 @@ Template.all_lists.events({
         closeOnConfirm: true,
         closeOnCancel: true,
      },
-     function(isConfirm){
-        console.log(id);
+     function(isConfirm){ //if user clicked yes
         if(isConfirm){
           //Delete list
           Meteor.call('task_list.remove', id);
@@ -83,8 +70,6 @@ Template.all_lists.events({
           Meteor.call('tasks.deleteWithList',id);
         }
      });
-    
-
   }
 
 });
