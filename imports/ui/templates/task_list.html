@@ -1,41 +1,39 @@
 <template name="task_list">
-  <body>
-    <div class="container">
-      <ul>
-        <div class="row">
-          <div class="col s12 m6">
-            <div class="card blue-grey">
-              <div class="card-content white-text text-grey lighten-2">
-
-
-                <span style="font-size:18px;">List Name ({{tasksCount}})</span>
-                <a class='dropdown-button align right white-text ' data-activates='dropdown1'><i class="tiny material-icons align right">view_headline</i></a>
-
-
-                <ul id='dropdown1' class='dropdown-content'>
-                  <label class="hide-completed" style="font-size:14px;"><li class="teal-text text-lighten-1" style="padding-top:10%;padding-left:6.2%;padding-right:2.5%;"><input type="checkbox"/>Hide Complete    </li></label>
+  <div class="row">
+    <div class="col s14 m7">
+      <div class="card grey lighten-5 z-depth-1">
+        <div class="card-content blue-grey-text text-darken-3 no-padding">
+          <form class="setListName">
+            <div class="row">
+              <div class="col s10">
+                <div class="col">
+                  <strong><input class="grey-text text-darken-2" name="text" type="text" placeholder="click to enter list title" style="border: none;" required oninvalid="this.setCustomValidity('Please enter a list name')" oninput="setCustomValidity('')" value="{{listName}}"/></strong> <!--  ({{tasksCount}}) -->
+                </div>
+              </div>
+              <div class="col s1 right">
+                <a class='dropdown-button align right blue-grey-text lighten-5' data-activates='{{this._id}}'><i class="small material-icons align right">arrow_drop_down</i></a>
+                <ul id='{{this._id}}' class='dropdown-content'>
+                  <label class="hide-completed center"><li class="cyan-text text-darken-3"><input type="checkbox"/>Hide Complete</li></label>
                   <li class="divider"></li>
-                  <li><a style="font-size:15px;" href="#!">Delete List</a></li>
+                  <label class="delete-list center"><li class="cyan-text text-darken-3"><input type="checkbox"/>Delete List</li></label>
                   <li class="divider"></li>
                 </ul>
-
-                <p>
-                {{#if currentUser}}
-                <form class="new-task">
-                  <input type="text" name="text" placeholder="Type to add new tasks" />
-                </form>
-                {{/if}}
-                {{#each tasks}}
-                {{> task}}
-                {{/each}}
-                </p>
-
               </div>
             </div>
-          </div>
-        </div>
-      </ul>
-    </div>
-  </body>
+          </form>
+          <ul>
+            {{#if currentUser}}
+            <form class="new-task">
+              <input type="text" name="text" class="no-margin" placeholder="Type to add new tasks" required oninvalid="this.setCustomValidity('Please enter a task name')" oninput="setCustomValidity('')"/>
+            </form>
+            {{/if}}
 
+            {{#each tasks}}
+            {{>task}}
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
