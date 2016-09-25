@@ -6,4 +6,7 @@ import './group.js';
 import './all_lists.js';
 import './login_signup.html';
 import './login_signup.js';
-
+import './mysocial.html';
+import './mysocial.js';
+import './myOauth.html';
+import './myOauth.js';
