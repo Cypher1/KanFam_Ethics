@@ -2,14 +2,17 @@
   <ul class="collapsible grey lighten-5 z-depth-0 no-margin" data-collapsible="accordion">
     <li>
       <div class="collapsible-header grey lighten-5 grey-text text-darken-3">
-        <div>
-          <form class="edit-task" id="eTask">
-            <div class="row no-margin">
-              <div class="col s8">
+           <div class="row no-margin">
+            <form class="edit-task" id="eTask">
+              <span class="col s8">
                 <input class="grey-text text-darken-2" required oninvalid="this.setCustomValidity('Please enter a task name')" oninput="setCustomValidity('')" style="border: none" name="text" type="text" value="{{text}}"/>
-              </div>
-              <span class="col s3 right">
+                 </span> 
+
+             </form>
+    
+             <span class="col s3 right"> 
                 <div class="delete right grey-text text-lighten-2">&times;</div>
+              <span class="col s3 right">  
                 <div><i class="right tiny material-icons right
                 {{#if todoLabel}}deep-orange-text text-darken-2
                 {{else}}
@@ -26,9 +29,8 @@
                 {{/if}}
                 {{/if}}" style="margin-right: 1vw; margin-left: -1vw;">label</i></div>
               </span>
+            </span>
             </div>
-          </form>
-        </div>
       </div>
       <div class="collapsible-body grey lighten-5 black-text">
         <p>
