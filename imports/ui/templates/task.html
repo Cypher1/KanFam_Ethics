@@ -1,18 +1,19 @@
 <template name="task">
-  <ul class="collapsible grey lighten-5 z-depth-0 no-margin" data-collapsible="accordion">
+<ul class="collapsible grey lighten-5 no-margin z-depth-0" data-collapsible="accordion" style="border-left:none;border-right:none;">
     <li>
-      <div class="collapsible-header grey lighten-5 grey-text text-darken-3">
-           <div class="row no-margin">
+      <div class="collapsible-header grey lighten-5 grey-text text-darken-3 no-margin z-depth-0 " style="border:none;">
+          <div class="row no-margin no-padding">
             <form class="edit-task" id="eTask">
-              <span class="col s8">
-                <input class="grey-text text-darken-2" required oninvalid="this.setCustomValidity('Please enter a task name')" oninput="setCustomValidity('')" style="border: none" name="text" type="text" value="{{text}}"/>
-                 </span> 
-
+             <span class="col s6 no-margin no-padding" style="padding-left:5px;">
+                <div class="row" style="height:20px;">
+                <input class="grey-text" required oninvalid="this.setCustomValidity('Please enter a task name')" oninput="setCustomValidity('')" style="border: none; font-size:13px; padding-left:3px;" name="text" type="text" value="{{text}}"/>
+                </div>
+            </span>  
              </form>
-    
-             <span class="col s3 right"> 
-                <div class="delete right grey-text text-lighten-2">&times;</div>
-              <span class="col s3 right">  
+             <span class="col s2 right no-padding" style="width:2px;"> 
+                <div class="delete right grey-text text-lighten-2 no-padding">&times;</div>
+             </span>
+              <span class="col s2 right" style="padding-left:10px;">  
                 <div><i class="right tiny material-icons right
                 {{#if todoLabel}}deep-orange-text text-darken-2
                 {{else}}
@@ -27,15 +28,14 @@
                 {{/if}}
                 {{/if}}
                 {{/if}}
-                {{/if}}" style="margin-right: 1vw; margin-left: -1vw;">label</i></div>
-              </span>
+                {{/if}}">label</i></div>
             </span>
-            </div>
+          </div>
       </div>
       <div class="collapsible-body grey lighten-5 black-text">
         <p>
         <br>
-        <div class="card-panel">
+        <div class="card-panel" style="overflow-x:auto;">
           <form class="new-note" id="tNotes">
             <textarea class="materialize-textarea grey-text text-darken-2" name="text" value="{{taskNotes}}" placeholder="  add notes..."></textarea>
             <button class="btn waves-effect waves-light cyan darken-2" type="submit" name="action">
@@ -45,6 +45,7 @@
           </form>
         </div>
         <br>
+        <div class="responsive-table"  style="white-space:normal;overflow-x:auto;">
         <table>
           <tr>
             <td>Todo</td>
@@ -67,15 +68,14 @@
             </td>
           </tr>
         </table>
+      </div>
         <br>
         <br>
-
         <form class="due_date">
           <input type="date" id="dd" class="datepicker" placeholder="Due date..." value="{{dueDate}}"/>
         </form>
         </p>
       </div>
     </li>
-  </ul>
-
+</ul>
 </template>

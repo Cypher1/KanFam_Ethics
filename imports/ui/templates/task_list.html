@@ -1,15 +1,15 @@
 <template name="task_list">
-  <div class="row">
-    <div class="col s14 m7">
-      <div class="card grey lighten-5 z-depth-1">
+  <div class="row valign-wrapper">
+    <div class="col s8 offset-s2 valign">
+      <div class="card grey lighten-5">
         <div class="card-content blue-grey-text text-darken-3 no-padding">
           <form class="setListName">
             <div class="row">
-              <div class="col s10">
-                <div class="col">
-                  <strong><input class="grey-text text-darken-2" name="text" type="text" placeholder="click to enter list title" style="border: none;" required oninvalid="this.setCustomValidity('Please enter a list name')" oninput="setCustomValidity('')" value="{{listName}}"/></strong> <!--  ({{tasksCount}}) -->
+              <div class="col s8">
+               <div class="col"> 
+                  <input class="grey-text text-darken-2" name="text" type="text" placeholder="click to enter list title" style="border: none;" required oninvalid="this.setCustomValidity('Please enter a list name')" oninput="setCustomValidity('')" value="{{listName}}"/> <!--  ({{tasksCount}}) -->
                 </div>
-              </div>
+             </div> 
               <div class="col s1 right">
                 <a class='dropdown-button align right blue-grey-text lighten-5' data-activates='{{this._id}}'><i class="small material-icons align right">arrow_drop_down</i></a>
                 <ul id='{{this._id}}' class='dropdown-content'>
@@ -22,11 +22,13 @@
             </div>
           </form>
           <ul>
+
             {{#if currentUser}}
             <form class="new-task">
-              <input type="text" name="text" class="no-margin" placeholder="Type to add new tasks" required oninvalid="this.setCustomValidity('Please enter a task name')" style="padding-left:3px;" oninput="setCustomValidity('')"/>
+              <input type="text" name="text" class="no-margin" placeholder="Type to add new tasks" required oninvalid="this.setCustomValidity('Please enter a task name')" style="padding-left:7px;border:none;" oninput="setCustomValidity('')"/>
             </form>
             {{/if}}
+
 
             {{#each tasks}}
             {{>task}}
