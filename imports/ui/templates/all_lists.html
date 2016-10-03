@@ -1,21 +1,21 @@
 <template name="all_lists">
   <div>
-    <div class="row valign-wrapper"  >
+    <div class="row valign-wrapper"> 
       <div class="col s8 offset-s2 valign">
-       <div class="row" style= "">
-        <div class="card grey lighten-4" style="overflow-x:auto;">
+       <div class="row truncate">
+        <div class="card grey lighten-4" style="overflow-x:scroll;">
           <div class="card-content black-text" style="padding-bottom:1px;">
              <div class="row">
-              <div class="col s8">
               <form class="new-list">
+               <div class="col s8">
               <input id="newList" name="text" type="text" placeholder="Create new list" required oninvalid="this.setCustomValidity('Please enter a list name')" oninput="setCustomValidity('')"/>
-               </form>
               </div>
-              <div class="col s4 right" style="margin-top:20px;">
+              <div class="col s4" style="margin-top:20px;">
               <button class="btn waves-effect waves-light cyan darken-2" type="submit">Create
                 <i class="tiny material-icons right">add</i>
               </button>
-            </div>
+              </div>
+              </form>
           </div>
            </div>
           </div>
@@ -23,10 +23,8 @@
       </div>
     </div>
     <br>
-    <br>
     {{#each lists}}
     {{> task_list}}
     {{/each}}
-
   </div>
 </template>
