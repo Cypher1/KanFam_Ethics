@@ -81,6 +81,7 @@ Meteor.methods({
     },
     'tasks.setDueDate'(taskId,dueDate) {
 
+        dueDate = dueDate.toISOString().slice(0,10);
         console.log("in setDueDate");
         console.log(dueDate);
         console.log(taskId);
