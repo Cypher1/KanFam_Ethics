@@ -50,6 +50,9 @@ Template.task_list.helpers({
     tasksCount() {
         return Tasks.find({parent: this._id}).count();
     }, 
+    isOwner() {
+        return this.owner === Meteor.userId();
+    },
 });
 
 

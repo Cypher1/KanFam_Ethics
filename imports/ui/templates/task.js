@@ -7,9 +7,6 @@ import './task.html';
 
 
 Template.task.helpers({
-    isOwner() {
-        return this.owner === Meteor.userId();
-    },
     todo(){
       if(this.progress >= 1){
         return true;
@@ -58,13 +55,12 @@ Template.task.onRendered(function(){
        // A setting that changes the collapsible behavior to expandable instead of the default accordion style
     });
       $('.datepicker').pickadate({
-       // selectMonths: true, // Creates a dropdown to control month
-       // selectYears: 15,// Creates a dropdown of 15 years to control year
-       // closeOnSelect: true,
-       format: 'yyyy-mm-dd',
-       formatSubmit: 'yyyy-mm-dd',
-      hiddenName: true,
-       container: 'body',
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 15,// Creates a dropdown of 15 years to control year
+        format: 'yyyy-mm-dd',
+        formatSubmit: 'yyyy-mm-dd',
+        hiddenName: true,
+        container: 'body',
  });
 
       
@@ -131,21 +127,9 @@ Template.task.events({
     'submit .due-date'(event){
 
       event.preventDefault();
-      console.log("in due date ui");
-      
-      //var input = $('.datepicker').datepicker("getDate");
-    //  var picker = $input.pickadate('picker');
-     // const d = event.target.text.value;
-     const temp = document.getElementById(this._id).value;
-     dueDate = new Date(temp);
-     //dateFormat(dueDate,"yyyy,mm,dd");
-    // da = d.value;
-    // const finalDate = dueDate.getMonth()+1 + "/" + dueDate.getDate() + "/" + dueDate.getYear();
-
-      console.log(dueDate);
-      console.log(this._id);
-
-     Meteor.call('tasks.setDueDate',this._id,dueDate);
+      const temp = document.getElementById(this._id).value;
+      dueDate = new Date(temp);
+      Meteor.call('tasks.setDueDate',this._id,dueDate);
     }
 });
 
