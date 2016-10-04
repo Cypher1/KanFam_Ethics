@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
-
 import { Tasks } from '../../api/tasks.js';
 
 import './task.html';
@@ -67,7 +66,6 @@ Template.task.onRendered(function(){
 
 Template.task.events({
 
-
     'click .delete'() {
         Meteor.call('tasks.remove', this._id);
     },
@@ -127,7 +125,10 @@ Template.task.events({
       const dueDate = document.getElementById("dd");
 
       Meteor.call('tasks.setDueDate',this._id,dueDate);
-    }
+    },
+   'click .toggle-priority'() {
+    Meteor.call('tasks.setPriority', this._id, !this.priority);
+  },
 });
 
 
