@@ -101,13 +101,13 @@ Meteor.methods({
         Tasks.update(taskId,{$set:{progress: progress}});
     },
     'tasks.setPriority'(taskId, newPriority) {
-	check(taskId, String);
-	check(newPriority, Boolean);
-	const task = Tasks.findOne(taskId);
-	if (task.private && owner !== this.userId) {
-	    throw new Meteor.Error('not-authorized');
-	}
-	Tasks.update(taskId,{$set:{priority:newPriority}});
+    	check(taskId, String);
+    	check(newPriority, Boolean);
+    	const task = Tasks.findOne(taskId);
+    	if (task.private && owner !== this.userId) {
+    	    throw new Meteor.Error('not-authorized');
+    	}
+    	Tasks.update(taskId,{$set:{priority:newPriority}});
   },
     
 });

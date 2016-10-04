@@ -46,11 +46,6 @@ Template.task.helpers({
         return true;
       }
     },
-    important(){
-      if(this.important == true){
-        return true;
-      }
-    }
 });
 
 
@@ -65,9 +60,7 @@ Template.task.onRendered(function(){
         formatSubmit: 'yyyy-mm-dd',
         hiddenName: true,
         container: 'body',
- });
-
-      
+ });   
 });
 
 
