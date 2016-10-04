@@ -38,8 +38,11 @@ Template.task_list.helpers({
 
         if (instance.state.get('hideCompleted')) {    
             // If hide completed is checked, filter tasks
-            filter.progress =  {$ne: 4};
+            filter.progress = {$ne: 4};
             return Tasks.find({parent: this._id, progress: {$ne : 4}},{sort:{createdAt:-1}});
+        } else if (instance.state.get('showOnlyPriority')) {    
+            // If show only priority is checked, filter tasks
+            return Tasks.find({parent: this._id, priority: true},{sort:{createdAt:-1}});
         }
         // sort by date newest first
         return Tasks.find({parent: this._id},{sort:{createdAt:-1}})
@@ -67,12 +70,17 @@ Template.task_list.events({
 
     // Clear form
     target.text.value = '';
-  },
-   
- 'change .hide-completed input'(event, instance) {
-      instance.state.set('hideCompleted', event.target.checked);
+    },
 
-  },'submit .edit-task'(event){
+    'change .hide-completed input'(event, instance) {
+      instance.state.set('hideCompleted', event.target.checked);
+    },
+    
+     'change .show-only-priority input'(event, instance) {
+      instance.state.set('showOnlyPriority', event.target.checked);
+
+ },
+    'submit .edit-task'(event){
        // Prevent default browser form submit
       event.preventDefault();
 
