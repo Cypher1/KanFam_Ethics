@@ -43,7 +43,7 @@ Meteor.methods({
             taskNotes: "",
             parent: task_list_id,
             progress: 1,
-            important: false,
+            priority: false,
         });
     },
     'tasks.remove'(taskId) {
@@ -100,12 +100,14 @@ Meteor.methods({
         }
         Tasks.update(taskId,{$set:{progress: progress}});
     },
-    'tasks.setImportant'(taskId,important) {
-        check(taskId,String);
-        const task = Tasks.findOne(taskId);
-        if (task.private && task.owner !== this.userId) {
-            throw new Meteor.Error('not-authorized');
-        }
-        Tasks.update(taskId,{$set:{important: important}});
-    },
+    'tasks.setPriority'(taskId, newPriority) {
+	check(taskId, String);
+	check(newPriority, Boolean);
+	const task = Tasks.findOne(taskId);
+	if (task.private && owner !== this.userId) {
+	    throw new Meteor.Error('not-authorized');
+	}
+	Tasks.update(taskId,{$set:{priority:newPriority}});
+  },
+    
 });

@@ -1,6 +1,6 @@
 <template name="task">
 <ul class="collapsible grey lighten-5 no-margin z-depth-0" data-collapsible="accordion" style="border-left:none;border-right:none;">
-    <li>
+  <li>
       <div class="collapsible-header grey lighten-5 grey-text text-darken-3 no-margin z-depth-0 " style="border:none;">
           <div class="row no-margin no-padding">
             <form class="edit-task" id="eTask">
@@ -13,6 +13,8 @@
              <span class="col s2 right no-padding" style="width:2px;"> 
                 <div class="delete right grey-text text-lighten-2 no-padding">&times;</div>
              </span>
+     
+            <!-- This is the colored icon to show progress-->
               <span class="col s2 right" style="padding-left:0px;">  
                 <div><i class="right tiny material-icons
                 {{#if todoLabel}}deep-orange-text text-darken-2
@@ -31,15 +33,20 @@
                 {{/if}}">label</i></div>
             </span>
             <span class="col s2 right no-padding" style="padding-left:10px;">
-               <form class="set-important"><button class="btn waves-effect waves-light grey lighten-3 z-depth-0"  >
+               <form class="toggle-priority"><button class="btn waves-effect waves-light grey lighten-3 z-depth-0"  >
                <i class="right tiny material-icons {{#if important}}red-text text-accent-4{{else}}grey-text text-lighten-2{{/if}}">star</i></button>
                 </form>
             </span>
           </div>
-      </div>
+	  </div>
+
+
+<!-- This is the collapsible section of a task -->	  
       <div class="collapsible-body grey lighten-5 black-text">
         <p>
-        <br>
+	<br>
+
+	<!-- This is the "add notes" text area -->
         <div class="card-panel" style="overflow-x:auto;">
           <form class="new-note" id="tNotes">
             <textarea class="materialize-textarea grey-text text-darken-2" name="text" value="{{taskNotes}}" placeholder="  add notes..."></textarea>
@@ -50,7 +57,9 @@
           </form>
         </div>
         <br>
-        <div class="responsive-table"  style="white-space:normal;overflow-x:auto;">
+
+	<!-- This table is for the progress buttons -->
+	<div class="responsive-table"  style="white-space:normal;overflow-x:auto;">
         <table>
           <tr>
             <td>Todo</td>
@@ -74,12 +83,26 @@
           </tr>
         </table>
       </div>
+
         <br>
         <br>
         <form class="due-date">
           <input type="date" name="text" id="{{_id}}" class="datepicker" placeholder="Due date..." value="{{dueDate}}"/>
           <button class="btn waves-effect waves-light cyan darken-2" type="submit" name="action">set</button>
-        </form>
+      <br>
+      <br>
+
+      <!-- This is the button to toggle an item as priority -->
+      <button class="toggle-priority">
+        {{#if priority}}
+          Priority
+         {{else}}
+          Not Priority
+        {{/if}}
+      </button>
+      <br>
+      <br>
+      
         </p>
       </div>
     </li>
