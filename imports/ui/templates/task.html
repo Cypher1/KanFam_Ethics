@@ -71,8 +71,9 @@
       </div>
         <br>
         <br>
-        <form class="due_date">
-          <input type="date" id="dd" class="datepicker" placeholder="Due date..." value="{{dueDate}}"/>
+        <form class="due-date" id="{{_id}}" >
+          <input type="date" id="{{_id}}" class="datepicker" placeholder="Due date..." value="{{dueDate}}"/>
+          <button class="btn waves-effect waves-light cyan darken-2" type="submit" name="action">set</button>
         </form>
         </p>
       </div>

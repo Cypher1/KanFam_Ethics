@@ -73,7 +73,6 @@ Meteor.methods({
             /* If the task is private, make sure only the owner can add notes it */
             throw new Meteor.Error('not-authorized');
         }
-        console.log(taskId);
         Tasks.update(taskId,{$set: { text: edit} });
     },
     'tasks.deleteWithList'(listId) { /* Removes all the tasks in a list */
@@ -81,9 +80,14 @@ Meteor.methods({
         Tasks.remove({parent: listId});
     },
     'tasks.setDueDate'(taskId,dueDate) {
+
+        console.log("in setDueDate");
+        console.log(dueDate);
+        console.log(taskId);
         /* still working on this */
         check(taskId,String);
-
+       
+        const task=Tasks.findOne(taskId);
         if (task.private && task.owner !== this.userId) {
             /* If the task is private, make sure only the owner can delete it */
             throw new Meteor.Error('not-authorized');
