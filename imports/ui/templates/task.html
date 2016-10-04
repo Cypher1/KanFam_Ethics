@@ -13,8 +13,8 @@
              <span class="col s2 right no-padding" style="width:2px;"> 
                 <div class="delete right grey-text text-lighten-2 no-padding">&times;</div>
              </span>
-              <span class="col s2 right" style="padding-left:10px;">  
-                <div><i class="right tiny material-icons right
+              <span class="col s2 right" style="padding-left:0px;">  
+                <div><i class="right tiny material-icons
                 {{#if todoLabel}}deep-orange-text text-darken-2
                 {{else}}
                 {{#if doingLabel}}
@@ -29,6 +29,11 @@
                 {{/if}}
                 {{/if}}
                 {{/if}}">label</i></div>
+            </span>
+            <span class="col s2 right no-padding" style="padding-left:10px;">
+               <form class="set-important"><button class="btn waves-effect waves-light grey lighten-3 z-depth-0"  >
+               <i class="right tiny material-icons {{#if important}}red-text text-accent-4{{else}}grey-text text-lighten-2{{/if}}">star</i></button>
+                </form>
             </span>
           </div>
       </div>

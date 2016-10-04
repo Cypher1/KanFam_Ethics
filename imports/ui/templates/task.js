@@ -47,6 +47,11 @@ Template.task.helpers({
         return true;
       }
     },
+    important(){
+      if(this.important == true){
+        return true;
+      }
+    }
 });
 
 
@@ -130,6 +135,12 @@ Template.task.events({
       const temp = document.getElementById(this._id).value;
       dueDate = new Date(temp);
       Meteor.call('tasks.setDueDate',this._id,dueDate);
+    },
+    'click .set-important'(){
+
+      event.preventDefault();
+      Meteor.call('tasks.setImportant',this._id,!this.important);
+
     }
 });
 
