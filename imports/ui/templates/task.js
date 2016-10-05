@@ -57,8 +57,6 @@ Template.task.helpers({
         container: 'body',
     });
 
-
-
 Template.task.onRendered(function(){
     $('.dropdown-task').dropdown({
         inDuration: 300,
@@ -83,9 +81,7 @@ Template.task.onRendered(function(){
 
 });
 
-
 Template.task.events({
-
 
   'click .delete'() {
 
