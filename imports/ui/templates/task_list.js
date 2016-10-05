@@ -45,10 +45,6 @@ Template.task_list.helpers({
             // If show only priority is checked, filter tasks
             filter.priority = true;
         }
-        //shows all archived tasks
-        if (instance.state.get('archiveTask')){
-            filter.archive = false;
-        }
         return Tasks.find(filter, sortOrder);
     },
     incompleteTasksCount() {
@@ -85,11 +81,6 @@ Template.task_list.events({
 
     'change .show-only-priority input'(event, instance) {
         instance.state.set('showOnlyPriority', event.target.checked);
-
-    },
-    'change .archive-task input'(event,instance){
-        instance.state.set('archiveTask', event.target.checked);
-        Meteor.call('task_list.showArchives',this._id, !this.showArchives);
     },
     'submit .edit-task'(event){
         // Prevent default browser form submit
@@ -104,4 +95,8 @@ Template.task_list.events({
         Meteor.call('tasks.editTask', this._id, edit);
 
     },
+    'click .show-archives'(event){
+        console.log("in show-archives");
+       Meteor.call('task_list.showArchives',this._id,!this.showArchives);
+    }
 });

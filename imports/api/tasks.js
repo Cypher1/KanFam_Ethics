@@ -111,18 +111,12 @@ Meteor.methods({
     	Tasks.update(taskId,{$set:{priority:newPriority}});
   },
   'tasks.setArchive'(taskId,newArchive){
-        
-        console.log(newArchive);
-
       check(taskId, String);
       check(newArchive, Boolean);
-      const task = Tasks.findOne(taskId);
-        
+      const task = Tasks.findOne(taskId);      
       if (task.private && owner !== this.userId) {
             throw new Meteor.Error('not-authorized');
     }
     Tasks.update(taskId,{$set:{archive:newArchive}});
-
-  }
-    
+  }   
 });

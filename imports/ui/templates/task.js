@@ -87,67 +87,80 @@ Template.task.onRendered(function(){
 Template.task.events({
 
 
-    'click .delete'() {
-        Meteor.call('tasks.remove', this._id);
-    },
-    'submit .new-note'(event) { 
-      // Prevent default browser form submit
-      event.preventDefault();
-      console.log("in new note");
-      console.log(this._id);
+  'click .delete'() {
 
-      // Get value from form element
-      const note = event.target.text.value;
-      // Insert a task into the collection
-      Meteor.call('tasks.addNote', this._id, note);
-    },
-    'click .toggle-doing'(){
+      var id = this._id;
+       //creates confimation alert
+      swal({
+        html:true,
+        title: "<h5>Delete Confirmation<h5>",
+        text: "Are you sure you want to delete this task?",
+        confirmButtonColor: '#0097a7',
+        confirmButtonText: 'Yes',
+        showCancelButton: true,
+        cancelButtonText: "No",
+        closeOnConfirm: true,
+        closeOnCancel: true,
+     },
+     function(isConfirm){ //if user clicked yes
+        if(isConfirm){
+           Meteor.call('tasks.remove', id);
+        }
+     });
 
-      if(this.progress == 1){
-        this.progress++;
-      }else if(this.progress == 2){
-        this.progress--;
-      }
-       Meteor.call('tasks.setProgress',this._id, this.progress);
-    },
-    'click .toggle-checking'(){
+  },
+  'submit .new-note'(event) { 
+    // Prevent default browser form submit
+    event.preventDefault();
+    console.log("in new note");
+    console.log(this._id);
 
-      if(this.progress == 2){
-        this.progress++;
-      }else if(this.progress == 3){
-        this.progress--;
-      }
-       Meteor.call('tasks.setProgress',this._id, this.progress);
-      
-    },
-    'click .toggle-done'(){
+    // Get value from form element
+    const note = event.target.text.value;
+    // Insert a task into the collection
+    Meteor.call('tasks.addNote', this._id, note);
+  },
+  'click .toggle-doing'(){
 
-      if(this.progress == 3){
-        this.progress++;
-      }else if(this.progress == 4){
-        this.progress--;
-      }
-        Meteor.call('tasks.setProgress',this._id, this.progress);
-    },
-    'submit .edit-task'(event){
-       // Prevent default browser form submit
-      event.preventDefault();
+    if(this.progress == 1){
+      this.progress++;
+    }else if(this.progress == 2){
+      this.progress--;
+    }
+     Meteor.call('tasks.setProgress',this._id, this.progress);
+  },
+  'click .toggle-checking'(){
 
-      // Get value from form element
-      const target = event.target;
-      const edit = target.text.value;
-       target.text.value = edit;
+    if(this.progress == 2){
+      this.progress++;
+    }else if(this.progress == 3){
+      this.progress--;
+    }
+     Meteor.call('tasks.setProgress',this._id, this.progress);
+    
+  },
+  'click .toggle-done'(){
 
-      // Insert a task into the collection
-      Meteor.call('tasks.editTask', this._id, edit);
-    },
-    'submit .due-date'(event){
+    if(this.progress == 3){
+      this.progress++;
+    }else if(this.progress == 4){
+      this.progress--;
+    }
+      Meteor.call('tasks.setProgress',this._id, this.progress);
+  },
+  'submit .edit-task'(event){
+    event.preventDefault();
+    const edit = event.target.text.value;
+    target.text.value = edit;
+    Meteor.call('tasks.editTask', this._id, edit);
+  },
+  'submit .due-date'(event){
 
-      event.preventDefault();
-      const temp = document.getElementById(this._id).value;
-      dueDate = new Date(temp);
-      Meteor.call('tasks.setDueDate',this._id,dueDate);
-    },
+    event.preventDefault();
+    const temp = document.getElementById(this._id).value;
+    dueDate = new Date(temp);
+    Meteor.call('tasks.setDueDate',this._id,dueDate);
+  },
    'click .toggle-priority'() {
     Meteor.call('tasks.setPriority', this._id, !this.priority);
   },

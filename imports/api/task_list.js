@@ -39,7 +39,6 @@ Meteor.methods({
             owner: this.userId,
             username: identifier,
             showArchives: false,
-
         });
 
     },
@@ -65,9 +64,6 @@ Meteor.methods({
         TaskList.remove(listId);
     },
     'task_list.showArchives'(listId, showing){
-     
-        console.log("in showArchives");
-        console.log(showing);
         check(listId,String);
         check(showing,Boolean);
         const list = TaskList.findOne(listId);
