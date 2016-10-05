@@ -16,7 +16,11 @@
              <!-- This is the button to toggle an item as priority -->
              <div class="right" style="margin-right:45px;">
             <span class="col s1 no-padd" style="width:0px;margin-right:30px;">
-             <i class="toggle-priority center tiny material-icons {{#if priority}}yellow-text text-darken-2{{else}}grey-text text-lighten-2{{/if}}">star</i>
+              {{#if priority}}   
+               <i class="toggle-priority center tiny material-icons yellow-text text-darken-2">star</i>
+               {{else}}
+                <i class="toggle-priority center tiny material-icons grey-text text-lighten-1">star_border</i>
+              {{/if}}
             </span>
             <!-- This is the colored icon to show progress-->
               <span class="col s1 no-padd" style="width:0px;">  
