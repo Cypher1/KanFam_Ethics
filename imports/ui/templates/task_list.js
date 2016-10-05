@@ -96,7 +96,6 @@ Template.task_list.events({
 
     },
     'click .show-archives'(event){
-        console.log("in show-archives");
        Meteor.call('task_list.showArchives',this._id,!this.showArchives);
-    }
+    },
 });

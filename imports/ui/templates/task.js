@@ -48,15 +48,7 @@ Template.task.helpers({
       }
     },
 });
-    $('.datepicker').pickadate({
-        selectMonths: true, // Creates a dropdown to control month
-        selectYears: 15,// Creates a dropdown of 15 years to control year
-        format: 'yyyy-mm-dd',
-        formatSubmit: 'yyyy-mm-dd',
-        hiddenName: true,
-        container: 'body',
-    });
-
+  
 Template.task.onRendered(function(){
     $('.dropdown-task').dropdown({
         inDuration: 300,
@@ -69,8 +61,7 @@ Template.task.onRendered(function(){
     $('.collapsible').collapsible({
        // A setting that changes the collapsible behavior to expandable instead of the default accordion style
     });
-    
-    $('.datepicker').pickadate({
+      $('.datepicker').pickadate({
         selectMonths: true, // Creates a dropdown to control month
         selectYears: 15,// Creates a dropdown of 15 years to control year
         format: 'yyyy-mm-dd',
@@ -78,8 +69,9 @@ Template.task.onRendered(function(){
         hiddenName: true,
         container: 'body',
     });
-
 });
+
+
 
 Template.task.events({
 
@@ -108,9 +100,6 @@ Template.task.events({
   'submit .new-note'(event) { 
     // Prevent default browser form submit
     event.preventDefault();
-    console.log("in new note");
-    console.log(this._id);
-
     // Get value from form element
     const note = event.target.text.value;
     // Insert a task into the collection

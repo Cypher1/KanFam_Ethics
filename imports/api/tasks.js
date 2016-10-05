@@ -45,6 +45,7 @@ Meteor.methods({
             progress: 1,
             priority: false,
             archive: false,
+
         });
     },
     'tasks.remove'(taskId) {

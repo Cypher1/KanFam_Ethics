@@ -1,7 +1,7 @@
 <template name="task_list">
  {{#if isOwner}}
-  <div class="row valign-wrapper" style="max-width:80%;">
-    <div class="col s8 offset-s4 valign">
+  <div class="row valign-wrapper">
+    <div class="col s8 offset-s2 valign">
       <div class="card grey lighten-5">
         <div class="card-content blue-grey-text text-darken-3 no-padding">
           <form class="setListName">
@@ -23,8 +23,7 @@
               </div>
             </div>
           </form>
-          <ul>
-              
+          <ul>              
             {{#if showArchives}}
                   <h6 style="padding-left:5px;">Archived Tasks</h6>
               {{#each tasks}}
@@ -44,7 +43,6 @@
 
             {{/if}}
      
-
           </ul>
         </div>
       </div>
