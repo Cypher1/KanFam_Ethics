@@ -6,9 +6,6 @@ import './task.html';
 
 
 Template.task.helpers({
-    isOwner() {
-        return this.owner === Meteor.userId();
-    },
     todo(){
       if(this.progress >= 1){
         return true;
@@ -51,20 +48,26 @@ Template.task.helpers({
     },
 });
 
+
 Template.task.onRendered(function(){
     $('.collapsible').collapsible({
        // A setting that changes the collapsible behavior to expandable instead of the default accordion style
     });
-    $('.datepicker').pickadate({
-    selectMonths: true, // Creates a dropdown to control month
-    selectYears: 15,// Creates a dropdown of 15 years to control year
-    autoclose: true,
-  });
-      
+      $('.datepicker').pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 15,// Creates a dropdown of 15 years to control year
+        format: 'yyyy-mm-dd',
+        formatSubmit: 'yyyy-mm-dd',
+        hiddenName: true,
+        container: 'body',
+ });   
 });
 
 
+
+
 Template.task.events({
+
 
     'click .delete'() {
         Meteor.call('tasks.remove', this._id);
@@ -72,10 +75,11 @@ Template.task.events({
     'submit .new-note'(event) { 
       // Prevent default browser form submit
       event.preventDefault();
+      console.log("in new note");
+      console.log(this._id);
 
       // Get value from form element
       const note = event.target.text.value;
-
       // Insert a task into the collection
       Meteor.call('tasks.addNote', this._id, note);
     },
@@ -119,11 +123,11 @@ Template.task.events({
       // Insert a task into the collection
       Meteor.call('tasks.editTask', this._id, edit);
     },
-    'selectOnClose .due-date'(event){
+    'submit .due-date'(event){
 
       event.preventDefault();
-      const dueDate = document.getElementById("dd");
-
+      const temp = document.getElementById(this._id).value;
+      dueDate = new Date(temp);
       Meteor.call('tasks.setDueDate',this._id,dueDate);
     },
    'click .toggle-priority'() {

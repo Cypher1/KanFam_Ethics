@@ -1,4 +1,5 @@
 <template name="task_list">
+ {{#if isOwner}}
   <div class="row valign-wrapper">
     <div class="col s8 offset-s2 valign">
       <div class="card grey lighten-5">
@@ -24,13 +25,10 @@
             </div>
           </form>
           <ul>
-
-            {{#if currentUser}}
+   
             <form class="new-task">
               <input type="text" name="text" class="no-margin" placeholder="Type to add new tasks" required oninvalid="this.setCustomValidity('Please enter a task name')" style="padding-left:7px;border:none;" oninput="setCustomValidity('')"/>
             </form>
-            {{/if}}
-
 
             {{#each tasks}}
             {{>task}}
@@ -40,4 +38,5 @@
       </div>
     </div>
   </div>
+{{/if}}
 </template>

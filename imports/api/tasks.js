@@ -43,7 +43,7 @@ Meteor.methods({
             taskNotes: "",
             parent: task_list_id,
             progress: 1,
-	    //priority: true,
+            priority: false,
         });
     },
     'tasks.remove'(taskId) {
@@ -74,7 +74,6 @@ Meteor.methods({
             /* If the task is private, make sure only the owner can add notes it */
             throw new Meteor.Error('not-authorized');
         }
-        console.log(taskId);
         Tasks.update(taskId,{$set: { text: edit} });
     },
     'tasks.deleteWithList'(listId) { /* Removes all the tasks in a list */
@@ -82,9 +81,11 @@ Meteor.methods({
         Tasks.remove({parent: listId});
     },
     'tasks.setDueDate'(taskId,dueDate) {
-        /* still working on this */
-        check(taskId,String);
 
+        dueDate = dueDate.toISOString().slice(0,10);
+        check(taskId,String);
+       
+        const task=Tasks.findOne(taskId);
         if (task.private && task.owner !== this.userId) {
             /* If the task is private, make sure only the owner can delete it */
             throw new Meteor.Error('not-authorized');
@@ -99,15 +100,14 @@ Meteor.methods({
         }
         Tasks.update(taskId,{$set:{progress: progress}});
     },
-
     'tasks.setPriority'(taskId, newPriority) {
-	check(taskId, String);
-	check(newPriority, Boolean);
-	const task = Tasks.findOne(taskId);
-	if (task.private && owner !== this.userId) {
-	    throw new Meteor.Error('not-authorized');
-	}
-	Tasks.update(taskId,{$set:{priority:newPriority}});
+    	check(taskId, String);
+    	check(newPriority, Boolean);
+    	const task = Tasks.findOne(taskId);
+    	if (task.private && owner !== this.userId) {
+    	    throw new Meteor.Error('not-authorized');
+    	}
+    	Tasks.update(taskId,{$set:{priority:newPriority}});
   },
     
 });
