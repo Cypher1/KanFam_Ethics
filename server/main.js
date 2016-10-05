@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import '../imports/startup/email-config.js';
 
 // Import API js
 import '../imports/api/tasks.js';
