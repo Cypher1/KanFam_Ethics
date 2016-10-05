@@ -1,26 +1,32 @@
 <template name="task">
 <ul class="collapsible grey lighten-5 no-margin z-depth-0" data-collapsible="accordion" style="border-left:none;border-right:none;">
   <li>
-      <div class="collapsible-header grey lighten-5 grey-text text-darken-3 no-margin z-depth-0 " style="border:none;">
+      <div class="collapsible-header grey lighten-5 no-margin no-padd z-depth-0" style="border:none;">
           <div class="row no-margin no-padd">
-            <form class="edit-task" id="eTask">
-             <span class="col s6 no-padd" style="padding-left:5px;">
-               <div class="row" style="height:20px;">
-                <input class="grey-text" required oninvalid="this.setCustomValidity('Please enter a task name')" oninput="setCustomValidity('')" style="border: none; font-size:13px; padding-left:3px;" name="text" type="text" value="{{text}}"/>
-                </div>
-            </span>  
-             </form>
-             <span class="col s3 right no-padd no-margin" style="width:2px;"> 
-                <div class="delete right grey-text text-lighten-2">&times;</div>
-             </span>
-             <!-- This is the button to toggle an item as priority -->
-             <div class="right" style="margin-right:45px;">
-            <span class="col s1 no-padd" style="width:0px;margin-right:30px;">
-             <i class="toggle-priority center tiny material-icons {{#if priority}}yellow-text text-darken-2{{else}}grey-text text-lighten-2{{/if}}">star</i>
-            </span>
-            <!-- This is the colored icon to show progress-->
-              <span class="col s1 no-padd" style="width:0px;">  
-               <i class="tiny material-icons
+            <div class="col s5 no-margin">
+              <form class="edit-task" id="eTask">
+                 <div class="row" style="height:20px;">
+                    {{#if archive}}
+                      <p class="grey-text" style="border: none; font-size:13px; padding-left:3px;">{{text}}</p>
+                    {{else}}
+                       <input class="grey-text text-darken-3" required oninvalid="this.setCustomValidity('Please enter a task name')" oninput="setCustomValidity('')" style="border: none; font-size:13px; padding-left:4px;" name="text" type="text" value="{{text}}"/>
+                    {{/if}}
+                  </div>
+               </form>
+            </div>
+             <div class="col s1 right" style="width:40px;">
+                <!-- This is a dropdown for removing and archiving tasks-->
+                <a class="dropdown-task grey-text lighten-3" style="font-size:6px;" data-activates='1{{_id}}'><i class="tiny material-icons align" style="font-size:14px;">edit</i></a>
+               <ul id='1{{_id}}' class='dropdown-content'>                
+                <label class="center"><li class="toggle-archive center cyan-text text-darken-3">{{#if archive}}Unarchive{{else}}Archive{{/if}}</li></label>
+                <li class="divider"></li>
+                <label class="delete center"><li class="cyan-text text-darken-3"><input type="checkbox"/>Remove</li></label>
+              </ul>
+            </div>
+                <div class="col s1 right" style="width:32px;">
+               <!-- This is the colored icon to show progress-->
+               {{#unless archive}}
+                <i class="tiny material-icons
                 {{#if todoLabel}}deep-orange-text text-darken-2
                 {{else}}
                 {{#if doingLabel}}
@@ -34,19 +40,27 @@
                 {{/if}}
                 {{/if}}
                 {{/if}}
-                {{/if}}">label</i>
-            </span>
-          </div>
-          </div>
-	  </div>
+                {{/if}}" style="font-size:18px;">label</i>
+                {{/unless}}
+            </div>
+            <div class="col s1 no-margin right" style="width:32px;">
+               <!-- This is the button to toggle an item as priority-->
+                {{#unless archive}}
+                {{#if priority}}   
+                 <i class="toggle-priority center tiny material-icons yellow-text text-darken-2" style="font-size:18px;">star</i>
+                 {{else}}
+                  <i class="toggle-priority center tiny material-icons grey-text text-lighten-1" style="font-size:18px;">star_border</i>
+                {{/if}}
+              {{/unless}}
+            </div>
+        </div>
+      </div>
+<!-- This is the collapsible section of a task -->  
 
-
-<!-- This is the collapsible section of a task -->	  
-      <div class="collapsible-body grey lighten-5 black-text">
+<div class="collapsible-body grey lighten-5 black-text" style="{{#if archive}}visibility:collapse;{{/if}}">
         <p>
-	<br>
-
-	<!-- This is the "add notes" text area -->
+  <br>
+  <!-- This is the "add notes" text area -->
         <div class="card-panel" style="overflow-x:auto;">
           <form class="new-note" id="tNotes">
             <textarea class="materialize-textarea grey-text text-darken-2" style="border:none;" name="text" value="{{taskNotes}}" placeholder="  add notes..."></textarea>
@@ -58,8 +72,8 @@
         </div>
         <br>
 
-	<!-- This table is for the progress buttons -->
-	<div class="responsive-table"  style="white-space:normal;overflow-x:auto;">
+  <!-- This table is for the progress buttons -->
+  <div class="responsive-table"  style="white-space:normal;overflow-x:auto;">
         <table>
           <tr>
             <td>Todo</td>
@@ -84,6 +98,7 @@
         </table>
       </div>
         <br>
+
         <form class="due-date">
           <input type="date" name="text" id="{{_id}}" class="datepicker" placeholder="Due date..." value="{{dueDate}}"/>
           <button class="btn waves-effect waves-light cyan darken-2" type="submit" name="action">Set Date</button>
