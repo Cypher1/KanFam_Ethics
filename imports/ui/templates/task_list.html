@@ -8,18 +8,19 @@
             <div class="row">
               <div class="col s8">
                <div class="col"> 
-                  <input class="grey-text text-darken-2" name="text" type="text" placeholder="click to enter list title" style="border: none;" required oninvalid="this.setCustomValidity('Please enter a list name')" oninput="setCustomValidity('')" value="{{listName}}"/> <!--  ({{tasksCount}}) -->
+                  <input class="grey-text text-darken-4" name="text" type="text" placeholder="click to enter list title" style="border: none;" required oninvalid="this.setCustomValidity('Please enter a list name')" oninput="setCustomValidity('')" value="{{listName}}"/> <!--  ({{tasksCount}}) -->
                 </div>
              </div> 
               <div class="col s1 right">
                 <a class='dropdown-button align right blue-grey-text lighten-3' data-activates='{{this._id}}'><i class="small material-icons align right">arrow_drop_down</i></a>
                 <ul id='{{this._id}}' class='dropdown-content'>
                   <label class="hide-completed center"><li class="cyan-text text-darken-3"><input type="checkbox"/>Hide Complete</li></label>
-		  <li class="divider"></li>
-		  <label class="show-only-priority center"><li class="cyan-text text-darken-3"><input type="checkbox"/>Show Only Priority</li></label>
+		           <li class="divider"></li>
+		          <label class="show-only-priority center"><li class="cyan-text text-darken-3"><input type="checkbox"/>Show Only Priority</li></label>
                   <li class="divider"></li>
                   <label class="delete-list center"><li class="cyan-text text-darken-3"><input type="checkbox"/>Delete List</li></label>
                   <li class="divider"></li>
+                  <label class="archive-task center"><li class="cyan-text text-darken-3"><input type="checkbox"/>{{#if showArchives}}Hide Archives{{else}}Show Archives{{/if}}</li></label>
                 </ul>
               </div>
             </div>

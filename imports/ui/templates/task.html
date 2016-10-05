@@ -1,26 +1,38 @@
 <template name="task">
 <ul class="collapsible grey lighten-5 no-margin z-depth-0" data-collapsible="accordion" style="border-left:none;border-right:none;">
-  <li>
-      <div class="collapsible-header grey lighten-5 grey-text text-darken-3 no-margin z-depth-0 " style="border:none;">
+  <li class =" {{#if archive}}disabled{{else}}enabled{{/if}}">
+      <div class="collapsible-header grey lighten-5 no-margin z-depth-0" style="border:none;">
           <div class="row no-margin no-padd">
             <form class="edit-task" id="eTask">
              <span class="col s6 no-padd" style="padding-left:5px;">
                <div class="row" style="height:20px;">
-                <input class="grey-text" required oninvalid="this.setCustomValidity('Please enter a task name')" oninput="setCustomValidity('')" style="border: none; font-size:13px; padding-left:3px;" name="text" type="text" value="{{text}}"/>
+                <input class="grey-text {{#unless archive}}text-darken-3{{/unless}}" required oninvalid="this.setCustomValidity('Please enter a task name')" oninput="setCustomValidity('')" style="border: none; font-size:13px; padding-left:3px;" name="text" type="text" value="{{text}}{{#if archive}} (Archived){{/if}}"/>
                 </div>
             </span>  
              </form>
-             <span class="col s3 right no-padd no-margin" style="width:2px;"> 
-                <div class="delete right grey-text text-lighten-2">&times;</div>
+             <span class="col s3 right no-padd no-margin"> 
+
+                <a class='dropdown-task align right blue-grey-text lighten-3' data-activates='1{{_id}}'><i class="small material-icons align right">menu</i></a>
+
+              <!-- Dropdown Structure -->
+              <ul id='1{{_id}}' class='dropdown-content'>                
+                <label class="center"><li class="toggle-archive archive-task center cyan-text text-darken-3">{{#if archive}}Unarchive{{else}}Archive{{/if}}</li></label>
+                <li class="divider"></li>
+                <label class="delete center"><li class="cyan-text text-darken-3"><input type="checkbox"/>Remove</li></label>
+         
+              </ul>
+
+               <!-- <div class="delete right grey-text text-lighten-2">&times;</div> -->
              </span>
+              {{#unless archive}}
              <!-- This is the button to toggle an item as priority -->
              <div class="right" style="margin-right:45px;">
             <span class="col s1 no-padd" style="width:0px;margin-right:30px;">
-              {{#if priority}}   
-               <i class="toggle-priority center tiny material-icons yellow-text text-darken-2">star</i>
-               {{else}}
-                <i class="toggle-priority center tiny material-icons grey-text text-lighten-1">star_border</i>
-              {{/if}}
+                {{#if priority}}   
+                 <i class="toggle-priority center tiny material-icons yellow-text text-darken-2">star</i>
+                 {{else}}
+                  <i class="toggle-priority center tiny material-icons grey-text text-lighten-1">star_border</i>
+                {{/if}}
             </span>
             <!-- This is the colored icon to show progress-->
               <span class="col s1 no-padd" style="width:0px;">  
@@ -41,15 +53,15 @@
                 {{/if}}">label</i>
             </span>
           </div>
+          {{/unless}}
           </div>
 	  </div>
 
+<!-- This is the collapsible section of a task -->	
 
-<!-- This is the collapsible section of a task -->	  
-      <div class="collapsible-body grey lighten-5 black-text">
+<div class="collapsible-body grey lighten-5 black-text" style="{{#if archive}}visibility:collapse;{{/if}}">
         <p>
 	<br>
-
 	<!-- This is the "add notes" text area -->
         <div class="card-panel" style="overflow-x:auto;">
           <form class="new-note" id="tNotes">
@@ -88,6 +100,7 @@
         </table>
       </div>
         <br>
+
         <form class="due-date">
           <input type="date" name="text" id="{{_id}}" class="datepicker" placeholder="Due date..." value="{{dueDate}}"/>
           <button class="btn waves-effect waves-light cyan darken-2" type="submit" name="action">Set Date</button>

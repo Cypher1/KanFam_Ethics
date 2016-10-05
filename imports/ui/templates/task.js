@@ -6,6 +6,7 @@ import './task.html';
 
 
 Template.task.helpers({
+
     todo(){
       if(this.progress >= 1){
         return true;
@@ -47,23 +48,40 @@ Template.task.helpers({
       }
     },
 });
-
-
-Template.task.onRendered(function(){
-    $('.collapsible').collapsible({
-       // A setting that changes the collapsible behavior to expandable instead of the default accordion style
-    });
-      $('.datepicker').pickadate({
+    $('.datepicker').pickadate({
         selectMonths: true, // Creates a dropdown to control month
         selectYears: 15,// Creates a dropdown of 15 years to control year
         format: 'yyyy-mm-dd',
         formatSubmit: 'yyyy-mm-dd',
         hiddenName: true,
         container: 'body',
- });   
+    });
+
+
+
+Template.task.onRendered(function(){
+    $('.dropdown-task').dropdown({
+        inDuration: 300,
+        outDuration: 225,
+        constrain_width: false, // Does not change width of dropdown to that of the activator
+        hover: true, // Activate on hover
+        gutter: 3, // Spacing from edge
+        belowOrigin: true, // Displays dropdown below the button
+    }); 
+    $('.collapsible').collapsible({
+       // A setting that changes the collapsible behavior to expandable instead of the default accordion style
+    });
+    
+    $('.datepicker').pickadate({
+        selectMonths: true, // Creates a dropdown to control month
+        selectYears: 15,// Creates a dropdown of 15 years to control year
+        format: 'yyyy-mm-dd',
+        formatSubmit: 'yyyy-mm-dd',
+        hiddenName: true,
+        container: 'body',
+    });
+
 });
-
-
 
 
 Template.task.events({
@@ -133,6 +151,9 @@ Template.task.events({
    'click .toggle-priority'() {
     Meteor.call('tasks.setPriority', this._id, !this.priority);
   },
+  'click .toggle-archive'(){
+    Meteor.call('tasks.setArchive',this._id, !this.archive);
+  }
 });
 
 
