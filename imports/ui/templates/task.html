@@ -9,14 +9,14 @@
                     {{#if archive}}
                       <p class="grey-text" style="border: none; font-size:13px; padding-left:3px;">{{text}}</p>
                     {{else}}
-                       <input class="grey-text text-darken-3" required oninvalid="this.setCustomValidity('Please enter a task name')" oninput="setCustomValidity('')" style="border: none; font-size:13px; padding-left:4px;" name="text" type="text" value="{{text}}"  />
+                       <input class="grey-text text-darken-3" required oninvalid="this.setCustomValidity('Please enter a task name')" oninput="setCustomValidity('')" style="border: none; font-size:13px; padding-left:4px;" name="text" type="text" value="{{text}}"/>
                     {{/if}}
                   </div>
                </form>
             </div>
              <div class="col s1 right" style="width:40px;">
                 <!-- This is a dropdown for removing and archiving tasks-->
-                <a class='dropdown-task grey-text lighten-3' data-activates='1{{_id}}'><i class="small material-icons align">menu</i></a>
+                <a class="dropdown-task grey-text lighten-3" style="font-size:6px;" data-activates='1{{_id}}'><i class="tiny material-icons align" style="font-size:14px;">edit</i></a>
                <ul id='1{{_id}}' class='dropdown-content'>                
                 <label class="center"><li class="toggle-archive center cyan-text text-darken-3">{{#if archive}}Unarchive{{else}}Archive{{/if}}</li></label>
                 <li class="divider"></li>
