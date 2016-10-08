@@ -81,7 +81,6 @@ Template.task_list.events({
 
     'change .show-only-priority input'(event, instance) {
         instance.state.set('showOnlyPriority', event.target.checked);
-
     },
     'submit .edit-task'(event){
         // Prevent default browser form submit
@@ -95,5 +94,8 @@ Template.task_list.events({
         // Insert a task into the collection
         Meteor.call('tasks.editTask', this._id, edit);
 
+    },
+    'click .show-archives'(event){
+       Meteor.call('task_list.showArchives',this._id,!this.showArchives);
     },
 });
