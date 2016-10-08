@@ -1,4 +1,5 @@
 import './landing.js';
 import './login.html';
 import './dashboard.html';
-import './groups.html';
+import './groups.js';
+import './group_page.js';

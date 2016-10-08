@@ -1,0 +1,26 @@
+<template name="all_lists">
+
+<div class="row valign-wrapper" style="max-width:90%;">
+ <div class="col s8 offset-s3 valign">
+  <div class="card grey lighten-4" style="overflow-x:scroll;">
+   <div class="card-content black-text" style="padding-bottom:1px;">
+        <form form class="new-list">
+        <div class="col s8">
+            <input id="newList" name="text" type="text" placeholder="Create new list" required oninvalid="this.setCustomValidity('Please enter a list name')" oninput="setCustomValidity('')"/>
+        </div>
+        <div class="col s4" style="margin-top:10px;">
+            <button class="btn waves-effect waves-light cyan darken-2" type="submit">Create
+            <i class="tiny material-icons right">add</i></button>
+        </div>
+        </form>
+   </div>
+  </div>
+ </div>
+</div>
+
+  <br>
+
+  {{#each lists}}
+  {{> task_list}}
+  {{/each}}
+</template>

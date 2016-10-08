@@ -11,7 +11,9 @@ function checkLoggedIn (ctx) {
 
 Accounts.onLogin(function () {
     // Send the user to their dashboard
-    FlowRouter.go('dashboard')
+    if(FlowRouter.current().route.name === "login") {
+        FlowRouter.go('dashboard')
+    }
 })
 
 Accounts.onLogout(function () {
@@ -58,6 +60,13 @@ privateRoutes.route('/groups', {
         BlazeLayout.render('mainLayout', {content: 'groups'})
     }
 })
+
+privateRoutes.route('/groups/:_id', {
+    name: 'group_page',
+    action: function(params) {
+        BlazeLayout.render("mainLayout", {content: 'group_page'});
+    }
+});
 
 privateRoutes.route('/logout', {
     name: 'logout',

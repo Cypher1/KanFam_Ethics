@@ -1,85 +1,110 @@
 <template name="task">
-<li class="{{#if checked}}checked{{/if}} {{#if private}}private{{/if}} {{#if todo}}todo{{/if}} {{#if doing}}doing{{/if}} {{#if checking}}checking{{/if}} {{#if done}}done{{/if}}">
-
-    <ul class="collapsible popout" data-collapsible="accordion">
-    <li>
-      <div class="collapsible-header black-text" style="height:60px;">          
-             
-            <div style="overflow: hidden;">
-             <form class="edit-task" id="eTask" >
-              
-              <button type="button" class="delete grey-text left white" style="border:none;padding-top:0px;margin:0px;height:3px;position:relative;top:-10px;left:-6.5px">&times;</button>
-              
-              <input style="border-bottom:none;border:none;padding-top:0px;margin-top:10px;margin-left:6px;" name="text" type="text" value="{{text}}"/>
-             
-             </form>
+<ul class="collapsible grey lighten-5 no-margin z-depth-0" data-collapsible="accordion" style="border-left:none;border-right:none;">
+  <li>
+      <div class="collapsible-header grey lighten-5 no-margin no-padd z-depth-0" style="border:none;">
+          <div class="row no-margin no-padd">
+            <div class="col s5 no-margin">
+              <form class="edit-task" id="eTask">
+                 <div class="row" style="height:20px;">
+                    {{#if archive}}
+                      <p class="grey-text" style="border: none; font-size:13px; padding-left:3px;">{{text}}</p>
+                    {{else}}
+                       <input class="grey-text text-darken-3" required oninvalid="this.setCustomValidity('Please enter a task name')" oninput="setCustomValidity('')" style="border: none; font-size:13px; padding-left:4px;" name="text" type="text" value="{{text}}"/>
+                    {{/if}}
+                  </div>
+               </form>
             </div>
-      
-      </div>
-      <div class="collapsible-body white black-text">
-           <p>
-
-
-          <plaintext style="font-size:10px;font-family:Helvetica"> Todo           Doing        Checking      Done</plaintext> 
-          
-          <div style="font-size:0px;position:relative;float:none;display:block;max-width: 100%;">
-    
-          {{#if todo}}
-            <button class="blue lighten-4  blue-text text-lighten-4 toggle-todo" checked="{{todo}}" style="-webkit-border-top-left-radius:5px;-webkit-border-bottom-left-radius:5px;height:16px;font-size:3px;border-color:#bbdefb;width:50px;"></button>
-          {{else}}
-            <button class="grey lighten-2 grey-text text-lighten-2 toggle-todo" checked="{{todo}}" style="-webkit-border-top-left-radius:5px;-webkit-border-bottom-left-radius:5px;height:16px;font-size:3px;border-color:#e0e0e0;width:50px;"></button>
-          {{/if}}
-
-            <button class="toggle-doing {{#if doing}}blue lighten-3{{else}}grey lighten-2{{/if}}" checked="{{doing}}" style="box-shadow:none;height:16px;font-size:3px;{{#if doing}}border-color:#90caf9{{else}}border-color:#e0e0e0{{/if}};width:50px;"></button>
-  
-          {{#if checking}}
-           <button class="toggle-checking blue darken-2 blue-text text-darken-2" checked="{{checking}}" style="height:16px;font-size:3px;border-color:#1976d2;width:50px;"></button>
-          {{else}}
-            <button class="toggle-checking grey lighten-2 grey-text text-lighten-2" checked="{{checking}}" style="height:16px;font-size:3px;border-color:#e0e0e0;width:50px;"></button>
-          {{/if}}
-
-          {{#if done}}
-            <button class="toggle-done blue darken-4 blue-text text-darken-4" checked="{{done}}"  style="-webkit-border-top-right-radius:5px;-webkit-border-bottom-right-radius:5px;height:16px;font-size:3px;border-color:#0d47a1;width:50px;"></button>
-          {{else}}
-            <button class="toggle-done grey lighten-2 grey-text text-lighten-2" checked="{{done}}" style="-webkit-border-top-right-radius:5px;-webkit-border-bottom-right-radius:5px;height:16px;font-size:3px;border-color:#e0e0e0;width:50px;"></button>
-          {{/if}}
-  
-          </div>
-            <br>
-                 <div class="card-panel">
-               
-                    <form class="new-note" id="tNotes">
-                        <textarea class="materialize-textarea" name="text" value="{{taskNotes}}" placeholder="  add notes..." style="border:none;word-break: break-all;"></textarea> 
-                          <button class="btn waves-effect waves-light" type="submit" name="action">Save
-                          <i class="material-icons right">send</i>
-                          </button>
-      
-                    </form>
-                </div>
-
-                {{notes}}
-
-                <!--   <plaintext class="grey-text text-darken-1" style="font-family:Helvetica font-size:13px;">Due:</plaintext> 
-                <input style="border:none;" type="date" class="datepicker">-->
-            <br>
-
-              {{#if isOwner}}
-              <div class="switch">
-                <label>
-                    Private
-                  <input class="toggle-private right" type="checkbox" checked="{{private}}">
-                  <span class="lever"></span>
-                    Public
-                </label>
-              </div>
+             <div class="col s1 right" style="width:40px;">
+                <!-- This is a dropdown for removing and archiving tasks-->
+                <a class="dropdown-task grey-text lighten-3" style="font-size:6px;" data-activates='1{{_id}}'><i class="tiny material-icons align" style="font-size:14px;">edit</i></a>
+               <ul id='1{{_id}}' class='dropdown-content'>                
+                <label class="center"><li class="toggle-archive center cyan-text text-darken-3">{{#if archive}}Unarchive{{else}}Archive{{/if}}</li></label>
+                <li class="divider"></li>
+                <label class="delete center"><li class="cyan-text text-darken-3"><input type="checkbox"/>Remove</li></label>
+              </ul>
+            </div>
+                <div class="col s1 right" style="width:32px;">
+               <!-- This is the colored icon to show progress-->
+               {{#unless archive}}
+                <i class="tiny material-icons
+                {{#if todoLabel}}deep-orange-text text-darken-2
+                {{else}}
+                {{#if doingLabel}}
+                orange-text text-darken-2
+                {{else}}
+                {{#if checkingLabel}}
+                blue-text text-lighten-1
+                {{else}}
+                {{#if doneLabel}}
+                light-green-text text-darken-1
                 {{/if}}
+                {{/if}}
+                {{/if}}
+                {{/if}}" style="font-size:18px;">label</i>
+                {{/unless}}
+            </div>
+            <div class="col s1 no-margin right" style="width:32px;">
+               <!-- This is the button to toggle an item as priority-->
+                {{#unless archive}}
+                {{#if priority}}   
+                 <i class="toggle-priority center tiny material-icons yellow-text text-darken-2" style="font-size:18px;">star</i>
+                 {{else}}
+                  <i class="toggle-priority center tiny material-icons grey-text text-lighten-1" style="font-size:18px;">star_border</i>
+                {{/if}}
+              {{/unless}}
+            </div>
+        </div>
+      </div>
+<!-- This is the collapsible section of a task -->  
 
-          </p>
-          
+<div class="collapsible-body grey lighten-5 black-text" style="{{#if archive}}visibility:collapse;{{/if}}">
+        <p>
+  <br>
+  <!-- This is the "add notes" text area -->
+        <div class="card-panel" style="overflow-x:auto;">
+          <form class="new-note" id="tNotes">
+            <textarea class="materialize-textarea grey-text text-darken-2" style="border:none;" name="text" value="{{taskNotes}}" placeholder="  add notes..."></textarea>
+            <button class="btn-floating waves-effect waves-light cyan darken-2" type="submit" name="action">
+              <i class="material-icons center">send</i>
+            </button>
+
+          </form>
+        </div>
+        <br>
+
+  <!-- This table is for the progress buttons -->
+  <div class="responsive-table"  style="white-space:normal;overflow-x:auto;">
+        <table>
+          <tr>
+            <td>Todo</td>
+            <td>Doing</td>
+            <td>Check</td>
+            <td>Done</td>
+          </tr>
+          <tr class="z-depth-0">
+            <td width="10%;" class="no-padd no-margin">
+              <button class="btn z-depth-0 enabled deep-orange darken-2 black-text" style="width:100%;height:90%;" checked="{{todo}}"></button>
+            </td>
+            <td  width="10%;" class="no-padd no-margin">
+              <button class="btn  z-depth-0 toggle-doing {{#if doing}}enabled{{else}}disabled{{/if}} orange darken-2 black-text" style="width:100%;height:90%;" checked="{{doing}}"></button>
+            </td>
+            <td width="10%;" class="no-padd no-margin">
+              <button class="btn z-depth-0 toggle-checking {{#if checking}}enabled{{else}}disabled{{/if}}  blue lighten-1 black-text" style="width:100%;height:90%;" checked="{{checking}}"></button>
+            </td>
+            <td width="10%;" class="no-padd no-margin">
+              <button class="btn z-depth-0 toggle-done {{#if done}}enabled{{else}}disabled{{/if}}  light-green darken-1 black-text" style="width:100%;height:90%;" checked="{{done}}"></button>
+            </td>
+          </tr>
+        </table>
+      </div>
+        <br>
+
+        <form class="due-date">
+          <input type="date" name="text" id="{{_id}}" class="datepicker" placeholder="Due date..." value="{{dueDate}}"/>
+          <button class="btn waves-effect waves-light cyan darken-2" type="submit" name="action">Set Date</button>
+        </form> 
+        </p>
       </div>
     </li>
-    </ul>
-                  
-
-</li>
+</ul>
 </template>
