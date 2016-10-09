@@ -114,4 +114,13 @@ Meteor.methods({
         }
         Groups.remove(groupId);
     },
+    'groups.edit-name'(groupId,newName){
+
+        check(groupId,String);
+        const group = Groups.findOne(groupId);
+        if (group.owner !== this.userId) {
+            throw new Meteor.Error('not-authorized');
+        }
+        Groups.update(groupId,{$set: { name: newName} });
+    }
 });
