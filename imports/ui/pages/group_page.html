@@ -1,9 +1,10 @@
 <template name="group_page">
   <div class="container">
-    <h2 class="header">Name {{name}}</h2>
- 	{{ get_group }}
-    {{> group}}
+    <h2 class="header center">Name {{this.name}}</h2>
+ 	<div class="center">
+	    {{>group}}
+	</div>
     <br>
-    {{> all_group_lists}}
+    {{>all_lists}}
   </div>
 </template>
