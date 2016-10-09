@@ -32,6 +32,7 @@ Meteor.methods({
             name: groupname,
             description: description,
             createdAt: new Date(),
+            owner: this.userId,
             admin: [this.userId],
             members: [this.userId],
             lists: [],

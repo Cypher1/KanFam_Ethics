@@ -13,7 +13,7 @@ Template.registerHelper('user', function() {
 
 Template.all_groups.onCreated(function bodyOnCreated() {
     this.state = new ReactiveDict();
-    Meteor.subscribe('group');
+    Meteor.subscribe('groups');
 });
 
 Template.all_groups.helpers({
