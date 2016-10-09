@@ -104,5 +104,14 @@ Meteor.methods({
         Groups.update(groupId,{$set: {name: name, description: description}});
         console.log(edit);
 
-    }
+    },
+    'groups.remove'(groupId) {
+        check(groupId, String);
+        const group =  Groups.findOne(groupId);
+        if (group.owner !== this.userId) {
+            /* If the task is private, make sure only the owner can delete it */
+            throw new Meteor.Error('not-authorized');
+        }
+        Groups.remove(groupId);
+    },
 });

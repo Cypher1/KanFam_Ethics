@@ -1,4 +1,5 @@
 <template name="group">
+{{#if isOwner}}
     <div class="card">
         <div class="card-stacked">
             <div class="card-content">
@@ -6,6 +7,7 @@
                     {{#unless isActiveRoute 'group_page'}}
                     {{name}}
                     {{/unless}}
+                    <i class="remove-group tiny material-icons align right">clear</i>
                     <img class="right z-depth-1" src="/resources/house.jpg" width="60" height="60">
                 </span>
                 <div class="row">
@@ -31,4 +33,5 @@
             </div>
         </div>
     </div>
+{{/if}}
 </template>

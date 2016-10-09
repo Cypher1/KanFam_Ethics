@@ -41,4 +41,31 @@ Template.all_groups.events({
 		event.target.groupName.value = '';
 		event.target.groupDes.value = '';
  	},
+    'click .remove-group'(event){
+
+        event.preventDefault();
+
+           var id = this._id;
+           var lName = this.name;
+      
+      //creates confimation alert
+      swal({
+        html:true,
+        title: "<h5>Delete Confirmation<h5>",
+        text: "Are you sure you want to delete the group: " +lName + "?",
+        confirmButtonColor: '#0097a7',
+        confirmButtonText: 'Yes',
+        showCancelButton: true,
+        cancelButtonText: "No",
+        closeOnConfirm: true,
+        closeOnCancel: true,
+     },
+     function(isConfirm){ //if user clicked yes
+        if(isConfirm){
+            //Delete Group
+            Meteor.call('groups.remove',id);
+        }
+     });
+    
+  },
 });
