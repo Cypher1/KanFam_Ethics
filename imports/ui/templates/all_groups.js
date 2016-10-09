@@ -66,6 +66,13 @@ Template.all_groups.events({
             Meteor.call('groups.remove',id);
         }
      });
-    
   },
+    'submit .edit-group-name'(event){
+        // Prevent default browser form submit
+        event.preventDefault();
+        // Get value from form element
+        const edit = event.target.text.value;
+        // Insert a task into the collection
+        Meteor.call('groups.edit-name', this._id, edit);
+    },
 });
