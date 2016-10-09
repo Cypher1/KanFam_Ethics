@@ -19,6 +19,9 @@ Template.all_groups.onCreated(function bodyOnCreated() {
 Template.all_groups.helpers({
   get_group: function () {
     return Groups.findOne({_id: FlowRouter.current().params._id});
+  },
+  groups: function () {
+    return Groups.find();
   }
 });
 
