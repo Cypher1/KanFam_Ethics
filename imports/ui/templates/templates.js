@@ -11,3 +11,5 @@ import './mysocial.js';
 import './myOauth.html';
 import './myOauth.js';
 import './all_groups.js';
+import './all_group_lists.js';
+import './group_list.js';
