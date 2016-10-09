@@ -17,9 +17,12 @@ Template.all_groups.onCreated(function bodyOnCreated() {
 });
 
 Template.all_groups.helpers({
-    get_group: function () {
-        return Groups.findOne({_id: FlowRouter.current().params._id});
-    }
+
+    groups () {
+        const instance = Template.instance();//stores current instance of template
+        let filter = {};
+        return Groups.find();
+    },
 });
 
 Template.all_groups.events({
