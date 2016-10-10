@@ -1,39 +1,52 @@
 <template name="task_list">
-  <div class="row">
-    <div class="col s14 m7">
-      <div class="card grey lighten-5 z-depth-1">
+ {{#if isOwner}}
+  <div class="row valign-wrapper">
+    <div class="col s8 offset-s2 valign">
+      <div class="card grey lighten-5">
         <div class="card-content blue-grey-text text-darken-3 no-padding">
           <form class="setListName">
             <div class="row">
-              <div class="col s10">
-                <div class="col">
-                  <strong><input class="grey-text text-darken-2" name="text" type="text" placeholder="click to enter list title" style="border: none;" required oninvalid="this.setCustomValidity('Please enter a list name')" oninput="setCustomValidity('')" value="{{listName}}"/></strong> <!--  ({{tasksCount}}) -->
-                </div>
-              </div>
+              <div class="col s11">
+                  <input class="grey-text text-darken-4" name="text" type="text" placeholder="click to enter list title" style="border: none;padding-left:4px;" required oninvalid="this.setCustomValidity('Please enter a list name')" oninput="setCustomValidity('')" value="{{listName}}"/> <!--  ({{tasksCount}}) -->
+             </div> 
               <div class="col s1 right">
-                <a class='dropdown-button align right blue-grey-text lighten-5' data-activates='{{this._id}}'><i class="small material-icons align right">arrow_drop_down</i></a>
+                <a class='dropdown-button align right blue-grey-text lighten-3' data-activates='{{this._id}}'><i class="small material-icons align right">arrow_drop_down</i></a>
                 <ul id='{{this._id}}' class='dropdown-content'>
                   <label class="hide-completed center"><li class="cyan-text text-darken-3"><input type="checkbox"/>Hide Complete</li></label>
+		           <li class="divider"></li>
+		          <label class="show-only-priority center"><li class="cyan-text text-darken-3"><input type="checkbox"/>Show Only Priority</li></label>
                   <li class="divider"></li>
                   <label class="delete-list center"><li class="cyan-text text-darken-3"><input type="checkbox"/>Delete List</li></label>
                   <li class="divider"></li>
+                  <label class="show-archives center"><li class="cyan-text text-darken-3">{{#if showArchives}}Show Tasks{{else}}Show Archives{{/if}}</li></label>
                 </ul>
               </div>
             </div>
           </form>
-          <ul>
-            {{#if currentUser}}
-            <form class="new-task">
-              <input type="text" name="text" class="no-margin" placeholder="Type to add new tasks" required oninvalid="this.setCustomValidity('Please enter a task name')" oninput="setCustomValidity('')"/>
-            </form>
-            {{/if}}
+          <ul>              
+            {{#if showArchives}}
+                  <h6 style="padding-left:5px;">Archived Tasks</h6>
+              {{#each tasks}}
+                  {{#if archive}}
+                    {{>task}}
+                  {{/if}}
+              {{/each}}
+            {{else}}
+               <form class="new-task">
+                  <input type="text" name="text" class="no-margin" placeholder="Type to add new tasks" required oninvalid="this.setCustomValidity('Please enter a task name')" style="padding-left:3px;border:none;width:99.5%;" oninput="setCustomValidity('')"/>
+                </form>
+              {{#each tasks}}
+                {{#unless archive}}
+                     {{>task}}
+                {{/unless}}
+              {{/each}}
 
-            {{#each tasks}}
-            {{>task}}
-            {{/each}}
+            {{/if}}
+     
           </ul>
         </div>
       </div>
     </div>
   </div>
+{{/if}}
 </template>
