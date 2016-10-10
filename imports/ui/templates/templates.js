@@ -10,3 +10,5 @@ import './mysocial.html';
 import './mysocial.js';
 import './myOauth.html';
 import './myOauth.js';
+import './calendar.html';
+import './calendar.js';

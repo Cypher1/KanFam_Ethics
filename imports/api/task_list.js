@@ -38,7 +38,7 @@ Meteor.methods({
             createdAt: new Date(),
             owner: this.userId,
             username: identifier,
-
+            showArchives: false,
         });
 
     },
@@ -63,4 +63,18 @@ Meteor.methods({
         }
         TaskList.remove(listId);
     },
+    'task_list.showArchives'(listId, showing){
+        check(listId,String);
+        check(showing,Boolean);
+        const list = TaskList.findOne(listId);
+
+        if (list.owner !== this.userId) {
+            /* If the task is private, make sure only the owner can delete it */
+            throw new Meteor.Error('not-authorized');
+        }
+        TaskList.update(listId,{$set: {showArchives: showing}});
+    }
 });
+
+
+
