@@ -1,6 +1,9 @@
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Groups } from '../../api/groups.js';
 
+import "../../api/groups.js";
 import "./group_page.html";
 import "../templates/all_lists.js";
 
