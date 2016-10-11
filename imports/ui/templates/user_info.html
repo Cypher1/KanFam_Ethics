@@ -1,0 +1,33 @@
+<template name="user_info">
+    <div class="row valign-wrapper no-padd no-margin" style="max-width:90%;">
+      <div  class="col s8 offset-s3 valign no-padd no-margin">
+        <div class="card-content col s9  offset-s5 grey lighten-5  blue-text z-depth-0 black-text" style="border:solid;border-color:#eceff1;border-width:0.1px;font-size:14px;">
+        <div class="row">
+        	<!-- <header class=" blue-grey lighten-4 no-padd no-margin" style="height:40px;">  -->
+ 			<div class = "col s12 grey darken-2 no-padd no-margin"  style="height:50px;">
+             <!-- image is a placeholder for user profile picture -->
+             <img class="circle left z-depth-0" src="/resources/house.jpg" width="80" height="80" style="margin-left:18px;margin-top:8px;border:solid;border-color:white;border-width:1px;">  
+             	<div class = "center col s6 grey-text text-lighten-5" style="padding-top:14px;font-size:17px;">
+             		<!--  using temporary user data until the user account sections is working fully -->
+             		Katherine Perdikis
+             	</div>
+            </div>
+
+            <div class="col s5 grey-text text-darken-4" style="margin-left:120px;margin-top:10px;">
+               {{currentDate}}
+            </div>
+            	<br>
+            	<br>
+            	<br>
+            	<br>
+            	<br>
+            	<br>
+
+                (still need to include tasks due on given day) <br>
+          		Number of Lists: {{listCount}}
+
+        </div>
+      </div>
+    </div>
+</div>
+</template>
