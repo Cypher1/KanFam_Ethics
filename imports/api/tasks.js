@@ -83,10 +83,8 @@ Meteor.methods({
         Tasks.remove({parent: listId});
     },
     'tasks.setDueDate'(taskId,dueDate) {
-
         dueDate = dueDate.toISOString().slice(0,10);
         check(taskId,String);
-       
         const task=Tasks.findOne(taskId);
         if (task.private && task.owner !== this.userId) {
             /* If the task is private, make sure only the owner can delete it */

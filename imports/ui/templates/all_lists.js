@@ -6,6 +6,9 @@ import { TaskList } from '../../api/task_list.js';
 import './all_lists.html';
 import './task_list.js';
 import '../../api/task_list.js';
+import './task.js';
+import '../../api/tasks.js'
+import './task_list.html';
 
 //all_lists.js is used to to generate new lists (parent to task_list)
 
@@ -25,6 +28,12 @@ Template.all_lists.helpers({
         let filter = {};
         return TaskList.find();
     }, 
+    //listCount(){
+    //    return TaskList.find({owner: Meteor.userId()}).count();
+   // },
+    isOwner(){
+      return this.owner === Meteor.userId();
+    }
 });
 
 Template.all_lists.events({

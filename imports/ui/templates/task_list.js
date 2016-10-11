@@ -56,6 +56,7 @@ Template.task_list.helpers({
     isOwner() {
         return this.owner === Meteor.userId();
     },
+
 });
 
 

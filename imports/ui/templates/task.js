@@ -48,7 +48,7 @@ Template.task.helpers({
       }
     },
 });
-  
+
 Template.task.onRendered(function(){
     $('.dropdown-task').dropdown({
         inDuration: 300,
@@ -61,14 +61,16 @@ Template.task.onRendered(function(){
     $('.collapsible').collapsible({
        // A setting that changes the collapsible behavior to expandable instead of the default accordion style
     });
-      $('.datepicker').pickadate({
-        selectMonths: true, // Creates a dropdown to control month
-        selectYears: 15,// Creates a dropdown of 15 years to control year
-        format: 'yyyy-mm-dd',
-        formatSubmit: 'yyyy-mm-dd',
-        hiddenName: true,
-        container: 'body',
+     $('.datepicker').pickadate({
+      selectMonths: true, // Creates a dropdown to control month
+      selectYears: 16,       // Creates a dropdown of 15 years to control year
+      dateMin: [2000,01,01],
+      format: 'yyyy-mm-dd',
+      formatSubmit: 'yyyy-mm-dd',
+      hiddenName: true,
+      container: 'body',
     });
+     
 });
 
 
@@ -76,7 +78,6 @@ Template.task.onRendered(function(){
 Template.task.events({
 
   'click .delete'() {
-
       var id = this._id;
        //creates confimation alert
       swal({
@@ -135,9 +136,9 @@ Template.task.events({
       Meteor.call('tasks.setProgress',this._id, this.progress);
   },
   'submit .edit-task'(event){
+
     event.preventDefault();
     const edit = event.target.text.value;
-    target.text.value = edit;
     Meteor.call('tasks.editTask', this._id, edit);
   },
   'submit .due-date'(event){

@@ -1,8 +1,10 @@
 <template name="all_lists">
 
+
+
 <div class="row valign-wrapper" style="max-width:90%;">
  <div class="col s8 offset-s3 valign">
-  <div class="card grey lighten-4" style="overflow-x:scroll;">
+  <div class="card white lighten-5 z-depth-0" style="overflow-x:scroll;">
    <div class="card-content black-text" style="padding-bottom:1px;">
         <form form class="new-list">
         <div class="col s8">
@@ -19,6 +21,8 @@
 </div>
 
   <br>
+
+   {{parent}}
 
   {{#each lists}}
   {{> task_list}}
