@@ -107,29 +107,30 @@ Template.task.events({
   },
   'click .toggle-doing'(){
 
-    if(this.progress == 1){
-      this.progress++;
-    }else if(this.progress == 2){
-      this.progress--;
-    }
+   if(this.progress >= 2){
+      this.progress = 1;
+   }else{
+      this.progress = 2;
+   }
+
      Meteor.call('tasks.setProgress',this._id, this.progress);
   },
   'click .toggle-checking'(){
 
-    if(this.progress == 2){
-      this.progress++;
-    }else if(this.progress == 3){
-      this.progress--;
+    if(this.progress >= 3){
+      this.progress = 2;
+    }else{
+      this.progress = 3;
     }
-     Meteor.call('tasks.setProgress',this._id, this.progress);
+    Meteor.call('tasks.setProgress',this._id, this.progress);
     
   },
   'click .toggle-done'(){
 
-    if(this.progress == 3){
-      this.progress++;
-    }else if(this.progress == 4){
-      this.progress--;
+    if(this.progress != 4){
+      this.progress = 4;
+    }else{
+      this.progress = 3;
     }
       Meteor.call('tasks.setProgress',this._id, this.progress);
   },
