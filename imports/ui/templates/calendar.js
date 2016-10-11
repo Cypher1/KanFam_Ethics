@@ -1,4 +1,9 @@
-Template.myCalendar.helpers({
+import { Meteor } from 'meteor/meteor';
+import { Template } from 'meteor/templating';
+
+import "./calendar.html"
+
+Template.calendar.helpers({
     calendarOptions: {
         // Standard fullcalendar options
         height: 700,
