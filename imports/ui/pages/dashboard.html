@@ -1,17 +1,30 @@
 <template name="dashboard">
-  <div class="container">
+<div class="blue-grey lighten-5">	
 
-   <!-- <h2 class="header">Dashboard</h2> -->
+  	  <div class="row" >
+  	  	   <div class="col s8">
+  	  	   	<br>
+  	  	   	<br>
+  	  	   	{{> all_lists}}</div>
+      	<div class="right col s4 no-margin no-padd">	
+  	  	   	<br>
+  	  	   	<br>
+      		{{> user_info}}</div>
+
+    </div>
+
+   <!-- <h2 class="header">Dashboard</h2
    <br>
    <br>
-   {{> user_info}}
- 
+   <div class="row">
+
+   		{{> user_info}}
+   		{{> all_lists}}
+ </div>
     <br>
     <br>
+> -->
 
-
-    {{> all_lists}}
-
-  </div>
+</div>
 </template>
 
