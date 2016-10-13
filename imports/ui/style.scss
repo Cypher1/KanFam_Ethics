@@ -28,11 +28,14 @@ $error-color: color("red", "base");
 
 /* Overrides */
 /* Set footer to flex */
+html {
+    background-color: color("blue-grey", "lighten-5");
+}
+
 body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
-    background-color: color("blue-grey", "lighten-5");
 };
 
 main {
