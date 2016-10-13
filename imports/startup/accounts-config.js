@@ -17,14 +17,22 @@ function PostSignUpServerSide() {
     console.log("Sign Up");
 }
 
-AccountsTemplates.addField({
+var email = AccountsTemplates.removeField('email');
+var pwd = AccountsTemplates.removeField('password');
+var username = {
     _id: 'username',
     type: 'text',
     required: true,
     minLength: 6,
     re: /[A-Za-z0-9_]{6,}/,
     errStr: 'Username only accepts letters, numbers and underscores (_)',
-});
+};
+
+AccountsTemplates.addFields([
+    username,
+    email,
+    pwd,
+]);
 
 AccountsTemplates.configure({
     // Behavior
@@ -67,15 +75,15 @@ AccountsTemplates.configure({
 
     // Texts
     texts: {
-      button: {
-          signUp: "Sign Up"
-      },
-      socialSignUp: "Sign Up",
-      socialIcons: {
-          "meteor-developer": "fa fa-rocket"
-      },
-      title: {
-          forgotPwd: "Recover Your Password"
-      },
+        button: {
+            signUp: "Sign Up"
+        },
+        socialSignUp: "Sign Up",
+        socialIcons: {
+            "meteor-developer": "fa fa-rocket"
+        },
+        title: {
+            forgotPwd: "Recover Your Password"
+        },
     },
 });
