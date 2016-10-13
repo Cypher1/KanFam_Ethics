@@ -70,7 +70,6 @@ Template.task_list.events({
 
         // Insert a task into the collection
         Meteor.call('tasks.insert', text, this._id);
-
         // Clear form
         target.text.value = '';
     },
