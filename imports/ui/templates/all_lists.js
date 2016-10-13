@@ -9,10 +9,6 @@ import '../../api/task_list.js';
 
 //all_lists.js is used to to generate new lists (parent to task_list)
 
-Template.registerHelper('user', function() {
-    return Meteor.user().username || Meteor.user().profile.name;
-});
-
 Template.all_lists.onCreated(function bodyOnCreated() {
     this.state = new ReactiveDict();
     Meteor.subscribe('task_list');
