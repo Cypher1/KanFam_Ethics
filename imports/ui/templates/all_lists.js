@@ -20,14 +20,14 @@ Template.all_lists.helpers({
         const instance = Template.instance();//stores current instance of template
         let filter = {};
         return TaskList.find();
-    }, 
+    },
 });
 
 Template.all_lists.events({
 
-  'submit .new-list'(event) { 
+  'submit .new-list'(event) {
 
-      event.preventDefault();       
+      event.preventDefault();
       const listName = event.target.text.value;
       Meteor.call('task_list.insert',listName);
       event.target.text.value = '';
@@ -42,7 +42,7 @@ Template.all_lists.events({
   },
   'click .delete-list'(event){
 
-  		event.preventDefault();
+          event.preventDefault();
 
            var id = this._id;
            var lName = this.listName;
