@@ -12,5 +12,10 @@ import './pages/pages.js';
 import './style.scss';
 
 Template.registerHelper('user', function() {
-    return Meteor.user().username || Meteor.user().profile.name || Meteor.user().email;
+    return Meteor.user().username || Meteor.user().profile.name || Meteor.user().emails[0].address;
+});
+
+Template.registerHelper('user_email', function() {
+    console.log(Meteor.user());
+    return Meteor.user().emails[0].address;
 });
