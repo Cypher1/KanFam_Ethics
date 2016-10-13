@@ -1,10 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
-
 import { Groups } from '../../api/groups.js';
 
 import './group.html';
-import '../../api/groups.js';
 
 Template.group.onCreated(function () {
     Meteor.subscribe('groups');
@@ -18,7 +16,6 @@ Template.group.helpers({
 
 Template.group.events({
     'click .remove-group'(event) {
-
         event.preventDefault();
 
         var id = this._id;
@@ -55,11 +52,9 @@ Template.group.events({
     'submit .new-member'(event) {
         // Prevent default browser from submit
         event.preventDefault();
-        console.log(this.admin);
         // Get values from the form
         var newMemberId = event.target.memberId.value;
         var groupId = this._id;
-        console.log("html " + groupId);
         // Add new members into the group's database
         Meteor.call('groups.add_member', groupId, newMemberId, false);
 
@@ -67,7 +62,6 @@ Template.group.events({
         event.target.memberId.value = '';
     },
     'submit .remove-member'(event) {
-
         event.preventDefault();
 
         var groupId = this._id;
