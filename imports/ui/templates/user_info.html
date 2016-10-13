@@ -5,27 +5,30 @@
         <div class="row">
                 <div class = "center col s7 grey-text text-darken-3" style="padding-top:14px;font-size:17px;">
                     <!--  using temporary user data until the user account sections is working fully -->
-                    Katherine Perdikis
+                    Daily Summary <br>
+                    {{currentDate}}
                 </div>
-             <img class="circle left z-depth-0" src="/resources/house.jpg" width="80" height="80" style="margin-left:18px;margin-top:8px;border:solid;border-color:white;border-width:1px;">  
+             <img class="circle left z-depth-0" src="/resources/house.jpg" width="80" height="80" style="margin-left:30px;margin-top:8px;border:solid;border-color:white;border-width:1px;">  
+        </div>
 
-            </div>
-
-            <div class="col s5 grey-text text-darken-4" style="margin-left:120px;margin-top:10px;">
-               {{currentDate}}
-            </div>
-
-            <div class ="col s12 grey-text text-darken-3">
-          		Total Lists: {{listCount}}
-            </div>  
-            <div class = "col s6 grey-text text-darken-3">
-               <h6 class="teal-text"> Due Today </h6> <br>
+         <div class = "col s6 grey-text text-darken-3">
+               <h6 class="teal-text"> Tasks Due</h6>
                
                 {{#each taskDue}}
                     {{text}} <br>
                 {{/each}}
+                <br>
 
             </div>
+
+            <div class="col s5 grey-text text-darken-4" style="margin-left:120px;margin-top:10px;">
+               
+            </div>
+
+            <div class ="col s12 grey-text text-darken-3">
+          		Total Lists: {{listCount}} 
+            </div>  
+           
         </div>
       </div>
     </div>
