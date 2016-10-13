@@ -37,7 +37,7 @@ Meteor.methods({
             members: [this.userId],
             lists: [],
         });
-        console.log(Groups.findOne({name: groupname}));
+        console.log(Groups.findOne({name: groupname, admin: this.userId}));
     },
     'groups.remove_group'(groupId) {
         check(groupId, String);
@@ -54,7 +54,8 @@ Meteor.methods({
         check(groupId,String);
         check(userId,String);
         check(remove,Boolean);
-
+        console.log(groupId);
+        console.log(this.userId);
         /* Check that user is admin in group */
         const group = Groups.findOne({name: groupId, admin: this.userId});
         if (!this.userId || group === undefined) {
