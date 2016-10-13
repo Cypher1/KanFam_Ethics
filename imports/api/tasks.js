@@ -17,7 +17,18 @@ if (Meteor.isServer) {
 }
 /* can do methods for new collection in here */
 Meteor.methods({
-    'tasks.insert'(text, task_list_id) {
+    'authHelper'(taskId,owner){
+        //does authorization checks for all task related stuff
+        const task = Tasks.findOne(taskId);
+        var owns = this.userId;
+        if(owner != undefined){
+            owns = owner;
+        }
+        if (task.owner !== owns) {
+            throw new Meteor.Error('not-authorized');
+        }
+    },
+    'tasks.insert'(text, task_list_id,task_list_owner) {
         check(text, String);
         /* Make sure the user is logged in before inserting a task */
         if (!this.userId) {
@@ -26,7 +37,6 @@ Meteor.methods({
 
         let user = Meteor.users.findOne(this.userId);
         let identifier = user.username;
-
         if (!identifier) {
             if(user.profile) {
                 identifier = user.profile.name;
@@ -34,11 +44,11 @@ Meteor.methods({
                 identifier = user.email;
             }
         }
-        /* insert into TaskInfo collection with task id and user id */
+
         Tasks.insert({
-            text,
+            text: text,
             createdAt: new Date(),
-            owner: this.userId,
+            owner: task_list_owner,
             username: identifier,
             taskNotes: "",
             parent: task_list_id,
@@ -48,74 +58,48 @@ Meteor.methods({
 
         });
     },
-    'tasks.remove'(taskId) {
+    'tasks.remove'(taskId,owner) { 
         check(taskId, String);
-        const task = Tasks.findOne(taskId);
-
-        if (task.private && task.owner !== this.userId) {
-            /* If the task is private, make sure only the owner can delete it */
-            throw new Meteor.Error('not-authorized');
-        }
+        Meteor.call('authHelper',taskId,owner);
         Tasks.remove(taskId);
     },
-    'tasks.addNote'(taskId,notes) {
-
+    'tasks.addNote'(taskId,notes,owner) {
         check(taskId,String);
-
-        const task= Tasks.findOne(taskId);
-        if (task.private && task.owner !== this.userId) {
-            /* If the task is private, make sure only the owner can add notes it */
-            throw new Meteor.Error('not-authorized');
-        }
+        Meteor.call('authHelper',taskId,owner);
         Tasks.update(taskId,{$set: { taskNotes: notes} });
-    },
-    'tasks.editTask'(taskId,edit) {
+    }, 
+    'tasks.editTask'(taskId,edit,owner) {
         check(taskId,String);
-        const task= Tasks.findOne(taskId);
-        if (task.private && task.owner !== this.userId) {
-            /* If the task is private, make sure only the owner can add notes it */
-            throw new Meteor.Error('not-authorized');
-        }
+        Meteor.call('authHelper',taskId,owner);
         Tasks.update(taskId,{$set: { text: edit} });
     },
-    'tasks.deleteWithList'(listId) { /* Removes all the tasks in a list */
+    'tasks.deleteWithList'(listId) {
+        //Removes all the tasks in a list 
         check(listId,String);
         Tasks.remove({parent: listId});
     },
-    'tasks.setDueDate'(taskId,dueDate) {
+    'tasks.setDueDate'(taskId,dueDate,owner) {
+        check(taskId,String);
         dueDate = dueDate.toISOString().slice(0,10);
         check(taskId,String);
-        const task=Tasks.findOne(taskId);
-        if (task.private && task.owner !== this.userId) {
-            /* If the task is private, make sure only the owner can delete it */
-            throw new Meteor.Error('not-authorized');
-        }
+        Meteor.call('authHelper',taskId,owner);
         Tasks.update(taskId,{$set: {dueDate: dueDate}});
     },
-    'tasks.setProgress'(taskId,progress) {
+    'tasks.setProgress'(taskId,progress,owner) {
         check(taskId,String);
-        const task = Tasks.findOne(taskId);
-        if (task.private && task.owner !== this.userId) {
-            throw new Meteor.Error('not-authorized');
-        }
+        Meteor.call('authHelper',taskId,owner);
         Tasks.update(taskId,{$set:{progress: progress}});
     },
-    'tasks.setPriority'(taskId, newPriority) {
-    	check(taskId, String);
-    	check(newPriority, Boolean);
-    	const task = Tasks.findOne(taskId);
-    	if (task.private && owner !== this.userId) {
-    	    throw new Meteor.Error('not-authorized');
-    	}
-    	Tasks.update(taskId,{$set:{priority:newPriority}});
-  },
-  'tasks.setArchive'(taskId,newArchive){
-      check(taskId, String);
-      check(newArchive, Boolean);
-      const task = Tasks.findOne(taskId);      
-      if (task.private && owner !== this.userId) {
-            throw new Meteor.Error('not-authorized');
-    }
-    Tasks.update(taskId,{$set:{archive:newArchive}});
-  }   
+    'tasks.setPriority'(taskId, newPriority,owner) {
+        check(taskId, String);
+        check(newPriority, Boolean);
+        Meteor.call('authHelper',taskId,owner);
+        Tasks.update(taskId,{$set:{priority:newPriority}});
+    },
+    'tasks.setArchive'(taskId,newArchive,owner){
+        check(taskId, String);
+        check(newArchive, Boolean);
+        Meteor.call('authHelper',taskId,owner);
+        Tasks.update(taskId,{$set:{archive:newArchive}});
+    }   
 });

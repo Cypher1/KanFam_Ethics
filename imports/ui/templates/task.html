@@ -4,16 +4,19 @@
       <div class="collapsible-header grey lighten-5 no-margin no-padd z-depth-0" style="border:none;">
           <div class="row no-margin no-padd">
             <div class="col s5 no-margin">
-              <form class="edit-task" id="eTask">
+              
                  <div class="row" style="height:20px;">
                     {{#if archive}}
                       <p class="grey-text" style="border: none; font-size:13px; padding-left:3px;">{{text}}</p>
                     {{else}}
+                      <form class="edit-task" id="eTask">
                        <input class="grey-text text-darken-3" required oninvalid="this.setCustomValidity('Please enter a task name')" oninput="setCustomValidity('')" style="border: none; font-size:13px; padding-left:4px;" name="text" type="text" value="{{text}}"/>
+                       </form>
                     {{/if}}
                   </div>
-               </form>
+          
             </div>
+        
              <div class="col s1 right" style="width:40px;">
                 <!-- This is a dropdown for removing and archiving tasks-->
                 <a class="dropdown-task grey-text lighten-3" style="font-size:6px;" data-activates='1{{_id}}'><i class="tiny material-icons align" style="font-size:14px;">edit</i></a>
@@ -23,6 +26,7 @@
                 <label class="delete center"><li class="cyan-text text-darken-3"><input type="checkbox"/>Remove</li></label>
               </ul>
             </div>
+
                 <div class="col s1 right" style="width:32px;">
                <!-- This is the colored icon to show progress-->
                {{#unless archive}}
@@ -53,6 +57,7 @@
                 {{/if}}
               {{/unless}}
             </div>
+        
         </div>
       </div>
 <!-- This is the collapsible section of a task -->  

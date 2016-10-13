@@ -4,7 +4,8 @@
  <div class="col s8 offset-s2 valign">
   <div class="card grey lighten-5" style="height:100px;">
    <div class="card-content black-text">
-        <form form class="new-list">
+
+        <form class="{{#if isActiveRoute 'dashboard'}}new-list-dash{{else}}new-list-group{{/if}}">
         <div class="col s8">
             <input id="newList" name="text" type="text" placeholder="Create new list" required oninvalid="this.setCustomValidity('Please enter a list name')" oninput="setCustomValidity('')"/>
         </div>
@@ -13,6 +14,8 @@
             <i class="tiny material-icons right">add</i></button>
         </div>
         </form>
+
+      <!--  {{isActiveRoute 'dashboard'}}-->
    </div>
   </div>
  </div>
@@ -22,15 +25,3 @@
   {{> task_list}}
   {{/each}}
 </template>
-
-<!--
-        <form form class="new-list">
-        <div class="col s8">
-            <input id="newList" name="text" type="text" placeholder="Create new list" required oninvalid="this.setCustomValidity('Please enter a list name')" oninput="setCustomValidity('')"/>
-        </div>
-        <div class="col s4" style="margin-top:10px;">
-            <button class="btn waves-effect waves-light cyan darken-2" type="submit">Create
-            <i class="tiny material-icons right">add</i></button>
-        </div>
-        </form>
--->

@@ -23,36 +23,31 @@ Template.all_lists.helpers({
         const instance = Template.instance();//stores current instance of template
         let filter = {};
         return TaskList.find();
-
     }, 
-    isOwner(){
-      return this.owner === Meteor.userId();
-    }
 });
 
 Template.all_lists.events({
 
-  'submit .new-list'(event) {
-
-      event.preventDefault();
-      const listName = event.target.text.value;
-      Meteor.call('task_list.insert',listName);
-      event.target.text.value = '';
+  'submit .new-list-dash'(event) {
+    event.preventDefault();
+    const listName = event.target.text.value;
+    var groupId;
+    Meteor.call('task_list.insert',groupId,listName);
+    event.target.text.value = '';
 
  },
- 'submit .setListName'(event){
-
-        event.preventDefault();
-        const listName = event.target.text.value;
-        Meteor.call('task_list.setListName',this._id,listName);
-
-  },
+ 'submit .new-list-group'(event) {
+    event.preventDefault();
+    const listName = event.target.text.value;
+    var groupId = this._id;
+    Meteor.call('task_list.insert',groupId,listName);
+    event.target.text.value = '';
+ },
   'click .delete-list'(event){
 
-          event.preventDefault();
-
-           var id = this._id;
-           var lName = this.listName;
+    event.preventDefault();
+     var id = this._id;
+     var lName = this.listName;
       //creates confimation alert
       swal({
         html:true,
@@ -67,10 +62,14 @@ Template.all_lists.events({
      },
      function(isConfirm){ //if user clicked yes
         if(isConfirm){
+          var owner;
+          if(FlowRouter.current().route.name == 'group_page'){ 
+            owner = FlowRouter.getParam('_id'); 
+          }
           //Delete list
-          Meteor.call('task_list.remove', id);
+          Meteor.call('task_list.remove', id,owner);
           //Delete tasks in that list
-          Meteor.call('tasks.deleteWithList',id);
+          Meteor.call('tasks.deleteWithList',id,owner);
         }
      });
 
