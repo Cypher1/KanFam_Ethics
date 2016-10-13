@@ -13,6 +13,10 @@ Template.group.onCreated(function () {
 Template.group.helpers({
 	 isOwner() {
         return this.owner === Meteor.userId();
+    },
+
+    members(){
+    	return this.members;
     }
 });
 
@@ -20,11 +24,11 @@ Template.group.events({
     'submit .new-member'(event) {
         // Prevent default browser from submit
         event.preventDefault();
-
+        console.log(this.admin);
         // Get values from the form
         var newMemberId = event.target.memberId.value;
         var groupId = this._id;
-        console.log(groupId);
+        console.log("html " + groupId);
         // Add new members into the group's database
         Meteor.call('groups.add_member', groupId, newMemberId, false);
 
@@ -33,7 +37,30 @@ Template.group.events({
     },
     'submit .remove-member'(event){
 
-    },
+        event.preventDefault();
+
+        var groupId = this._id;
+        var memberId = event.target.removeId.value;
+	  
+	      //creates confimation alert
+	    swal({
+        	html:true,
+	        title: "<h5>Delete Confirmation<h5>",
+	        text: "Are you sure you want to remove this member: " +memberId + "?",
+	        confirmButtonColor: '#0097a7',
+	        confirmButtonText: 'Yes',
+	        showCancelButton: true,
+	        cancelButtonText: "No",
+	        closeOnConfirm: true,
+	        closeOnCancel: true,
+	    },
+	    function(isConfirm){ //if user clicked yes
+	        if(isConfirm){
+	            //Delete Group
+	            Meteor.call('groups.add_member',groupId, memberId, true);
+	        }
+   		});
+  	},
     'submit .setIcon'(event) {
         // Prevent default browser from submit
         event.preventDefault();

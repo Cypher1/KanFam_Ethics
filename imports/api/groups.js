@@ -37,7 +37,7 @@ Meteor.methods({
             members: [this.userId],
             lists: [],
         });
-        console.log(Groups.findOne({name: groupname, admin: this.userId}));
+        console.log("new group " + Groups.findOne({_id: JoA3DvXvKkfq5msDt}));
     },
     'groups.remove_group'(groupId) {
         check(groupId, String);
