@@ -38,12 +38,10 @@ Meteor.methods({
             lists: [],
         });
     },
-    'groups.remove_group'(groupId) {
+    'groups.remove'(groupId) {
         check(groupId, String);
-
         /* Check that user is admin in group */
-        const group = Groups.findOne({name: groupId, admin: this.userId});
-
+        const group = Groups.findOne({_id: groupId, admin: this.userId});
         if (!this.userId || !group) {
             throw new Meteor.Error('not-authorized');
         }
@@ -55,7 +53,7 @@ Meteor.methods({
         check(remove,Boolean);
 
         /* Check that user is admin in group */
-        const group = Groups.findOne({name: groupId, admin: this.userId});
+        const group = Groups.findOne({_id: groupId, admin: this.userId});
         if (!this.userId || !group) {
             throw new Meteor.Error('not-authorized');
         }
@@ -77,7 +75,7 @@ Meteor.methods({
         check(remove,Boolean);
 
         /* Check that user is admin in group */
-        const group = Groups.findOne({name: groupId, admin: this.userId});
+        const group = Groups.findOne({_id: groupId, admin: this.userId});
         if (!this.userId || !group) {
             throw new Meteor.Error('not-authorized');
         }
@@ -95,32 +93,22 @@ Meteor.methods({
         check(name,String);
         check(description,String);
 
-        const group = Groups.findOne(groupId);
-        if (task.private && task.owner !== this.userId) {
-            /* If the task is private, make sure only the owner can add notes it */
+        const group = Groups.findOne({_id: groupId, admin: this.userId});
+        if (!this.userId || !group) {
             throw new Meteor.Error('not-authorized');
         }
         console.log("in edit_group");
-        Groups.update(groupId,{$set: {name: name, description: description}});
+        Groups.update(groupId,{$set: {_id: name, description: description}});
         console.log(edit);
 
-    },
-    'groups.remove'(groupId) {
-        check(groupId, String);
-        const group =  Groups.findOne(groupId);
-        if (group.owner !== this.userId) {
-            /* If the task is private, make sure only the owner can delete it */
-            throw new Meteor.Error('not-authorized');
-        }
-        Groups.remove(groupId);
     },
     'groups.edit-name'(groupId,newName){
 
         check(groupId,String);
-        const group = Groups.findOne(groupId);
-        if (group.owner !== this.userId) {
+        const group = Groups.findOne({_id: groupId, admin: this.userId});
+        if (!group) {
             throw new Meteor.Error('not-authorized');
         }
-        Groups.update(groupId,{$set: { name: newName} });
+        Groups.update(groupId,{$set: { _id: newName} });
     }
 });
