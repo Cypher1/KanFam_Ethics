@@ -20,7 +20,7 @@ Template.all_lists.helpers({
         const instance = Template.instance();//stores current instance of template
         let filter = {};
         return TaskList.find();
-    }, 
+    },
 });
 
 Template.all_lists.events({
@@ -31,7 +31,6 @@ Template.all_lists.events({
     var groupId;
     Meteor.call('task_list.insert',groupId,listName);
     event.target.text.value = '';
-
  },
  'submit .new-list-group'(event) {
     event.preventDefault();
@@ -41,7 +40,6 @@ Template.all_lists.events({
     event.target.text.value = '';
  },
   'click .delete-list'(event){
-
     event.preventDefault();
      var id = this._id;
      var lName = this.listName;
