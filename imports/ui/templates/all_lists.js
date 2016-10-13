@@ -9,10 +9,6 @@ import '../../api/task_list.js';
 
 //all_lists.js is used to to generate new lists (parent to task_list)
 
-Template.registerHelper('user', function() {
-    return Meteor.user().username || Meteor.user().profile.name;
-});
-
 Template.all_lists.onCreated(function bodyOnCreated() {
     this.state = new ReactiveDict();
     Meteor.subscribe('task_list');
@@ -24,14 +20,14 @@ Template.all_lists.helpers({
         const instance = Template.instance();//stores current instance of template
         let filter = {};
         return TaskList.find();
-    }, 
+    },
 });
 
 Template.all_lists.events({
 
-  'submit .new-list'(event) { 
+  'submit .new-list'(event) {
 
-      event.preventDefault();       
+      event.preventDefault();
       const listName = event.target.text.value;
       Meteor.call('task_list.insert',listName);
       event.target.text.value = '';
@@ -46,7 +42,7 @@ Template.all_lists.events({
   },
   'click .delete-list'(event){
 
-  		event.preventDefault();
+          event.preventDefault();
 
            var id = this._id;
            var lName = this.listName;

@@ -1,10 +1,12 @@
 <template name="group_page">
+  {{#with get_group}}
   <div class="container">
-    <h2 class="header">Name{{name}}</h2>
-    {{ get_group }}
-    {{> group}}
-    {{#each list}}
-    {{> task_list}}
-    {{/each}}
+    <br>
+    <div class="center">
+      {{>group}}
+    </div>
+    <br>
+    {{>all_lists}}
   </div>
+  {{/with}}
 </template>
