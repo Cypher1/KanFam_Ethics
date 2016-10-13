@@ -11,6 +11,10 @@ Template.group.onCreated(function () {
 Template.group.helpers({
     isOwner() {
         return this.owner === Meteor.userId();
+    },
+
+    members() {
+        return this.members;
     }
 });
 
