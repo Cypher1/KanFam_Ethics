@@ -37,6 +37,7 @@ Meteor.methods({
             members: [this.userId],
             lists: [],
         });
+        console.log("new group " + Groups.findOne({_id: JoA3DvXvKkfq5msDt}));
     },
     'groups.remove'(groupId) {
         check(groupId, String);
@@ -51,18 +52,14 @@ Meteor.methods({
         check(groupId,String);
         check(userId,String);
         check(remove,Boolean);
-
+        console.log(groupId);
+        console.log(this.userId);
         /* Check that user is admin in group */
         const group = Groups.findOne({_id: groupId, admin: this.userId});
         if (!this.userId || !group) {
             throw new Meteor.Error('not-authorized');
         }
-        if (remove && this.userId === userId) {
-            throw new Meteor.Error('not-authorized to remove admin');
-        }
         console.log("in add_admin");
-        console.log(groupId);
-        console.log(userId);
         if (remove) {
             Groups.update(groupId, {$pull: {admin: userId}});
         } else {
@@ -73,15 +70,12 @@ Meteor.methods({
         check(groupId,String);
         check(userId,String);
         check(remove,Boolean);
-
         /* Check that user is admin in group */
         const group = Groups.findOne({_id: groupId, admin: this.userId});
         if (!this.userId || !group) {
             throw new Meteor.Error('not-authorized');
         }
         console.log("in add_member");
-        console.log(groupId);
-        console.log(userId);
         if (remove) {
             Groups.update(groupId, {$pull: {members: userId}});
         } else {
@@ -106,7 +100,7 @@ Meteor.methods({
 
         check(groupId,String);
         const group = Groups.findOne({_id: groupId, admin: this.userId});
-        if (!group) {
+        if (!this.userId || !group) {
             throw new Meteor.Error('not-authorized');
         }
         Groups.update(groupId,{$set: { _id: newName} });
