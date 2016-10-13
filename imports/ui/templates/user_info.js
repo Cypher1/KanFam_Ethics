@@ -20,7 +20,6 @@ Template.user_info.onCreated(function bodyOnCreated() {
     Meteor.subscribe('tasks');
 });
 
-
 Template.user_info.helpers({
 
    timeFix (date) {
@@ -40,7 +39,6 @@ Template.user_info.helpers({
         return this.owner == Meteor.userId();
     },
       listCount(){
-      //  console.log(this._id);
         return TaskList.find({owner: Meteor.userId()}).count();
 
     },

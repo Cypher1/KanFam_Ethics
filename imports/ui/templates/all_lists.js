@@ -6,9 +6,6 @@ import { TaskList } from '../../api/task_list.js';
 import './all_lists.html';
 import './task_list.js';
 import '../../api/task_list.js';
-import './task.js';
-import '../../api/tasks.js'
-import './task_list.html';
 
 //all_lists.js is used to to generate new lists (parent to task_list)
 
