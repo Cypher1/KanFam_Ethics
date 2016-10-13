@@ -12,14 +12,10 @@ Template.group.helpers({
     isOwner() {
         return this.owner === Meteor.userId();
     },
-
-    members() {
-        return this.members;
-    }
 });
 
 Template.group.events({
-    'click .remove-group'(event) {
+    'click .remove-group'(event){
         event.preventDefault();
 
         var id = this._id;
@@ -37,15 +33,15 @@ Template.group.events({
             closeOnConfirm: true,
             closeOnCancel: true,
         },
-        function(isConfirm) { //if user clicked yes
-            if(isConfirm) {
+        function(isConfirm){ //if user clicked yes
+            if(isConfirm){
                 //Delete Group
                 Meteor.call('groups.remove',id);
                 FlowRouter.go("/groups");
             }
         });
     },
-    'submit .edit-group-name'(event) {
+    'submit .edit-group-name'(event){
         // Prevent default browser form submit
         event.preventDefault();
         // Get value from form element
@@ -102,6 +98,5 @@ Template.group.events({
 
         //Insert icon into database
         //Meteor.call('groups.')
-
     }
 });
