@@ -55,6 +55,7 @@ Meteor.methods({
             progress: 1,
             priority: false,
             archive: false,
+	    assignees: [identifier],
 
         });
     },
@@ -62,6 +63,28 @@ Meteor.methods({
         check(taskId, String);
         Meteor.call('authHelper',taskId,owner);
         Tasks.remove(taskId);
+    },
+    'tasks.addAssignee'(taskId,assign) {
+
+        check(taskId,String);
+
+        const task= Tasks.findOne(taskId);
+        if (task.private && task.owner !== this.userId) {
+            /* If the task is private, make sure only the owner can add notes it */
+            throw new Meteor.Error('not-authorized');
+        }
+        Tasks.update(taskId,{$push: { assignees : assign} });
+    },
+    'tasks.deleteAssignee'(taskId,assign) {
+
+        check(taskId,String);
+
+        const task= Tasks.findOne(taskId);
+        if (task.private && task.owner !== this.userId) {
+            /* If the task is private, make sure only the owner can add notes it */
+            throw new Meteor.Error('not-authorized');
+        }
+        Tasks.update(taskId,{$pull: { assignees : assign} });
     },
     'tasks.addNote'(taskId,notes,owner) {
         check(taskId,String);
