@@ -102,6 +102,18 @@ Template.task.events({
      });
 
   },
+  'submit .new-assign'(event) { 
+    // Prevent default browser form submit
+    event.preventDefault();
+    const assign = event.target.text.value;
+    Meteor.call('tasks.addAssignee', this._id, assign);
+  },
+  'submit .delete-assign'(event) { 
+    // Prevent default browser form submit
+    event.preventDefault();
+    const assign = event.target.text.value;
+    Meteor.call('tasks.deleteAssignee', this._id, assign);
+  },
   'submit .new-note'(event) { 
     event.preventDefault();
     const note = event.target.text.value;
