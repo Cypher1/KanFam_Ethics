@@ -48,27 +48,29 @@ Template.task.helpers({
       }
     },
 });
-  
+
 Template.task.onRendered(function(){
     $('.dropdown-task').dropdown({
         inDuration: 300,
         outDuration: 225,
         constrain_width: false, // Does not change width of dropdown to that of the activator
-        hover: true, // Activate on hover
+        hover: false, // Activate on hover
         gutter: 0, // Spacing from edge
         belowOrigin: true, // Displays dropdown below the button
     }); 
     $('.collapsible').collapsible({
        // A setting that changes the collapsible behavior to expandable instead of the default accordion style
     });
-      $('.datepicker').pickadate({
-        selectMonths: true, // Creates a dropdown to control month
-        selectYears: 15,// Creates a dropdown of 15 years to control year
-        format: 'yyyy-mm-dd',
-        formatSubmit: 'yyyy-mm-dd',
-        hiddenName: true,
-        container: 'body',
+     $('.datepicker').pickadate({
+      selectMonths: true, // Creates a dropdown to control month
+      selectYears: 16,       // Creates a dropdown of 15 years to control year
+      dateMin: [2000,01,01],
+      format: 'yyyy-mm-dd',
+      formatSubmit: 'yyyy-mm-dd',
+      hiddenName: true,
+      container: 'body',
     });
+     
 });
 
 
@@ -76,7 +78,6 @@ Template.task.onRendered(function(){
 Template.task.events({
 
   'click .delete'() {
-
       var id = this._id;
        //creates confimation alert
       swal({
@@ -92,65 +93,103 @@ Template.task.events({
      },
      function(isConfirm){ //if user clicked yes
         if(isConfirm){
-           Meteor.call('tasks.remove', id);
+          var owner;
+         if(FlowRouter.current().route.name == 'group_page'){ 
+            owner = FlowRouter.getParam('_id'); 
+         }
+          Meteor.call('tasks.remove', id,owner);
         }
      });
 
   },
   'submit .new-note'(event) { 
-    // Prevent default browser form submit
     event.preventDefault();
-    // Get value from form element
     const note = event.target.text.value;
-    // Insert a task into the collection
-    Meteor.call('tasks.addNote', this._id, note);
+
+    var owner;
+    if(FlowRouter.current().route.name == 'group_page'){ 
+            owner = FlowRouter.getParam('_id'); 
+     }
+
+    Meteor.call('tasks.addNote', this._id, note,owner);
   },
   'click .toggle-doing'(){
 
-    if(this.progress == 1){
-      this.progress++;
-    }else if(this.progress == 2){
-      this.progress--;
-    }
-     Meteor.call('tasks.setProgress',this._id, this.progress);
+   if(this.progress >= 2){
+      this.progress = 1;
+   }else{
+      this.progress = 2;
+   }
+    var owner;
+    if(FlowRouter.current().route.name == 'group_page'){ 
+            owner = FlowRouter.getParam('_id'); 
+     }
+
+     Meteor.call('tasks.setProgress',this._id, this.progress,owner);
   },
   'click .toggle-checking'(){
 
-    if(this.progress == 2){
-      this.progress++;
-    }else if(this.progress == 3){
-      this.progress--;
+    if(this.progress >= 3){
+      this.progress = 2;
+    }else{
+      this.progress = 3;
     }
-     Meteor.call('tasks.setProgress',this._id, this.progress);
+    var owner;
+    if(FlowRouter.current().route.name == 'group_page'){ 
+            owner = FlowRouter.getParam('_id'); 
+     }
+    Meteor.call('tasks.setProgress',this._id, this.progress,owner);
     
   },
   'click .toggle-done'(){
 
-    if(this.progress == 3){
-      this.progress++;
-    }else if(this.progress == 4){
-      this.progress--;
+    if(this.progress != 4){
+      this.progress = 4;
+    }else{
+      this.progress = 3;
     }
-      Meteor.call('tasks.setProgress',this._id, this.progress);
+    var owner;
+    if(FlowRouter.current().route.name == 'group_page'){ 
+            owner = FlowRouter.getParam('_id'); 
+     }
+    Meteor.call('tasks.setProgress',this._id, this.progress,owner);
   },
   'submit .edit-task'(event){
+
     event.preventDefault();
     const edit = event.target.text.value;
-    target.text.value = edit;
-    Meteor.call('tasks.editTask', this._id, edit);
+    var owner;
+    if(FlowRouter.current().route.name == 'group_page'){ 
+            owner = FlowRouter.getParam('_id'); 
+    }
+    Meteor.call('tasks.editTask', this._id,edit,owner);
   },
+
   'submit .due-date'(event){
 
     event.preventDefault();
     const temp = document.getElementById(this._id).value;
     dueDate = new Date(temp);
-    Meteor.call('tasks.setDueDate',this._id,dueDate);
+    var owner;
+    if(FlowRouter.current().route.name == 'group_page'){ 
+            owner = FlowRouter.getParam('_id'); 
+     }
+    Meteor.call('tasks.setDueDate',this._id,dueDate,owner);
+
   },
    'click .toggle-priority'() {
-    Meteor.call('tasks.setPriority', this._id, !this.priority);
+    var owner;
+    if(FlowRouter.current().route.name == 'group_page'){ 
+            owner = FlowRouter.getParam('_id'); 
+     }
+    Meteor.call('tasks.setPriority', this._id, !this.priority,owner);
   },
   'click .toggle-archive'(){
-    Meteor.call('tasks.setArchive',this._id, !this.archive);
+    var owner;
+    if(FlowRouter.current().route.name == 'group_page'){ 
+            owner = FlowRouter.getParam('_id'); 
+     }
+    Meteor.call('tasks.setArchive',this._id, !this.archive,owner);
   }
 });
 

@@ -3,10 +3,12 @@ import { Template } from 'meteor/templating';
 import { ReactiveDict } from 'meteor/reactive-dict';
 import { Tasks } from '../../api/tasks.js';
 import { TaskList } from '../../api/task_list.js';
+import { Groups } from '../../api/groups.js';
 
 import './task.js';
 import '../../api/tasks.js'
 import './task_list.html';
+import '../../api/groups.js';
 
 
 Template.task_list.rendered = function() {
@@ -27,6 +29,7 @@ Template.registerHelper('user', function() {
 Template.task_list.onCreated(function bodyOnCreated() {
     this.state = new ReactiveDict();
     Meteor.subscribe('tasks');
+    Meteor.subscribe('groups');
 });
 
 Template.task_list.helpers({
@@ -54,48 +57,49 @@ Template.task_list.helpers({
         return Tasks.find({parent: this._id}).count();
     },
     isOwner() {
-        return this.owner === Meteor.userId();
+        //if we are on the dashboard
+        if(FlowRouter.current().route.name == 'dashboard'){
+            return this.owner === Meteor.userId();
+        //if we are on a given groups page
+        }else if(FlowRouter.current().route.name == 'group_page'){
+            
+            let id = FlowRouter.getParam('_id');
+            return this.owner === id;
+        }
     },
-});
 
+});
 
 Template.task_list.events({
     'submit .new-task'(event) {
-        // Prevent default browser form submit
         event.preventDefault();
-
-        // Get value from form element
         const target = event.target;
         const text = target.text.value;
-
-        // Insert a task into the collection
-        Meteor.call('tasks.insert', text, this._id);
-
-        // Clear form
+        Meteor.call('tasks.insert', text, this._id, this.owner);
         target.text.value = '';
     },
+    'submit .setListName'(event){
 
+        event.preventDefault();
+        const listName = event.target.text.value;
+        var owner;
+        if(FlowRouter.current().route.name == 'group_page'){ 
+            owner = FlowRouter.getParam('_id'); 
+        }
+        Meteor.call('task_list.setListName',this._id,listName,owner);
+
+  },
     'change .hide-completed input'(event, instance) {
         instance.state.set('hideCompleted', event.target.checked);
     },
-
     'change .show-only-priority input'(event, instance) {
         instance.state.set('showOnlyPriority', event.target.checked);
     },
-    'submit .edit-task'(event){
-        // Prevent default browser form submit
-        event.preventDefault();
-
-        // Get value from form element
-        const target = event.target;
-        const edit = target.text.value;
-        target.text.value = edit;
-
-        // Insert a task into the collection
-        Meteor.call('tasks.editTask', this._id, edit);
-
-    },
     'click .show-archives'(event){
-       Meteor.call('task_list.showArchives',this._id,!this.showArchives);
+      var owner;
+      if(FlowRouter.current().route.name == 'group_page'){ 
+        owner = FlowRouter.getParam('_id'); 
+      }
+       Meteor.call('task_list.showArchives',this._id,!this.showArchives,owner);
     },
 });

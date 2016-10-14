@@ -18,11 +18,28 @@ if (Meteor.isServer) {
 }
 
 Meteor.methods({
-    'task_list.insert'(listName) {
-        check(listName,String);
-        if(!this.userId) {
+    'authListHelper'(listId,owner){
+        //does authorization checks for all task related stuff
+        const list = TaskList.findOne(listId);
+        var owns = this.userId;
+        if(owner != undefined){
+            owns = owner;
+        }
+        if (list.owner !== owns) {
             throw new Meteor.Error('not-authorized');
         }
+    },
+    'task_list.insert'(groupId,listName) {
+
+        check(listName,String);       
+        var owns = this.userId;  
+        if(groupId != undefined){
+            owns = groupId;
+        }
+        if(!owns){
+            throw new Meteor.Error('not-authorized');
+        }
+        
         let user = Meteor.users.findOne(this.userId);
         let identifier = user.username;
 
@@ -36,44 +53,30 @@ Meteor.methods({
         TaskList.insert({
             listName: listName,
             createdAt: new Date(),
-            owner: this.userId,
+            owner: owns,
             username: identifier,
             showArchives: false,
         });
 
     },
-    'task_list.setListName'(listId,listName) {
+    'task_list.setListName'(listId,listName,owner) {
 
         check(listId,String);
-        const list = TaskList.findOne(listId);
-
-        if (list.owner !== this.userId) {
-            /* If the task is private, make sure only the owner can delete it */
-            throw new Meteor.Error('not-authorized');
-        }
+        Meteor.call('authListHelper',listId,owner);
         TaskList.update(listId,{$set: { listName: listName} });
     },
-    'task_list.remove'(listId) {
+    'task_list.remove'(listId,owner) {
         check(listId, String);
-        const list = TaskList.findOne(listId);
-
-        if (list.owner !== this.userId) {
-            /* If the task is private, make sure only the owner can delete it */
-            throw new Meteor.Error('not-authorized');
-        }
+        Meteor.call('authListHelper',listId,owner);
         TaskList.remove(listId);
     },
-    'task_list.showArchives'(listId, showing){
+    'task_list.showArchives'(listId, showing,owner){
         check(listId,String);
         check(showing,Boolean);
-        const list = TaskList.findOne(listId);
-
-        if (list.owner !== this.userId) {
-            /* If the task is private, make sure only the owner can delete it */
-            throw new Meteor.Error('not-authorized');
-        }
+        Meteor.call('authListHelper',listId,owner);
         TaskList.update(listId,{$set: {showArchives: showing}});
-    }
+    },
+
 });
 
 
