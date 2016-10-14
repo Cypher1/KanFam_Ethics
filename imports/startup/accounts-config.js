@@ -68,7 +68,7 @@ AccountsTemplates.configure({
     termsUrl: 'terms-of-use',
 
     // Redirects
-    homeRoutePath: '/dash',
+    homeRoutePath: '/dashboard',
     redirectTimeout: 4000,
 
     // Hooks
