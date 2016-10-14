@@ -65,6 +65,24 @@
 <div class="collapsible-body grey lighten-5 black-text" style="{{#if archive}}visibility:collapse;{{/if}}">
         <p>
   <br>
+
+  <!-- This is the assignees block -->  
+  {{#unless isActiveRoute 'dashboard'}}
+  This task is assigned to: {{#each assignees}} <br> {{this}} {{/each}}
+  <form class="new-assign">
+  <input type="text" name="text" class="no-margin"
+  placeholder="Type to assign a new user" required
+  oninvalid="this.setCustomValidity('Please enter a task name')"
+  oninput="setCustomValidity('')"/>
+  </form>
+  <form class="delete-assign">
+  <input type="text" name="text" class="no-margin"
+  placeholder="Type to unassign an assigned user" required
+  oninvalid="this.setCustomValidity('Please enter a task name')"
+  oninput="setCustomValidity('')"/>
+  </form>
+  {{/unless}}
+  
   <!-- This is the "add notes" text area -->
         <div class="card-panel" style="overflow-x:auto;">
           <form class="new-note" id="tNotes">
