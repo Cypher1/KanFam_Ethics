@@ -22,7 +22,7 @@ Meteor.methods({
         //does authorization checks for all task related stuff
         const list = TaskList.findOne(listId);
         var owns = this.userId;
-        if(owner != undefined){
+        if(owner != ""){
             owns = owner;
         }
         if (list.owner !== owns) {

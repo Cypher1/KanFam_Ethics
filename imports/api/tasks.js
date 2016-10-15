@@ -21,7 +21,7 @@ Meteor.methods({
         //does authorization checks for all task related stuff
         const task = Tasks.findOne(taskId);
         var owns = this.userId;
-        if(owner != undefined) {
+        if(owner != "") {
             owns = owner;
         }
         if (task.owner !== owns) {
@@ -82,6 +82,7 @@ Meteor.methods({
         check(taskId, String);
         check(owner, String);
         check(dueDate, Date);
+        dueDate = dueDate.toISOString().slice(0,10);
         Meteor.call('authHelper', taskId, owner);
         Tasks.update(taskId, {$set: {dueDate: dueDate}});
     },
