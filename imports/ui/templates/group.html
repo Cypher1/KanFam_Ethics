@@ -46,8 +46,8 @@
                 <div class="row">
                     {{#if isActiveRoute 'group_page'}}
                     <label>Members</label>
-                    {{#each members}}
                     <form class="remove-member">
+                    {{#each members}}
                         <ul class="collapsible grey lighten-5 no-margin z-depth-0" data-collapsible="accordion" style="border-left:none;border-right:none;">
                             <li>
                                 <div class="row" style="margin:0px">
@@ -62,9 +62,9 @@
                                     </div>
                                 </div>
                             </li>
-                        </ul>
-                    </form>
+                        </ul>  
                     {{/each}}
+                    </form>
                     {{/if}}
                 </div>
                 <div class="progress no-margin">

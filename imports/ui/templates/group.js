@@ -11,16 +11,52 @@ Template.group.onCreated(function () {
 });
 
 Template.group.helpers({
-	 isOwner() {
+
+    isOwner() {
         return this.owner === Meteor.userId();
     },
 
-    members(){
-    	return this.members;
+    members() {
+        return this.members;
     }
 });
 
 Template.group.events({
+    'click .remove-group'(event) {
+
+        event.preventDefault();
+
+        var id = this._id;
+        var lName = this.name;
+
+        //creates confimation alert
+        swal({
+            html:true,
+            title: "<h5>Delete Confirmation<h5>",
+            text: "Are you sure you want to delete the group: " +lName + "?",
+            confirmButtonColor: '#0097a7',
+            confirmButtonText: 'Yes',
+            showCancelButton: true,
+            cancelButtonText: "No",
+            closeOnConfirm: true,
+            closeOnCancel: true,
+        },
+        function(isConfirm) { //if user clicked yes
+            if(isConfirm) {
+                //Delete Group
+                Meteor.call('groups.remove',id);
+                FlowRouter.go("/groups");
+            }
+        });
+    },
+    'submit .edit-group-name'(event) {
+        // Prevent default browser form submit
+        event.preventDefault();
+        // Get value from form element
+        const edit = event.target.text.value;
+        // Insert a task into the collection
+        Meteor.call('groups.edit-name', this._id, edit);
+    },
     'submit .new-member'(event) {
         // Prevent default browser from submit
         event.preventDefault();
@@ -35,32 +71,35 @@ Template.group.events({
         // Clear the form
         event.target.memberId.value = '';
     },
-    'submit .remove-member'(event){
+    'submit .remove-member'(event) {
 
         event.preventDefault();
 
         var groupId = this._id;
         var memberId = event.target.removeId.value;
-	  
-	      //creates confimation alert
-	    swal({
-        	html:true,
-	        title: "<h5>Delete Confirmation<h5>",
-	        text: "Are you sure you want to remove this member: " +memberId + "?",
-	        confirmButtonColor: '#0097a7',
-	        confirmButtonText: 'Yes',
-	        showCancelButton: true,
-	        cancelButtonText: "No",
-	        closeOnConfirm: true,
-	        closeOnCancel: true,
-	    },
-	    function(isConfirm){ //if user clicked yes
-	        if(isConfirm){
-	            //Delete Group
-	            Meteor.call('groups.add_member',groupId, memberId, true);
-	        }
-   		});
-  	},
+
+        console.log(groupId);
+        console.log("Group memberId: " + memberId + ".");
+
+        //creates confimation alert
+        swal({
+            html:true,
+            title: "<h5>Delete Confirmation<h5>",
+            text: "Are you sure you want to remove the following member(s): " +memberId + "?",
+            confirmButtonColor: '#0097a7',
+            confirmButtonText: 'Yes',
+            showCancelButton: true,
+            cancelButtonText: "No",
+            closeOnConfirm: true,
+            closeOnCancel: true,
+        },
+        function(isConfirm) { //if user clicked yes
+            if(isConfirm) {
+                //Delete Group
+                Meteor.call('groups.add_member',groupId, memberId, true);
+            }
+        });
+    },
     'submit .setIcon'(event) {
         // Prevent default browser from submit
         event.preventDefault();
