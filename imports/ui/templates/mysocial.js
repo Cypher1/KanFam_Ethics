@@ -1,3 +1,4 @@
+import './mysocial.html';
 // Simply 'inherites' helpers from AccountsTemplates
 Template.mySocial.helpers(AccountsTemplates.atSocialHelpers);
 

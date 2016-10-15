@@ -82,7 +82,7 @@ Template.task_list.events({
 
         event.preventDefault();
         const listName = event.target.text.value;
-        var owner;
+        var owner = "";
         if(FlowRouter.current().route.name == 'group_page'){ 
             owner = FlowRouter.getParam('_id'); 
         }
@@ -96,7 +96,7 @@ Template.task_list.events({
         instance.state.set('showOnlyPriority', event.target.checked);
     },
     'click .show-archives'(event){
-      var owner;
+      var owner = "";
       if(FlowRouter.current().route.name == 'group_page'){ 
         owner = FlowRouter.getParam('_id'); 
       }
