@@ -1,6 +1,10 @@
 import { Accounts } from 'meteor/accounts-base';
 import { AccountsTemplates } from 'meteor/useraccounts:core';
 
+Accounts.ui.config({
+    passwordSignupFields: 'USERNAME_AND_EMAIL',
+});
+
 function Logout() {
     // Handled by meteor, extra actions go here
 }
@@ -64,7 +68,7 @@ AccountsTemplates.configure({
     termsUrl: 'terms-of-use',
 
     // Redirects
-    homeRoutePath: '/dash',
+    homeRoutePath: '/dashboard',
     redirectTimeout: 4000,
 
     // Hooks

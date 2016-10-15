@@ -74,3 +74,10 @@ privateRoutes.route('/logout', {
         Meteor.logout();
     }
 });
+
+privateRoutes.route('/calendar', {
+    name: 'myCalendar',
+    action: function () {
+        BlazeLayout.render('mainLayout', {content: 'myCalendar'})
+    }
+})

@@ -17,18 +17,18 @@ if (Meteor.isServer) {
 }
 /* can do methods for new collection in here */
 Meteor.methods({
-    'authHelper'(taskId,owner){
+    'authHelper'(taskId, owner) {
         //does authorization checks for all task related stuff
         const task = Tasks.findOne(taskId);
         var owns = this.userId;
-        if(owner != undefined){
+        if(owner != "") {
             owns = owner;
         }
         if (task.owner !== owns) {
             throw new Meteor.Error('not-authorized');
         }
     },
-    'tasks.insert'(text, task_list_id,task_list_owner) {
+    'tasks.insert'(text, task_list_id, task_list_owner) {
         check(text, String);
         /* Make sure the user is logged in before inserting a task */
         if (!this.userId) {
@@ -58,48 +58,52 @@ Meteor.methods({
 
         });
     },
-    'tasks.remove'(taskId,owner) { 
+    'tasks.remove'(taskId, owner) {
         check(taskId, String);
-        Meteor.call('authHelper',taskId,owner);
+        Meteor.call('authHelper', taskId, owner);
         Tasks.remove(taskId);
     },
-    'tasks.addNote'(taskId,notes,owner) {
-        check(taskId,String);
-        Meteor.call('authHelper',taskId,owner);
-        Tasks.update(taskId,{$set: { taskNotes: notes} });
-    }, 
-    'tasks.editTask'(taskId,edit,owner) {
-        check(taskId,String);
-        Meteor.call('authHelper',taskId,owner);
-        Tasks.update(taskId,{$set: { text: edit} });
+    'tasks.addNote'(taskId, notes, owner) {
+        check(taskId, String);
+        Meteor.call('authHelper', taskId, owner);
+        Tasks.update(taskId, {$set: { taskNotes: notes} });
+    },
+    'tasks.editTask'(taskId, edit, owner) {
+        check(taskId, String);
+        Meteor.call('authHelper', taskId, owner);
+        Tasks.update(taskId, {$set: { text: edit} });
     },
     'tasks.deleteWithList'(listId) {
-        //Removes all the tasks in a list 
-        check(listId,String);
+        //Removes all the tasks in a list
+        check(listId, String);
         Tasks.remove({parent: listId});
     },
-    'tasks.setDueDate'(taskId,dueDate,owner) {
-        check(taskId,String);
+    'tasks.setDueDate'(taskId, dueDate, owner) {
+        check(taskId, String);
+        check(owner, String);
+        check(dueDate, Date);
         dueDate = dueDate.toISOString().slice(0,10);
-        check(taskId,String);
-        Meteor.call('authHelper',taskId,owner);
-        Tasks.update(taskId,{$set: {dueDate: dueDate}});
+        Meteor.call('authHelper', taskId, owner);
+        Tasks.update(taskId, {$set: {dueDate: dueDate}});
     },
-    'tasks.setProgress'(taskId,progress,owner) {
-        check(taskId,String);
-        Meteor.call('authHelper',taskId,owner);
-        Tasks.update(taskId,{$set:{progress: progress}});
-    },
-    'tasks.setPriority'(taskId, newPriority,owner) {
+    'tasks.setProgress'(taskId, progress, owner) {
         check(taskId, String);
+        check(owner, String);
+        Meteor.call('authHelper', taskId, owner);
+        Tasks.update(taskId, {$set:{progress: progress}});
+    },
+    'tasks.setPriority'(taskId, newPriority, owner) {
+        check(taskId, String);
+        check(owner, String);
         check(newPriority, Boolean);
-        Meteor.call('authHelper',taskId,owner);
-        Tasks.update(taskId,{$set:{priority:newPriority}});
+        Meteor.call('authHelper', taskId, owner);
+        Tasks.update(taskId, {$set:{priority:newPriority}});
     },
-    'tasks.setArchive'(taskId,newArchive,owner){
+    'tasks.setArchive'(taskId, newArchive, owner) {
         check(taskId, String);
+        check(owner, String);
         check(newArchive, Boolean);
-        Meteor.call('authHelper',taskId,owner);
-        Tasks.update(taskId,{$set:{archive:newArchive}});
-    }   
+        Meteor.call('authHelper', taskId, owner);
+        Tasks.update(taskId, {$set:{archive:newArchive}});
+    }
 });

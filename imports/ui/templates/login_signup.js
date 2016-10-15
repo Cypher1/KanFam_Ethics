@@ -1,4 +1,4 @@
-//import "./login_signup.html"
+import './login_signup.html';
 // Simply 'inherites' helpers from AccountsTemplates
 Template.loginSignup.helpers(AccountsTemplates.atFormHelpers);
 
