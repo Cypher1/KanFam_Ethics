@@ -78,6 +78,7 @@ Template.group.events({
         var groupId = this._id;
         var memberId = event.target.removeId.value;
 
+
         console.log(groupId);
         console.log("Group memberId: " + memberId + ".");
 
