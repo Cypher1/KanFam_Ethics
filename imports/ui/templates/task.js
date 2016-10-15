@@ -192,7 +192,3 @@ Template.task.events({
     Meteor.call('tasks.setArchive',this._id, !this.archive,owner);
   }
 });
-
-
-
-
