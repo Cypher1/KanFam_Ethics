@@ -38,7 +38,7 @@ Template.calendar.onRendered( () => {
     autoruns: [],
     // Standard fullcalendar options
     height: 700,
-    hiddenDays: [ 0 ],
+    hiddenDays: [],
     slotDuration: '01:00:00',
     minTime: '08:00:00',
     maxTime: '19:00:00',
