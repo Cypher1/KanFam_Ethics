@@ -59,7 +59,7 @@ Template.all_lists.events({
      },
      function(isConfirm){ //if user clicked yes
         if(isConfirm){
-          var owner;
+          var owner = "";
           if(FlowRouter.current().route.name == 'group_page'){ 
             owner = FlowRouter.getParam('_id'); 
           }

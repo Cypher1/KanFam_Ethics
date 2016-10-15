@@ -82,6 +82,7 @@ Meteor.methods({
         check(taskId, String);
         check(owner, String);
         check(dueDate, Date);
+
         dueDate = dueDate.toISOString().slice(0,10);
         Meteor.call('authHelper', taskId, owner);
         Tasks.update(taskId, {$set: {dueDate: dueDate}});
