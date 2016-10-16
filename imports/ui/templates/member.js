@@ -17,13 +17,8 @@ Template.member.helpers({
 Template.member.events({
 	'submit .remove-member'(event) {
         event.preventDefault();
-        console.log(this);
         var groupId = Template.parentData(1)._id;
         var memberId = event.target.removeId.value;
-
-
-        console.log("GroupId: "+groupId);
-        console.log("Group memberId: " + memberId + ".");
 
         //creates confimation alert
         swal({
