@@ -3,11 +3,7 @@ import { Template } from 'meteor/templating';
 import { Groups } from '../../api/groups.js';
 
 import './group.html';
-<<<<<<< 7e3e0bff6ca900e5eadca914df653fe8a35d5a13
-=======
 import './member.js'
-import '../../api/groups.js';
->>>>>>> API for adding and removing users is complete
 
 Template.group.onCreated(function () {
     Meteor.subscribe('groups');
