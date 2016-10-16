@@ -13,8 +13,11 @@ Template.group.onCreated(function () {
 
 Template.group.helpers({
 
-    isOwner() {
-        return this.owner === Meteor.userId();
+    isPartOf() {
+        console.log(Groups.findOne({_id: this._id}));
+        console.log("userID " + Meteor.user().username);
+        var group = Groups.findOne({_id: this._id, members: Meteor.user().username});
+        return (typeof group != "undefined") ? true : false;
     },
 
     members() {
