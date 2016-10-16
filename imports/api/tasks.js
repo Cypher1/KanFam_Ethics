@@ -30,6 +30,8 @@ Meteor.methods({
     },
     'tasks.insert'(text, task_list_id, task_list_owner) {
         check(text, String);
+        check(task_list_id, String);
+        check(task_list_owner, String);
         /* Make sure the user is logged in before inserting a task */
         if (!this.userId) {
             throw new Meteor.Error('not-authorized');
@@ -44,7 +46,6 @@ Meteor.methods({
                 identifier = user.email;
             }
         }
-
         Tasks.insert({
             text: text,
             createdAt: new Date(),
