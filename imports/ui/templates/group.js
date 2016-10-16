@@ -53,12 +53,8 @@ Template.group.events({
         event.preventDefault();
         // Get values from the form
         var newMemberId = event.target.memberId.value;
-        <<<<<<< 03916b5d3b564bee5f89f2a16c54089a3689f031
-            var groupId = this._id;
-        =======
-            >>>>>>> Major bug fixes for group privacy and stopping the template code hitting the db so much
-            // Add new members into the group's database
-            Meteor.call('groups.add_member', this._id, newMemberId, false);
+        // Add new members into the group's database
+        Meteor.call('groups.add_member', this._id, newMemberId, false);
 
         // Clear the form
         event.target.memberId.value = '';
@@ -95,16 +91,7 @@ Template.group.events({
         // Get the group icon
         var icon = event.target.icon.value;
 
-        <<<<<<< 03916b5d3b564bee5f89f2a16c54089a3689f031
-            // Convert to base64 to store on the database
-            // TO DO: find a way to convert
-
-            //Insert icon into database
-            //Meteor.call('groups.')
-            =======
-            // TODO: store icon in db as BSON
-
-            //Meteor.call('groups.setIcon')
-            >>>>>>> Major bug fixes for group privacy and stopping the template code hitting the db so much
+        // TODO: store icon in db as BSON
+        //Meteor.call('groups.setIcon')
     }
 });

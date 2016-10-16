@@ -7,7 +7,6 @@ import './all_groups.html';
 import './group.js';
 
 Template.all_groups.onCreated(function bodyOnCreated() {
-  this.state = new ReactiveDict();
   Meteor.subscribe('groups');
 });
 
@@ -17,7 +16,7 @@ Template.all_groups.helpers({
   },
   groups: function () {
     return Groups.find();
-  }
+  },
 });
 
 Template.all_groups.events({
