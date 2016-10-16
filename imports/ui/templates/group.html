@@ -1,5 +1,4 @@
 <template name="group">
-    {{#if isOwner}}
     <div class="card">
         <div class="card-stacked">
             <div class="card-content">
@@ -27,43 +26,20 @@
                         <a href="/groups/{{_id}}">Go to group</a>
                     </div>
                     {{/unless}}
-                    <div class="col right">
-                        {{#if muted}}
-                        <a><i class="material-icons">volume_off</i></a>
-                        {{else}}
-                        <a><i class="material-icons">volume_up</i></a>
-                        {{/if}}
-                    </div>
                 </div>
                 <div class="row">
-                {{#if isActiveRoute 'group_page'}}
+                    {{#if isActiveRoute 'group_page'}}
                     <form class="new-member">
                         <label>Add Member</label>
                         <input placeholder="Enter a userID" name="memberId" text="text"/>
                     </form>
-                {{/if}}
+                    {{/if}}
                 </div>
                 <div class="row">
                     {{#if isActiveRoute 'group_page'}}
                     <label>Members</label>
                     {{#each members}}
-                    <form class="remove-member">
-                        <ul class="collapsible grey lighten-5 no-margin z-depth-0" data-collapsible="accordion" style="border-left:none;border-right:none;">
-                            <li>
-                                <div class="row" style="margin:0px">
-                                    <div class="col s11">
-                                        <input disabled type="text" class="grey-text" name="removeId" value="{{this}}" style="border: none; font-size:13px; padding-left:3px; padding-top: 3px; padding-bottom: 3px;"/>
-                                    </div>
-                                    <div class="col s1">
-                                        <br>
-                                        <button type="submit" style="background:none!important; border:none; padding:0!important;">
-                                        <i class="remove-member tiny material-icons align right">clear</i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </form>
+                    {{>member}}
                     {{/each}}
                     {{/if}}
                 </div>
@@ -73,5 +49,4 @@
             </div>
         </div>
     </div>
-    {{/if}}
 </template>

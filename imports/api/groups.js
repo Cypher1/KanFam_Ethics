@@ -7,12 +7,7 @@ export const Groups = new Mongo.Collection('groups');
 if (Meteor.isServer) {
     /* This code only runs on the server */
     Meteor.publish('groups', function groupsPublication() {
-        let publicGroups = {private: {$ne: true}};
-        if(!this.userId) {
-            return Groups.find(publicGroups);
-        }
-        let myGroups = {members: this.userId};
-        return Groups.find({$or: [myGroups, publicGroups]});
+        return Groups.find({members: this.userId});
     });
 }
 
@@ -58,6 +53,10 @@ Meteor.methods({
         if (!this.userId || !group) {
             throw new Meteor.Error('not-authorized');
         }
+        const user = Meteor.users.findOne({_id: userId});
+        if (!user) {
+            throw new Meteor.Error('user does not exist');
+        }
         console.log("in add_admin");
         if (remove) {
             Groups.update(groupId, {$pull: {admin: userId}});
@@ -74,10 +73,13 @@ Meteor.methods({
         if (!this.userId || !group) {
             throw new Meteor.Error('not-authorized');
         }
-        console.log("in add_member");
         if (remove) {
             Groups.update(groupId, {$pull: {members: userId}});
         } else {
+            const user = Meteor.users.findOne({_id: userId});
+            if (!user) {
+                throw new Meteor.Error('user does not exist');
+            }
             Groups.update(groupId, {$addToSet: {members: userId}});
         }
     },
@@ -90,13 +92,9 @@ Meteor.methods({
         if (!this.userId || !group) {
             throw new Meteor.Error('not-authorized');
         }
-        console.log("in edit_group");
         Groups.update(groupId,{$set: {_id: name, description: description}});
-        console.log(edit);
-
     },
-    'groups.edit-name'(groupId,newName){
-
+    'groups.edit-name'(groupId,newName) {
         check(groupId,String);
         const group = Groups.findOne({_id: groupId, admin: this.userId});
         if (!this.userId || !group) {
