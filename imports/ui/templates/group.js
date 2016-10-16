@@ -4,6 +4,7 @@ import { Template } from 'meteor/templating';
 import { Groups } from '../../api/groups.js';
 
 import './group.html';
+import './member.js'
 import '../../api/groups.js';
 
 Template.group.onCreated(function () {
@@ -70,36 +71,6 @@ Template.group.events({
 
         // Clear the form
         event.target.memberId.value = '';
-    },
-    'submit .remove-member'(event) {
-
-        event.preventDefault();
-
-        var groupId = this._id;
-        var memberId = event.target.removeId.value;
-
-
-        console.log(groupId);
-        console.log("Group memberId: " + memberId + ".");
-
-        //creates confimation alert
-        swal({
-            html:true,
-            title: "<h5>Delete Confirmation<h5>",
-            text: "Are you sure you want to remove the following member(s): " +memberId + "?",
-            confirmButtonColor: '#0097a7',
-            confirmButtonText: 'Yes',
-            showCancelButton: true,
-            cancelButtonText: "No",
-            closeOnConfirm: true,
-            closeOnCancel: true,
-        },
-        function(isConfirm) { //if user clicked yes
-            if(isConfirm) {
-                //Delete Group
-                Meteor.call('groups.add_member',groupId, memberId, true);
-            }
-        });
     },
     'submit .setIcon'(event) {
         // Prevent default browser from submit

@@ -12,3 +12,4 @@ import './myOauth.html';
 import './myOauth.js';
 import './all_groups.js';
 import './user_info.js';
+import './member.js';
