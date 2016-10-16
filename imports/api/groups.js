@@ -69,7 +69,6 @@ Meteor.methods({
         if (!this.userId || !group) {
             throw new Meteor.Error('not-authorized');
         }
-        console.log("in add_member");
         if (remove) {
             Groups.update(groupId, {$pull: {members: userId}});
         } else {

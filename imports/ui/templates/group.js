@@ -50,7 +50,6 @@ Template.group.events({
     'submit .new-member'(event) {
         // Prevent default browser from submit
         event.preventDefault();
-        console.log(this.admin);
         // Get values from the form
         var newMemberId = event.target.memberId.value;
         // Add new members into the group's database
