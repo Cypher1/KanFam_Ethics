@@ -53,6 +53,10 @@ Meteor.methods({
         if (!this.userId || !group) {
             throw new Meteor.Error('not-authorized');
         }
+        const user = Meteor.users.findOne({_id: userId});
+        if (!user) {
+            throw new Meteor.Error('user does not exist');
+        }
         console.log("in add_admin");
         if (remove) {
             Groups.update(groupId, {$pull: {admin: userId}});
@@ -72,6 +76,10 @@ Meteor.methods({
         if (remove) {
             Groups.update(groupId, {$pull: {members: userId}});
         } else {
+            const user = Meteor.users.findOne({_id: userId});
+            if (!user) {
+                throw new Meteor.Error('user does not exist');
+            }
             Groups.update(groupId, {$addToSet: {members: userId}});
         }
     },
