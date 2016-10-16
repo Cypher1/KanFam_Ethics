@@ -93,7 +93,7 @@ Template.task.events({
      },
      function(isConfirm){ //if user clicked yes
         if(isConfirm){
-          var owner;
+          var owner = "";
          if(FlowRouter.current().route.name == 'group_page'){ 
             owner = FlowRouter.getParam('_id'); 
          }
@@ -106,7 +106,7 @@ Template.task.events({
     event.preventDefault();
     const note = event.target.text.value;
 
-    var owner;
+    var owner = "";
     if(FlowRouter.current().route.name == 'group_page'){ 
             owner = FlowRouter.getParam('_id'); 
      }
@@ -120,7 +120,7 @@ Template.task.events({
    }else{
       this.progress = 2;
    }
-    var owner;
+    var owner = "";
     if(FlowRouter.current().route.name == 'group_page'){ 
             owner = FlowRouter.getParam('_id'); 
      }
@@ -134,7 +134,7 @@ Template.task.events({
     }else{
       this.progress = 3;
     }
-    var owner;
+    var owner = "";
     if(FlowRouter.current().route.name == 'group_page'){ 
             owner = FlowRouter.getParam('_id'); 
      }
@@ -148,7 +148,7 @@ Template.task.events({
     }else{
       this.progress = 3;
     }
-    var owner;
+    var owner = "";
     if(FlowRouter.current().route.name == 'group_page'){ 
             owner = FlowRouter.getParam('_id'); 
      }
@@ -158,7 +158,7 @@ Template.task.events({
 
     event.preventDefault();
     const edit = event.target.text.value;
-    var owner;
+    var owner = "";
     if(FlowRouter.current().route.name == 'group_page'){ 
             owner = FlowRouter.getParam('_id'); 
     }
@@ -170,7 +170,7 @@ Template.task.events({
     event.preventDefault();
     const temp = document.getElementById(this._id).value;
     dueDate = new Date(temp);
-    var owner;
+    var owner = "";
     if(FlowRouter.current().route.name == 'group_page'){ 
             owner = FlowRouter.getParam('_id'); 
      }
@@ -178,21 +178,17 @@ Template.task.events({
 
   },
    'click .toggle-priority'() {
-    var owner;
+    var owner = "";
     if(FlowRouter.current().route.name == 'group_page'){ 
             owner = FlowRouter.getParam('_id'); 
      }
     Meteor.call('tasks.setPriority', this._id, !this.priority,owner);
   },
   'click .toggle-archive'(){
-    var owner;
+    var owner = "";
     if(FlowRouter.current().route.name == 'group_page'){ 
             owner = FlowRouter.getParam('_id'); 
      }
     Meteor.call('tasks.setArchive',this._id, !this.archive,owner);
   }
 });
-
-
-
-

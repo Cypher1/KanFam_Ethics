@@ -35,5 +35,6 @@ fortawesome:fontawesome
 browser-policy@1.0.9
 zimme:active-route
 kevohagan:sweetalert
+gquemart:meteor-reactive-fullcalendar
 email
 meteorhacks:ssr
