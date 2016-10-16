@@ -10,4 +10,3 @@ import './myOauth.js';
 import './calendar.js';
 import './all_groups.js';
 import './user_info.js';
-import './member.js';
