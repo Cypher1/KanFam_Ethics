@@ -1,5 +1,4 @@
 <template name="group">
-    {{#if isPartOf}}
     <div class="card">
         <div class="card-stacked">
             <div class="card-content">
@@ -27,13 +26,6 @@
                         <a href="/groups/{{_id}}">Go to group</a>
                     </div>
                     {{/unless}}
-                    <div class="col right">
-                        {{#if muted}}
-                        <a><i class="material-icons">volume_off</i></a>
-                        {{else}}
-                        <a><i class="material-icons">volume_up</i></a>
-                        {{/if}}
-                    </div>
                 </div>
                 <div class="row">
                     {{#if isActiveRoute 'group_page'}}
@@ -73,5 +65,4 @@
             </div>
         </div>
     </div>
-    {{/if}}
 </template>

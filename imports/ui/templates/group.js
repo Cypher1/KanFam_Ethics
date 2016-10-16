@@ -16,17 +16,15 @@ Template.group.helpers({
 });
 
 Template.group.events({
-    'click .remove-group'(event){
+    'click .remove-group'(event) {
         event.preventDefault();
-
-        var id = this._id;
-        var lName = this.name;
+        var group_name = this.name;
 
         //creates confimation alert
         swal({
             html:true,
             title: "<h5>Delete Confirmation<h5>",
-            text: "Are you sure you want to delete the group: " +lName + "?",
+            text: "Are you sure you want to delete the group: " +group_name+ "?",
             confirmButtonColor: '#0097a7',
             confirmButtonText: 'Yes',
             showCancelButton: true,
@@ -34,15 +32,15 @@ Template.group.events({
             closeOnConfirm: true,
             closeOnCancel: true,
         },
-        function(isConfirm){ //if user clicked yes
-            if(isConfirm){
+        function(isConfirm) { //if user clicked yes
+            if(isConfirm) {
                 //Delete Group
-                Meteor.call('groups.remove',id);
+                Meteor.call('groups.remove',this._id);
                 FlowRouter.go("/groups");
             }
         });
     },
-    'submit .edit-group-name'(event){
+    'submit .edit-group-name'(event) {
         // Prevent default browser form submit
         event.preventDefault();
         // Get value from form element
@@ -55,9 +53,12 @@ Template.group.events({
         event.preventDefault();
         // Get values from the form
         var newMemberId = event.target.memberId.value;
-        var groupId = this._id;
-        // Add new members into the group's database
-        Meteor.call('groups.add_member', groupId, newMemberId, false);
+        <<<<<<< 03916b5d3b564bee5f89f2a16c54089a3689f031
+            var groupId = this._id;
+        =======
+            >>>>>>> Major bug fixes for group privacy and stopping the template code hitting the db so much
+            // Add new members into the group's database
+            Meteor.call('groups.add_member', this._id, newMemberId, false);
 
         // Clear the form
         event.target.memberId.value = '';
@@ -94,10 +95,16 @@ Template.group.events({
         // Get the group icon
         var icon = event.target.icon.value;
 
-        // Convert to base64 to store on the database
-        // TO DO: find a way to convert
+        <<<<<<< 03916b5d3b564bee5f89f2a16c54089a3689f031
+            // Convert to base64 to store on the database
+            // TO DO: find a way to convert
 
-        //Insert icon into database
-        //Meteor.call('groups.')
+            //Insert icon into database
+            //Meteor.call('groups.')
+            =======
+            // TODO: store icon in db as BSON
+
+            //Meteor.call('groups.setIcon')
+            >>>>>>> Major bug fixes for group privacy and stopping the template code hitting the db so much
     }
 });
