@@ -1,5 +1,4 @@
 <template name="group">
-    {{#if isPartOf}}
     <div class="card">
         <div class="card-stacked">
             <div class="card-content">
@@ -27,28 +26,21 @@
                         <a href="/groups/{{_id}}">Go to group</a>
                     </div>
                     {{/unless}}
-                    <div class="col right">
-                        {{#if muted}}
-                        <a><i class="material-icons">volume_off</i></a>
-                        {{else}}
-                        <a><i class="material-icons">volume_up</i></a>
-                        {{/if}}
-                    </div>
                 </div>
                 <div class="row">
-                {{#if isActiveRoute 'group_page'}}
+                    {{#if isActiveRoute 'group_page'}}
                     <form class="new-member">
                         <label>Add Member</label>
                         <input placeholder="Enter a userID" name="memberId" text="text"/>
                     </form>
-                {{/if}}
+                    {{/if}}
                 </div>
                 <div class="row">
                     {{#if isActiveRoute 'group_page'}}
-                        <label>Members</label>
-                        {{#each members}}
-                            {{>member}}
-                        {{/each}}
+                    <label>Members</label>
+                    {{#each members}}
+                    {{>member}}
+                    {{/each}}
                     {{/if}}
                 </div>
                 <div class="progress no-margin">
@@ -57,5 +49,4 @@
             </div>
         </div>
     </div>
-    {{/if}}
 </template>

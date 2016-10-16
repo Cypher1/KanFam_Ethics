@@ -7,12 +7,7 @@ export const Groups = new Mongo.Collection('groups');
 if (Meteor.isServer) {
     /* This code only runs on the server */
     Meteor.publish('groups', function groupsPublication() {
-        let publicGroups = {private: {$ne: true}};
-        if(!this.userId) {
-            return Groups.find(publicGroups);
-        }
-        let myGroups = {members: this.userId};
-        return Groups.find({$or: [myGroups, publicGroups]});
+        return Groups.find({members: this.userId});
     });
 }
 
@@ -34,7 +29,7 @@ Meteor.methods({
             createdAt: new Date(),
             owner: this.userId,
             admin: [this.userId],
-            members: [user.username],
+            members: [this.userId],
             lists: [],
         });
         console.log("new group " + Groups.findOne({name: groupname}).members);
@@ -91,13 +86,9 @@ Meteor.methods({
         if (!this.userId || !group) {
             throw new Meteor.Error('not-authorized');
         }
-        console.log("in edit_group");
         Groups.update(groupId,{$set: {_id: name, description: description}});
-        console.log(edit);
-
     },
-    'groups.edit-name'(groupId,newName){
-
+    'groups.edit-name'(groupId,newName) {
         check(groupId,String);
         const group = Groups.findOne({_id: groupId, admin: this.userId});
         if (!this.userId || !group) {
