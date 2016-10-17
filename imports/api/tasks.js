@@ -1,18 +1,20 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
+import { Groups } from './groups.js';
 
 export const Tasks = new Mongo.Collection('tasks');
 
 if (Meteor.isServer) {
     /* This code only runs on the server */
     Meteor.publish('tasks', function tasksPublication() {
-        let publicTasks = {private: {$ne: true}};
         if(!this.userId) {
-            return Tasks.find(publicTasks);
+            throw new Meteor.Error('not logged in');
         }
-        let myTasks = {owner: this.userId};
-        return Tasks.find({$or: [myTasks, publicTasks]});
+        let mygroups = Groups.find({'members':this.userId});
+        let mygroup_ids = mygroups.fetch().map(function(group) {return group._id;});
+        mygroup_ids.push(this.userId);
+        return Tasks.find({owner: {$in: mygroup_ids}});
     });
 }
 /* can do methods for new collection in here */
