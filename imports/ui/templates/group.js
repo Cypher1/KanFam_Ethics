@@ -5,7 +5,6 @@ import { Groups } from '../../api/groups.js';
 
 import './group.html';
 import './member.js'
-import '../../api/groups.js';
 
 Template.group.onCreated(function () {
     Meteor.subscribe('groups');

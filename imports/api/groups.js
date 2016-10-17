@@ -41,6 +41,7 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
         Groups.remove(groupId);
+        FlowRouter.go('/groups');
     },
     'groups.add_admin'(groupId, userId, remove) {
         check(groupId,String);
@@ -75,6 +76,9 @@ Meteor.methods({
         }
         if (remove) {
             Groups.update(groupId, {$pull: {members: userId}});
+            if(this.userId == userId) {
+                FlowRouter.go('/groups');
+            }
         } else {
             const user = Meteor.users.findOne({_id: userId});
             if (!user) {

@@ -9,9 +9,7 @@
                                 <input class=" black-text" name="text" type="text" style="font-weight:bold;border:none;padding-left:0px;font-size:20px;" required oninvalid="this.setCustomValidity('Please enter a group name')" oninput="setCustomValidity('')" value="{{name}}"/>
                             </form>
                         </div>
-                        {{#unless isActiveRoute 'group_page'}}
                         <i class="remove-group tiny material-icons align right">clear</i>
-                        {{/unless}}
                         <img class="right z-depth-1" src="/resources/house.jpg" width="60" height="60">
                     </div>
                 </span>
