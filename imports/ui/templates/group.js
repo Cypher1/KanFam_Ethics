@@ -1,12 +1,14 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Groups } from '../../api/groups.js';
+import { Tasks } from '../../api/tasks.js';
 
 import './group.html';
 import './member.js'
 
 Template.group.onCreated(function () {
     Meteor.subscribe('groups');
+    Meteor.subscribe('tasks');
 });
 
 Template.group.helpers({
@@ -15,6 +17,19 @@ Template.group.helpers({
     },
     is_admin() {
         return this.admin.indexOf(Meteor.user()._id) > -1;
+    },
+    'done_tasks_percentage': function() {
+        let tasks = Tasks.find({owner: this._id}).fetch();
+        let total = 0;
+        let done = 0;
+        for(i in tasks) {
+            console.log(tasks[i]);
+            total += 1.0;
+            if(tasks[i].progress == 4) {// THERE SHOULD BE A GLOBAL FOR THIS
+                done += 1.0;
+            }
+        }
+        return 100*done/total;
     }
 });
 
