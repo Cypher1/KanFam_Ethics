@@ -22,3 +22,5 @@ Template.group_page.helpers({
 Template.group_page.onRendered(function () {
 });
 
+Template.group_page.events({
+});
