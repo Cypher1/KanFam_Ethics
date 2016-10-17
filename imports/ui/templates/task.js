@@ -113,12 +113,18 @@ Template.task.events({
 
     Meteor.call('tasks.addNote', this._id, note,owner);
   },
+  'click toggle-todo'(){
+    console.log(this.progress);
+    if(this.progress > 1){
+      this.progress = 1;
+    }
+  },
   'click .toggle-doing'(){
 
-   if(this.progress >= 2){
-      this.progress = 1;
-   }else{
+    if(this.progress > 2 || this.progress == 1){
       this.progress = 2;
+   }else{
+      this.progress = 1;
    }
     var owner = "";
     if(FlowRouter.current().route.name == 'group_page'){ 
@@ -128,11 +134,10 @@ Template.task.events({
      Meteor.call('tasks.setProgress',this._id, this.progress,owner);
   },
   'click .toggle-checking'(){
-
-    if(this.progress >= 3){
-      this.progress = 2;
-    }else{
+    if(this.progress > 3 || this.progress <= 2){
       this.progress = 3;
+    }else{
+      this.progress = 2;
     }
     var owner = "";
     if(FlowRouter.current().route.name == 'group_page'){ 
