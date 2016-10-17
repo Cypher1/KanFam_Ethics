@@ -23,7 +23,6 @@ Template.group.helpers({
         let total = 0;
         let done = 0;
         for(i in tasks) {
-            console.log(tasks[i]);
             total += 1.0;
             if(tasks[i].progress == 4) {// THERE SHOULD BE A GLOBAL FOR THIS
                 done += 1.0;
