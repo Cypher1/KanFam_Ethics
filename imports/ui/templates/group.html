@@ -9,7 +9,9 @@
                                 <input class=" black-text" name="text" type="text" style="font-weight:bold;border:none;padding-left:0px;font-size:20px;" required oninvalid="this.setCustomValidity('Please enter a group name')" oninput="setCustomValidity('')" value="{{name}}"/>
                             </form>
                         </div>
+                        {{#if is_admin}}
                         <i class="remove-group tiny material-icons align right">clear</i>
+                        {{/if}}
                         <img class="right z-depth-1" src="/resources/house.jpg" width="60" height="60">
                     </div>
                 </span>
@@ -18,23 +20,25 @@
                         <p class="flow-text left" style="font-size:15px">{{description}}</p>
                     </div>
                 </div>
+                {{#unless isActiveRoute 'group_page'}}
                 <div class="row">
-                    {{#unless isActiveRoute 'group_page'}}
                     <div class="col s4">
                         <a href="/groups/{{_id}}">Go to group</a>
                     </div>
-                    {{/unless}}
                 </div>
+                {{/unless}}
+                {{#if is_admin}}
+                {{#if isActiveRoute 'group_page'}}
                 <div class="row">
-                    {{#if isActiveRoute 'group_page'}}
                     <form class="new-member">
                         <label>Add Member</label>
                         <input placeholder="Enter a userID" name="memberId" text="text"/>
                     </form>
-                    {{/if}}
                 </div>
+                {{/if}}
+                {{/if}}
+                {{#if isActiveRoute 'group_page'}}
                 <div class="row">
-                    {{#if isActiveRoute 'group_page'}}
                     <label>Members</label>
                     {{#each members}}
                     <form class="remove-member">
@@ -55,8 +59,8 @@
                         </ul>
                     </form>
                     {{/each}}
-                    {{/if}}
                 </div>
+                {{/if}}
                 <div class="progress no-margin">
                     <div class="determinate" style="width: {{done_tasks_percentage}}.999%"></div>
                 </div>

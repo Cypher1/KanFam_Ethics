@@ -72,7 +72,7 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
         if (remove) {
-            Groups.update(groupId, {$pull: {members: userId}});
+            Groups.update(groupId, {$pull: {members: userId}, $pull: {admin: userId}});
             if(this.userId == userId) {
                 FlowRouter.go('/groups');
             }

@@ -13,12 +13,16 @@ Template.group.helpers({
     isOwner() {
         return this.owner === Meteor.userId();
     },
+    is_admin() {
+        return this.admin.indexOf(Meteor.user()._id) > -1;
+    }
 });
 
 Template.group.events({
     'click .remove-group'(event) {
         event.preventDefault();
         var group_name = this.name;
+        var group_id = this._id;
 
         //creates confimation alert
         swal({
@@ -35,7 +39,7 @@ Template.group.events({
         function(isConfirm) { //if user clicked yes
             if(isConfirm) {
                 //Delete Group
-                Meteor.call('groups.remove',this._id);
+                Meteor.call('groups.remove',group_id);
                 FlowRouter.go("/groups");
             }
         });
