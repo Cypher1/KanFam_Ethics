@@ -20,6 +20,8 @@ if (Meteor.isServer) {
 
     Meteor.methods({
         'authListHelper'(listId,owner) {
+            check(listId,String);
+            check(owner,String);
             //does authorization checks for all task related stuff
             const list = TaskList.findOne(listId);
             var owns = this.userId;
@@ -31,7 +33,7 @@ if (Meteor.isServer) {
             }
         },
         'task_list.insert'(groupId,listName) {
-
+            check(groupId,String);
             check(listName,String);
             var owns = this.userId;
             if(groupId != undefined) {
@@ -61,8 +63,8 @@ if (Meteor.isServer) {
 
         },
         'task_list.setListName'(listId,listName,owner) {
-
             check(listId,String);
+            check(listName,String);
             Meteor.call('authListHelper',listId,owner);
             TaskList.update(listId,{$set: { listName: listName} });
         },
