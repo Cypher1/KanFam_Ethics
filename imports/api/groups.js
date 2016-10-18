@@ -52,7 +52,7 @@ Meteor.methods({
         if (!this.userId || !group) {
             throw new Meteor.Error('not-authorized');
         }
-        const user = Meteor.users.findOne({_id: userId});
+        const user = Meteor.users.findOne(userId);
         if (!user) {
             throw new Meteor.Error('user does not exist');
         }
@@ -77,7 +77,7 @@ Meteor.methods({
                 FlowRouter.go('/groups');
             }
         } else {
-            const user = Meteor.users.findOne({_id: userId});
+            const user = Meteor.users.findOne(userId);
             if (!user) {
                 throw new Meteor.Error('user does not exist');
             }

@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 import { Groups } from './groups.js';
+import './helpers.js';
 
 export const TaskList = new Mongo.Collection('task_list');
 
@@ -41,16 +42,7 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
 
-        let user = Meteor.users.findOne(this.userId);
-        let identifier = user.username;
-
-        if (!identifier) {
-            if(user.profile) {
-                identifier = user.profile.name;
-            } else {
-                identifier = user.email;
-            }
-        }
+        let identifier = user_identifer();
         TaskList.insert({
             listName: listName,
             createdAt: new Date(),
@@ -58,7 +50,6 @@ Meteor.methods({
             username: identifier,
             showArchives: false,
         });
-
     },
     'task_list.setListName'(listId,listName,owner) {
 

@@ -16,7 +16,7 @@ Template.group.helpers({
         return this.owner === Meteor.userId();
     },
     is_admin() {
-        return this.admin.indexOf(Meteor.user()._id) > -1;
+        return this.admin.indexOf(Meteor.userId()) > -1;
     },
     'done_tasks_percentage': function() {
         let tasks = Tasks.find({owner: this._id, archive:{$ne: true}}).fetch();
