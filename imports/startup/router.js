@@ -52,6 +52,13 @@ FlowRouter.route('/signUp', {
     }
 });
 
+FlowRouter.route('/feedback', {
+    name: 'feedback',
+    action: function() {
+        BlazeLayout.render("mainLayout", {content: "feedback"});
+    }
+});
+
 // PRIVATE ROUTES
 var privateRoutes = FlowRouter.group({
     name: 'private',
