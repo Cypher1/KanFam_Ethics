@@ -70,6 +70,7 @@ Template.task.onRendered(function(){
       hiddenName: true,
       container: 'body',
     });
+     
 });
 
 
@@ -99,7 +100,30 @@ Template.task.events({
           Meteor.call('tasks.remove', id,owner);
         }
      });
+
   },
+    
+  'submit .new-assign'(event) { 
+    // Prevent default browser form submit
+    event.preventDefault();
+    const assign = event.target.text.value;
+          var owner = "";
+         if(FlowRouter.current().route.name == 'group_page'){ 
+            owner = FlowRouter.getParam('_id'); 
+         }
+    Meteor.call('tasks.addAssignee', this._id, assign, owner);
+  },
+  'submit .delete-assign'(event) { 
+    // Prevent default browser form submit
+    event.preventDefault();
+      const assign = event.target.text.value;
+          var owner = "";
+         if(FlowRouter.current().route.name == 'group_page'){ 
+            owner = FlowRouter.getParam('_id'); 
+         }
+    Meteor.call('tasks.deleteAssignee', this._id, assign, owner);
+  },
+    
   'submit .new-note'(event) { 
     event.preventDefault();
     const note = event.target.text.value;
@@ -112,6 +136,7 @@ Template.task.events({
     Meteor.call('tasks.addNote', this._id, note,owner);
   },
   'click .toggle-doing'(){
+
    if(this.progress >= 2){
       this.progress = 1;
    }else{
@@ -136,6 +161,7 @@ Template.task.events({
             owner = FlowRouter.getParam('_id'); 
      }
     Meteor.call('tasks.setProgress',this._id, this.progress,owner);
+    
   },
   'click .toggle-done'(){
 
