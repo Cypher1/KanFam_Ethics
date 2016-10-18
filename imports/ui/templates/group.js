@@ -35,18 +35,22 @@ Template.group.helpers({
 
 Template.group.events({
     'submit .edit-group-name'(event) {
+
+        var userId = Meteor.user()._id;
         // Prevent default browser form submit
         event.preventDefault();
         // Get value from form element
         const edit = event.target.text.value;
         // Insert a task into the collection
-        Meteor.call('groups.edit-name', this._id, edit);
+        Meteor.call('groups.edit-name', this._id, userId, edit);
     },
     'submit .new-member'(event) {
         // Prevent default browser from submit
         event.preventDefault();
         // Get values from the form
         var newMemberId = event.target.memberId.value;
+        console.log(newMemberId);
+        console.log(this._id);
         // Add new members into the group's database
         Meteor.call('groups.add_member', this._id, newMemberId, false);
 
@@ -57,6 +61,9 @@ Template.group.events({
         event.preventDefault();
 
         var groupId = this._id;
+        console.log("in remove-member handler");
+        console.log(groupId);
+        console.log(this);
         var memberId = event.target.removeId.value;
 
         //creates confimation alert
