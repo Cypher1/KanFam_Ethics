@@ -18,7 +18,6 @@ Template.calendar.onRendered( () => {
         for(var i in tasks) {
           var task = tasks[i];
           if(task.dueDate) {
-            //console.log(task.dueDate);
             var eventDetails = {
               "title": task.text,
               "start": task.dueDate,

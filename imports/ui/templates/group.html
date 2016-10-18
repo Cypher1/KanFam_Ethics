@@ -1,5 +1,4 @@
 <template name="group">
-    {{#if isOwner}}
     <div class="card">
         <div class="card-stacked">
             <div class="card-content">
@@ -10,9 +9,9 @@
                                 <input class=" black-text" name="text" type="text" style="font-weight:bold;border:none;padding-left:0px;font-size:20px;" required oninvalid="this.setCustomValidity('Please enter a group name')" oninput="setCustomValidity('')" value="{{name}}"/>
                             </form>
                         </div>
-                        {{#unless isActiveRoute 'group_page'}}
+                        {{#if is_admin}}
                         <i class="remove-group tiny material-icons align right">clear</i>
-                        {{/unless}}
+                        {{/if}}
                         <img class="right z-depth-1" src="/resources/house.jpg" width="60" height="60">
                     </div>
                 </span>
@@ -21,30 +20,25 @@
                         <p class="flow-text left" style="font-size:15px">{{description}}</p>
                     </div>
                 </div>
+                {{#unless isActiveRoute 'group_page'}}
                 <div class="row">
-                    {{#unless isActiveRoute 'group_page'}}
                     <div class="col s4">
                         <a href="/groups/{{_id}}">Go to group</a>
                     </div>
-                    {{/unless}}
-                    <div class="col right">
-                        {{#if muted}}
-                        <a><i class="material-icons">volume_off</i></a>
-                        {{else}}
-                        <a><i class="material-icons">volume_up</i></a>
-                        {{/if}}
-                    </div>
                 </div>
-                <div class="row">
+                {{/unless}}
+                {{#if is_admin}}
                 {{#if isActiveRoute 'group_page'}}
+                <div class="row">
                     <form class="new-member">
                         <label>Add Member</label>
                         <input placeholder="Enter a userID" name="memberId" text="text"/>
                     </form>
-                {{/if}}
                 </div>
+                {{/if}}
+                {{/if}}
+                {{#if isActiveRoute 'group_page'}}
                 <div class="row">
-                    {{#if isActiveRoute 'group_page'}}
                     <label>Members</label>
                     {{#each members}}
                     <form class="remove-member">
@@ -57,7 +51,7 @@
                                     <div class="col s1">
                                         <br>
                                         <button type="submit" style="background:none!important; border:none; padding:0!important;">
-                                        <i class="remove-member tiny material-icons align right">clear</i>
+                                            <i class="remove-member tiny material-icons align right">clear</i>
                                         </button>
                                     </div>
                                 </div>
@@ -65,13 +59,12 @@
                         </ul>
                     </form>
                     {{/each}}
-                    {{/if}}
                 </div>
+                {{/if}}
                 <div class="progress no-margin">
-                    <div class="determinate" style="width: {{done_tasks_percentage}}.999%"></div>
+                    <div class="determinate" style="width: {{done_tasks_percentage}}%"></div>
                 </div>
             </div>
         </div>
     </div>
-    {{/if}}
 </template>

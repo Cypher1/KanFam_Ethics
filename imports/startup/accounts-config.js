@@ -14,11 +14,9 @@ function PostSignInClientSide() {
 }
 
 function PreSignUp() {
-    console.log("Sign Up Attempt");
 }
 
 function PostSignUpServerSide() {
-    console.log("Sign Up");
 }
 
 var email = AccountsTemplates.removeField('email');

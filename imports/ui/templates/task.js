@@ -70,7 +70,6 @@ Template.task.onRendered(function(){
       hiddenName: true,
       container: 'body',
     });
-     
 });
 
 
@@ -100,7 +99,6 @@ Template.task.events({
           Meteor.call('tasks.remove', id,owner);
         }
      });
-
   },
   'submit .new-note'(event) { 
     event.preventDefault();
@@ -120,8 +118,14 @@ Template.task.events({
     }
   },
   'click .toggle-doing'(){
+<<<<<<< HEAD
 
     if(this.progress > 2 || this.progress == 1){
+=======
+   if(this.progress >= 2){
+      this.progress = 1;
+   }else{
+>>>>>>> 6ecb2074bb503e02208c7427c378875c355ffce8
       this.progress = 2;
    }else{
       this.progress = 1;
@@ -144,7 +148,6 @@ Template.task.events({
             owner = FlowRouter.getParam('_id'); 
      }
     Meteor.call('tasks.setProgress',this._id, this.progress,owner);
-    
   },
   'click .toggle-done'(){
 
@@ -197,3 +200,4 @@ Template.task.events({
     Meteor.call('tasks.setArchive',this._id, !this.archive,owner);
   }
 });
+
