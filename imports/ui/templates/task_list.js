@@ -19,10 +19,6 @@ Template.task_list.rendered = function() {
     });
 };
 
-Template.registerHelper('user', function() {
-    return Meteor.user().username || Meteor.user().profile.name;
-});
-
 Template.task_list.onCreated(function bodyOnCreated() {
     this.state = new ReactiveDict();
     Meteor.subscribe('tasks');
@@ -76,7 +72,6 @@ Template.task_list.events({
         target.text.value = '';
     },
     'submit .setListName'(event) {
-
         event.preventDefault();
         const listName = event.target.text.value;
         var owner = "";
@@ -84,7 +79,6 @@ Template.task_list.events({
             owner = FlowRouter.getParam('_id');
         }
         Meteor.call('task_list.setListName',this._id,listName,owner);
-
     },
     'change .hide-completed input'(event, instance) {
         instance.state.set('hideCompleted', event.target.checked);

@@ -32,6 +32,7 @@ Template.group.helpers({
     }
 });
 
+
 Template.group.events({
     'click .remove-group'(event) {
         event.preventDefault();
