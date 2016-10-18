@@ -20,13 +20,14 @@ if (Meteor.isServer) {
 /* can do methods for new collection in here */
 Meteor.methods({
     'authHelper'(taskId, owner) {
-        //does authorization checks for all task related stuff
+
+        //If task belongs to dash - makes sure user is owner and is logged in 
         const task = Tasks.findOne(taskId);
         var owns = this.userId;
         if(owner != "") {
             owns = owner;
         }
-        if (task.owner !== owns) {
+        if (task.owner !== owns || (!Meteor.userId)) {
             throw new Meteor.Error('not-authorized');
         }
     },
@@ -80,7 +81,7 @@ Meteor.methods({
     'tasks.deleteWithList'(listId, owner) {
         //Removes all the tasks in a list
         check(listId, String);
-        Meteor.call('authHelper', taskId, owner);
+       // Meteor.call('authHelper', taskId, owner);
         Tasks.remove({parent: listId});
     },
     'tasks.setDueDate'(taskId, dueDate, owner) {

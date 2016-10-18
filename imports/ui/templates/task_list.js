@@ -60,7 +60,6 @@ Template.task_list.helpers({
             return this.owner === id;
         }
     },
-
 });
 
 Template.task_list.events({
