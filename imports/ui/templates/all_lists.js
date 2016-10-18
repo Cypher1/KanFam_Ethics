@@ -56,13 +56,9 @@ Template.all_lists.events({
         if(FlowRouter.current().route.name == 'group_page') {
           owner = FlowRouter.getParam('_id');
         }
-        //Delete list
+        //Delete list and tasks belonging to that list
         Meteor.call('task_list.remove', id,owner);
-        //Delete tasks in that list
-        Meteor.call('tasks.deleteWithList',id,owner);
       }
     });
   },
 });
-
-
