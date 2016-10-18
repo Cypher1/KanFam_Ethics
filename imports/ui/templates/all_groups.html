@@ -1,44 +1,40 @@
 <template name="all_groups">
-	<div class="row">
-		<div class="row valign-wrapper"> 
-			<div class="col s8 offset-s2 valign">
-				<div class="row truncate">
-					<div class="card grey lighten-4">
-						<div class="card-content black-text" style="padding-bottom:1px;">
-							<div class="row">
-								<form class="new-group">
-									<!-- Enter details for new group -->
-									<div class="row">
-										<div class="col s12">
-											<input id="newGroup" name="groupName" type="text" placeholder="Enter group name" required oninvalid="this.setCustomValidity('Please enter a group name')" oninput="setCustomValidity('')"/>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col s12">
-											<textarea placeholder="Add a group description" name="groupDes" class="materialize-textarea" style="padding: 0px"></textarea>
-										</div>
-
-									</div>
-									<div class="row">
-										<div class="col s2 offset-s4">
-											<button class="btn waves-effect waves-light cyan darken-2" type="submit">Create Group
-											<i class="tiny material-icons right">add</i>
-											</button>
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<br>
-
-	{{#each groups}}
-	{{>group}}
-	{{/each}}
-
-
+  <div class="row">
+    <div class="row valign-wrapper">
+      <div class="col s8 offset-s2 valign">
+        <div class="row truncate">
+          <div class="card grey lighten-4">
+            <div class="card-content black-text" style="padding-bottom:1px;">
+              <div class="row">
+                <form class="new-group">
+                  <!-- Enter details for new group -->
+                  <div class="row">
+                    <div class="col s12">
+                      <input id="newGroup" name="groupName" type="text" placeholder="Enter group name" required oninvalid="this.setCustomValidity('Please enter a group name')" oninput="setCustomValidity('')"/>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col s12">
+                      <textarea placeholder="Add a group description" name="groupDes" class="materialize-textarea" style="padding: 0px"></textarea>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col s2 offset-s4">
+                      <button class="btn waves-effect waves-light cyan darken-2" type="submit">Create Group
+                        <i class="tiny material-icons right">add</i>
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  {{#each groups}}
+  {{>group}}
+  {{/each}}
 </template>

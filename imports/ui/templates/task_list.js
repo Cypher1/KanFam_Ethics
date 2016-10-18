@@ -6,10 +6,7 @@ import { TaskList } from '../../api/task_list.js';
 import { Groups } from '../../api/groups.js';
 
 import './task.js';
-import '../../api/tasks.js'
 import './task_list.html';
-import '../../api/groups.js';
-
 
 Template.task_list.rendered = function() {
     this.$('.dropdown-button').dropdown({
@@ -58,11 +55,11 @@ Template.task_list.helpers({
     },
     isOwner() {
         //if we are on the dashboard
-        if(FlowRouter.current().route.name == 'dashboard'){
+        if(FlowRouter.current().route.name == 'dashboard') {
             return this.owner === Meteor.userId();
-        //if we are on a given groups page
-        }else if(FlowRouter.current().route.name == 'group_page'){
-            
+            //if we are on a given groups page
+        }else if(FlowRouter.current().route.name == 'group_page') {
+
             let id = FlowRouter.getParam('_id');
             return this.owner === id;
         }
@@ -78,28 +75,28 @@ Template.task_list.events({
         Meteor.call('tasks.insert', text, this._id, this.owner);
         target.text.value = '';
     },
-    'submit .setListName'(event){
+    'submit .setListName'(event) {
 
         event.preventDefault();
         const listName = event.target.text.value;
         var owner = "";
-        if(FlowRouter.current().route.name == 'group_page'){ 
-            owner = FlowRouter.getParam('_id'); 
+        if(FlowRouter.current().route.name == 'group_page') {
+            owner = FlowRouter.getParam('_id');
         }
         Meteor.call('task_list.setListName',this._id,listName,owner);
 
-  },
+    },
     'change .hide-completed input'(event, instance) {
         instance.state.set('hideCompleted', event.target.checked);
     },
     'change .show-only-priority input'(event, instance) {
         instance.state.set('showOnlyPriority', event.target.checked);
     },
-    'click .show-archives'(event){
-      var owner = "";
-      if(FlowRouter.current().route.name == 'group_page'){ 
-        owner = FlowRouter.getParam('_id'); 
-      }
-       Meteor.call('task_list.showArchives',this._id,!this.showArchives,owner);
+    'click .show-archives'(event) {
+        var owner = "";
+        if(FlowRouter.current().route.name == 'group_page') {
+            owner = FlowRouter.getParam('_id');
+        }
+        Meteor.call('task_list.showArchives',this._id,!this.showArchives,owner);
     },
 });
