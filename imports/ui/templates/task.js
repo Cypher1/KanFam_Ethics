@@ -107,20 +107,20 @@ Template.task.events({
     // Prevent default browser form submit
     event.preventDefault();
     const assign = event.target.text.value;
-          var owner = "";
-         if(FlowRouter.current().route.name == 'group_page'){ 
-            owner = FlowRouter.getParam('_id'); 
-         }
+    var owner = "";
+    if(FlowRouter.current().route.name == 'group_page'){
+	  owner = FlowRouter.getParam('_id'); 
+    }
     Meteor.call('tasks.addAssignee', this._id, assign, owner);
   },
   'submit .delete-assign'(event) { 
     // Prevent default browser form submit
     event.preventDefault();
-      const assign = event.target.text.value;
-          var owner = "";
-         if(FlowRouter.current().route.name == 'group_page'){ 
+    const assign = event.target.text.value;
+    var owner = "";
+    if(FlowRouter.current().route.name == 'group_page'){ 
             owner = FlowRouter.getParam('_id'); 
-         }
+    }
     Meteor.call('tasks.deleteAssignee', this._id, assign, owner);
   },
     
