@@ -43,9 +43,6 @@ Meteor.methods({
         Groups.remove(groupId);
         FlowRouter.go('/groups');
     },
-    'groups.remove_admin'(){
-
-    },
     'groups.add_admin'(groupId, userId, remove) {
       
         check(groupId,String);
