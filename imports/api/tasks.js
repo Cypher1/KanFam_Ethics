@@ -27,7 +27,7 @@ Meteor.methods({
         if(owner != "") {
             owns = owner;
         }
-        if (task.owner !== owns || (!Meteor.userId)) {
+        if (task.owner !== owns && (!Meteor.userId)) {
             throw new Meteor.Error('not-authorized');
         }
     },
@@ -78,12 +78,14 @@ Meteor.methods({
         Meteor.call('authHelper', taskId, owner);
         Tasks.update(taskId, {$set: { text: edit} });
     },
+    /*
     'tasks.deleteWithList'(listId, owner) {
         //Removes all the tasks in a list
         check(listId, String);
        // Meteor.call('authHelper', taskId, owner);
         Tasks.remove({parent: listId});
     },
+    */
     'tasks.setDueDate'(taskId, dueDate, owner) {
         check(taskId, String);
         check(dueDate, Date);

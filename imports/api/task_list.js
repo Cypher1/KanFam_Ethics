@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 import { Groups } from './groups.js';
+import { Tasks } from './tasks.js';
 
 export const TaskList = new Mongo.Collection('task_list');
 
@@ -70,6 +71,7 @@ Meteor.methods({
         check(listId, String);
         Meteor.call('authListHelper',listId,owner);
         TaskList.remove(listId);
+        Tasks.remove({parent: listId});
     },
     'task_list.showArchives'(listId, showing,owner) {
         check(listId,String);

@@ -59,7 +59,7 @@ Template.all_lists.events({
         //Delete list
         Meteor.call('task_list.remove', id,owner);
         //Delete tasks in that list
-        Meteor.call('tasks.deleteWithList',id,owner);
+       // Meteor.call('tasks.deleteWithList',id,owner);
       }
     });
   },
