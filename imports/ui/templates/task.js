@@ -118,14 +118,8 @@ Template.task.events({
     }
   },
   'click .toggle-doing'(){
-<<<<<<< HEAD
 
     if(this.progress > 2 || this.progress == 1){
-=======
-   if(this.progress >= 2){
-      this.progress = 1;
-   }else{
->>>>>>> 6ecb2074bb503e02208c7427c378875c355ffce8
       this.progress = 2;
    }else{
       this.progress = 1;

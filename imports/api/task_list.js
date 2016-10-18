@@ -22,13 +22,8 @@ Meteor.methods({
     'authListHelper'(listId,owner) {
         //does authorization checks for all task related stuff
         const list = TaskList.findOne(listId);
-<<<<<<< HEAD
-        var owns = this.userId;   
-        if(owner != ""){
-=======
         var owns = this.userId;
         if(owner != "") {
->>>>>>> 6ecb2074bb503e02208c7427c378875c355ffce8
             owns = owner;
         }
         if (list.owner !== owns) {
