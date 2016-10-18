@@ -27,7 +27,7 @@ Meteor.methods({
         if(owner != "") {
             owns = owner;
         }
-        if (list.owner !== owns || (!Meteor.userId)) {
+        if (list.owner !== owns || (!this.userId)) {
             throw new Meteor.Error('not-authorized');
         }
     },
