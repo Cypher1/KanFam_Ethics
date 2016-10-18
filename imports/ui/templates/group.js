@@ -36,13 +36,25 @@ Template.group.helpers({
 Template.group.events({
     'submit .edit-group-name'(event) {
 
+        //get current user id
         var userId = Meteor.user()._id;
         // Prevent default browser form submit
         event.preventDefault();
         // Get value from form element
-        const edit = event.target.text.value;
+        const name_edit = event.target.text.value;
         // Insert a task into the collection
-        Meteor.call('groups.edit-name', this._id, userId, edit);
+        Meteor.call('groups.edit_name', this._id, userId, name_edit);
+    },
+    'submit .edit-group-description'(event){
+
+        //get current user id
+        var userId = Meteor.user()._id;
+        // Prevent default browser form submit
+        event.preventDefault();
+        // Get value from form element
+        const descrip_edit = event.target.text.value;
+        // Insert a task into the collection
+        Meteor.call('groups.edit_description', this._id, userId, descrip_edit);
     },
     'submit .new-member'(event) {
         // Prevent default browser from submit

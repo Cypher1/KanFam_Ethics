@@ -100,20 +100,21 @@ Meteor.methods({
             Groups.update(groupId, {$addToSet: {members: userId}});
         }
     },
-    /*
-    'groups.edit_group'(groupId, name, description) {
+    
+    'groups.edit_description'(groupId, userId, newDescription) {
         check(groupId,String);
-        check(name,String);
-        check(description,String);
+        check(userId,String);
+        check(newDescription,String);
 
-        const group = Groups.findOne({_id: groupId, admin: this.userId});
-        if (!this.userId || !group) {
+        const group = Groups.findOne({_id: groupId, admin: userId});
+
+        if (!userId || !group) {
             throw new Meteor.Error('not-authorized');
         }
-        Groups.update(groupId,{$set: {_id: name, description: description}});
+        Groups.update(groupId, {$set: {description: newDescription}});
     },
-    */
-    'groups.edit-name'(groupId,userId,newName) {
+    
+    'groups.edit_name'(groupId,userId,newName) {
 
         check(groupId,String);
         check(userId,String);
