@@ -29,73 +29,27 @@ Template.group.helpers({
             }
         }
         return 100*done/total;
-    }
+    },
 });
 
 
 Template.group.events({
     'submit .edit-group-name'(event) {
-
-        //get current user id
-        var userId = Meteor.user()._id;
         // Prevent default browser form submit
         event.preventDefault();
         // Get value from form element
         const name_edit = event.target.text.value;
         // Insert a task into the collection
-        Meteor.call('groups.edit_name', this._id, userId, name_edit);
+        Meteor.call('groups.edit_name', this._id, name_edit);
     },
     'submit .edit-group-description'(event){
 
-        //get current user id
-        var userId = Meteor.user()._id;
         // Prevent default browser form submit
         event.preventDefault();
         // Get value from form element
         const descrip_edit = event.target.text.value;
         // Insert a task into the collection
-        Meteor.call('groups.edit_description', this._id, userId, descrip_edit);
-    },
-    'submit .new-member'(event) {
-        // Prevent default browser from submit
-        event.preventDefault();
-        // Get values from the form
-        var newMemberId = event.target.memberId.value;
-        console.log(newMemberId);
-        console.log(this._id);
-        // Add new members into the group's database
-        Meteor.call('groups.add_member', this._id, newMemberId, false);
-
-        // Clear the form
-        event.target.memberId.value = '';
-    },
-    'submit .remove-member'(event) {
-        event.preventDefault();
-
-        var groupId = this._id;
-        console.log("in remove-member handler");
-        console.log(groupId);
-        console.log(this);
-        var memberId = event.target.removeId.value;
-
-        //creates confimation alert
-        swal({
-            html:true,
-            title: "<h5>Delete Confirmation<h5>",
-            text: "Are you sure you want to remove this member: " +memberId + "?",
-            confirmButtonColor: '#0097a7',
-            confirmButtonText: 'Yes',
-            showCancelButton: true,
-            cancelButtonText: "No",
-            closeOnConfirm: true,
-            closeOnCancel: true,
-        },
-        function(isConfirm) { //if user clicked yes
-            if(isConfirm) {
-                //Delete Group
-                Meteor.call('groups.add_member',groupId, memberId, true);
-            }
-        });
+        Meteor.call('groups.edit_description', this._id,descrip_edit);
     },
     'submit .setIcon'(event) {
         // Prevent default browser from submit
@@ -106,5 +60,17 @@ Template.group.events({
 
         // TODO: store icon in db as BSON
         //Meteor.call('groups.setIcon')
-    }
+    },
+
+    'submit .new-member'(event) {
+
+        // Prevent default browser from submit
+        event.preventDefault();
+        // Get values from the form
+        var newMemberId = event.target.memberId.value;
+        // Add new members into the group's database
+        Meteor.call('groups.add_remove_member', this._id, newMemberId, false);
+        // Clear the form
+        event.target.memberId.value = '';
+    },
 });
