@@ -70,7 +70,11 @@ Meteor.methods({
     'tasks.addAssignee'(taskId,assign,owner) {
         check(taskId,String);
         Meteor.call('authHelper', taskId, owner);
-        Tasks.update(taskId,{$push: { assignees : assign} });
+	const groupMembers = Groups.findOne(owner).members;
+	const taskAssignees = Tasks.findOne(taskId).assignees;
+	if ((groupMembers.indexOf(assign) != -1) && (taskAssignees.indexOf(assign) == -1)) {
+            Tasks.update(taskId,{$push: { assignees : assign} });
+	}
     },
     'tasks.deleteAssignee'(taskId,assign,owner) {
         check(taskId,String);
