@@ -66,8 +66,3 @@ Template.all_lists.events({
 });
 
 
-
-
-
-
-
