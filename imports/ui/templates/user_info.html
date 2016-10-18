@@ -1,28 +1,27 @@
 <template name="user_info">
-    <div class="row" style="padding-right:60px;">
-      <div  class="left col s22 no-padd">
-        <div class="left card-content col s22  grey lighten-5 blue-text z-depth-1 black-text" style="border:solid;border-color:#eceff1;border-width:0.1px;font-size:14px;">
+  <div class="row" style="padding-right:60px;">
+    <div  class="left col s22 no-padd">
+      <div class="left card-content col s22  grey lighten-5 blue-text z-depth-1 black-text" style="border:solid;border-color:#eceff1;border-width:0.1px;font-size:14px;">
         <div class="row">
-                <div class = "center col s7 grey-text text-darken-3" style="padding-top:14px;font-size:17px;">
-                    Daily Summary <br>
-                    {{currentDate}}
-                </div>
-                <div class = "col s5">
-             <img class="circle left z-depth-0" src="/resources/house.jpg" width="80" height="80" style="margin-left:30px;margin-top:8px;border:solid;border-color:white;border-width:1px;">  
-              </div>
+          <div class = "center col s7 grey-text text-darken-3" style="padding-top:14px;font-size:17px;">
+            <p>Daily Summary</p>
+            <p>{{currentDate}}</p>
+          </div>
+          <div class = "col s5">
+            <img class="circle left z-depth-0" src="/resources/house.jpg" width="80" height="80" style="margin-left:30px;margin-top:8px;border:solid;border-color:white;border-width:1px;">
+          </div>
         </div>
-         <div class = "col s6 grey-text text-darken-3">
-               <h6 class="teal-text"> Tasks Due</h6>   
-                {{#each taskDue}}
-                    {{text}} <br>
-                {{/each}}
-                <br>
-            </div>
-            <div class ="col s12 grey-text text-darken-3">
-          		Total Lists: {{listCount}} 
-            </div>  
+        <div class = "col s6 grey-text text-darken-3">
+          <h6 class="teal-text"> Tasks Due</h6>
+          {{#each taskDue}}
+          {{text}} <br>
+          {{/each}}
+          <br>
+        </div>
+        <div class ="col s12 grey-text text-darken-3">
+          Total Lists: {{listCount}}
         </div>
       </div>
     </div>
-
+  </div>
 </template>

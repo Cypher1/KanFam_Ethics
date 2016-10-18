@@ -41,6 +41,17 @@ FlowRouter.route('/login', {
     }
 });
 
+FlowRouter.route('/signUp', {
+    name: 'signUp',
+    action: function() {
+        if(!Meteor.userId()) {
+            BlazeLayout.render("mainLayout", {content: "signUp"});
+        } else {
+            FlowRouter.go('/');
+        }
+    }
+});
+
 // PRIVATE ROUTES
 var privateRoutes = FlowRouter.group({
     name: 'private',
@@ -74,3 +85,10 @@ privateRoutes.route('/logout', {
         Meteor.logout();
     }
 });
+
+privateRoutes.route('/calendar', {
+    name: 'myCalendar',
+    action: function () {
+        BlazeLayout.render('mainLayout', {content: 'myCalendar'})
+    }
+})

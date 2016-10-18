@@ -16,6 +16,5 @@ Template.registerHelper('user', function() {
 });
 
 Template.registerHelper('user_email', function() {
-    console.log(Meteor.user());
     return Meteor.user().emails[0].address;
 });
