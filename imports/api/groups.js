@@ -47,8 +47,6 @@ Meteor.methods({
         check(groupId,String);
         check(userId,String);
         check(remove,Boolean);
-        console.log(groupId);
-        console.log(this.userId);
         /* Check that user is admin in group */
         const group = Groups.findOne({_id: groupId, admin: this.userId});
         if (!this.userId || !group) {
@@ -58,7 +56,6 @@ Meteor.methods({
         if (!user) {
             throw new Meteor.Error('user does not exist');
         }
-        console.log("in add_admin");
         if (remove) {
             Groups.update(groupId, {$pull: {admin: userId}});
         } else {
@@ -75,7 +72,7 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
         if (remove) {
-            Groups.update(groupId, {$pull: {members: userId}});
+            Groups.update(groupId, {$pull: {members: userId}, $pull: {admin: userId}});
             if(this.userId == userId) {
                 FlowRouter.go('/groups');
             }

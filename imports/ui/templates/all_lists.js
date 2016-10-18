@@ -62,13 +62,7 @@ Template.all_lists.events({
         Meteor.call('tasks.deleteWithList',id,owner);
       }
     });
-
   },
 });
-
-
-
-
-
 
 
