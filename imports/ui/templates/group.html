@@ -6,7 +6,7 @@
                     <div class="row">
                         <div class="col s5" style="padding:0px">
                             <form class="edit-group-name">
-                                <input class=" black-text" name="text" type="text" style="font-weight:bold;border:none;padding-left:0px;font-size:20px;" required oninvalid="this.setCustomValidity('Please enter a group name')" oninput="setCustomValidity('')" value="{{name}}"/>
+                                <input class="black-text" name="text" type="text" style="font-weight:bold;border:none;padding-left:0px;font-size:20px;" required oninvalid="this.setCustomValidity('Please enter a group name')" oninput="setCustomValidity('')" value="{{name}}"/>
                             </form>
                         </div>
                         {{#if is_admin}}
@@ -16,9 +16,13 @@
                     </div>
                 </span>
                 <div class="row">
+        
                     <div class="col s5" style="padding:0px">
-                        <p class="flow-text left" style="font-size:15px">{{description}}</p>
+                        <form class="edit-group-description">
+                            <input class="flow-text left" name="text" type="text" style="font-size:15px;border:none;" value="{{description}}" placeholder="add description..."/>
+                        </form>
                     </div>
+                  
                 </div>
                 {{#unless isActiveRoute 'group_page'}}
                 <div class="row">
@@ -27,8 +31,9 @@
                     </div>
                 </div>
                 {{/unless}}
-                {{#if is_admin}}
+                
                 {{#if isActiveRoute 'group_page'}}
+                {{#if is_admin}}
                 <div class="row">
                     <form class="new-member">
                         <label>Add Member</label>
@@ -36,31 +41,13 @@
                     </form>
                 </div>
                 {{/if}}
-                {{/if}}
-                {{#if isActiveRoute 'group_page'}}
                 <div class="row">
                     <label>Members</label>
-                    {{#each members}}
-                    <form class="remove-member">
-                        <ul class="collapsible grey lighten-5 no-margin z-depth-0" data-collapsible="accordion" style="border-left:none;border-right:none;">
-                            <li>
-                                <div class="row" style="margin:0px">
-                                    <div class="col s11">
-                                        <input disabled type="text" class="grey-text" name="removeId" value="{{this}}" style="border: none; font-size:13px; padding-left:3px; padding-top: 3px; padding-bottom: 3px;"/>
-                                    </div>
-                                    <div class="col s1">
-                                        <br>
-                                        <button type="submit" style="background:none!important; border:none; padding:0!important;">
-                                            <i class="remove-member tiny material-icons align right">clear</i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </form>
+                    {{#each members}} 
+                        {{> member}}
                     {{/each}}
                 </div>
-                {{/if}}
+                {{/if}} 
                 <div class="progress no-margin">
                     <div class="determinate" style="width: {{done_tasks_percentage}}%"></div>
                 </div>
