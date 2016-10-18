@@ -80,9 +80,11 @@ Meteor.methods({
     },
     'tasks.setDueDate'(taskId, dueDate, owner) {
         check(taskId, String);
-        check(dueDate, Date);
+        if(dueDate != undefined){
+            check(dueDate, Date);
+            dueDate = dueDate.toISOString().slice(0,10);
+        }
         Meteor.call('authHelper', taskId, owner);
-        dueDate = dueDate.toISOString().slice(0,10);
         Tasks.update(taskId, {$set: {dueDate: dueDate}});
     },
     'tasks.setProgress'(taskId, progress, owner) {

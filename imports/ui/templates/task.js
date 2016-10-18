@@ -176,14 +176,20 @@ Template.task.events({
   'submit .due-date'(event){
 
     event.preventDefault();
-    const temp = document.getElementById(this._id).value;
-    console.log(value);
-    dueDate = new Date(temp);
+    const date_input = document.getElementById(this._id);
+
+    //if due date was cleared
+    if(date_input.value != ''){
+        dueDate = date_input.value;
+        dueDate = new Date(dueDate);
+    }else{
+        dueDate = undefined;
+    }
     var owner = "";
     if(FlowRouter.current().route.name == 'group_page'){ 
             owner = FlowRouter.getParam('_id'); 
     }
-   // Meteor.call('tasks.setDueDate',this._id,dueDate,owner);
+    Meteor.call('tasks.setDueDate',this._id,dueDate,owner);
 
   },
    'click .toggle-priority'() {
