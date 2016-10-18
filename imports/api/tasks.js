@@ -39,7 +39,6 @@ Meteor.methods({
         if (!this.userId) {
             throw new Meteor.Error('not-authorized');
         }
-
         let user = Meteor.users.findOne(this.userId);
         let identifier = user.username;
         if (!identifier) {
@@ -59,6 +58,7 @@ Meteor.methods({
             progress: 1,
             priority: false,
             archive: false,
+	    assignees: [],
         });
     },
     'tasks.remove'(taskId, owner) {
