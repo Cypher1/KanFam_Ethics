@@ -177,12 +177,13 @@ Template.task.events({
 
     event.preventDefault();
     const temp = document.getElementById(this._id).value;
+    console.log(value);
     dueDate = new Date(temp);
     var owner = "";
     if(FlowRouter.current().route.name == 'group_page'){ 
             owner = FlowRouter.getParam('_id'); 
     }
-    Meteor.call('tasks.setDueDate',this._id,dueDate,owner);
+   // Meteor.call('tasks.setDueDate',this._id,dueDate,owner);
 
   },
    'click .toggle-priority'() {
