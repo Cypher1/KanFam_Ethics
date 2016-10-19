@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
+import { Tasks } from './tasks.js';
+import { TaskList } from './task_list.js';
 
 export const Groups = new Mongo.Collection('groups');
 
@@ -40,6 +42,9 @@ Meteor.methods({
         if (!this.userId || !group) {
             throw new Meteor.Error('not-authorized');
         }
+
+        Tasks.remove({owner: groupId});
+        TaskList.remove({owner: groupId});
         Groups.remove(groupId);
         FlowRouter.go('/groups');
     },
@@ -48,8 +53,6 @@ Meteor.methods({
         check(groupId,String);
         check(adminId,String);
         check(remove,Boolean);
-
-        console.log("in add_remove_admin");
 
         /* Check that user is admin in group */
         const group = Groups.findOne({_id: groupId, admin: this.userId});
