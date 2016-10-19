@@ -42,7 +42,7 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
 
-        let identifier = user_identifer();
+        let identifier = user_identifier();
         TaskList.insert({
             listName: listName,
             createdAt: new Date(),
