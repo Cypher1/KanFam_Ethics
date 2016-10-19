@@ -67,10 +67,12 @@ Template.group.events({
         // Prevent default browser from submit
         event.preventDefault();
         // Get values from the form
-        var newMemberId = event.target.memberId.value;
+        var newMemberUsername = event.target.memberUsername.value;
+
         // Add new members into the group's database
-        Meteor.call('groups.add_remove_member', this._id, newMemberId, false);
+        // Meteor.call('groups.add_remove_member', this._id, newMemberId, false);
+        Meteor.call('groups.add_member_byUsername', this._id, newMemberUsername);
         // Clear the form
-        event.target.memberId.value = '';
+        event.target.memberUsername.value = '';
     },
 });

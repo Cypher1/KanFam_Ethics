@@ -119,6 +119,25 @@ Meteor.methods({
             }
         }
     },
+    'groups.add_member_byUsername'(groupId, newMemberUsername){
+        check(groupId,String);
+        check(newMemberUsername,String);
+
+         const group = Groups.findOne({_id: groupId, admin: this.userId});
+       
+        if (!this.userId || !group) {
+            throw new Meteor.Error('not-authorized');
+        }
+
+         if(Meteor.isServer) {
+                const user = Meteor.users.findOne({username: newMemberUsername});
+                if (!user) {
+                    throw new Meteor.Error('user does not exist');
+                }
+                let memberId = user._id;
+                Groups.update(groupId, {$addToSet: {members: {"id":memberId,"name":newMemberUsername}}});
+            }
+    },
     'groups.edit_description'(groupId, newDescription) {
         check(groupId,String);
         check(newDescription,String);
