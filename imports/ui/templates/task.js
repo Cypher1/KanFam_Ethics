@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { Tasks } from '../../api/tasks.js';
+import { Groups } from '../../api/groups.js';
 
 import './task.html';
 
@@ -47,6 +48,12 @@ Template.task.helpers({
       if(this.progress == 4){
         return true;
       }
+    },
+    checkAdmin(){
+      //checks if the current user is an admin for the group this task belongs to
+      var groupId = this.owner;
+      return Groups.findOne({_id: groupId, admin: Meteor.userId()});
+      
     }
 });
 
@@ -158,7 +165,7 @@ Template.task.events({
     }
     var owner = "";
     if(FlowRouter.current().route.name == 'group_page'){ 
-            owner = FlowRouter.getParam('_id'); 
+        owner = FlowRouter.getParam('_id'); 
     }
     Meteor.call('tasks.setProgress',this._id, this.progress,owner);
   },
@@ -189,6 +196,7 @@ Template.task.events({
     if(FlowRouter.current().route.name == 'group_page'){ 
             owner = FlowRouter.getParam('_id'); 
     }
+    
     Meteor.call('tasks.setDueDate',this._id,dueDate,owner);
 
   },
@@ -207,4 +215,3 @@ Template.task.events({
     Meteor.call('tasks.setArchive',this._id, !this.archive,owner);
   }
 });
-
