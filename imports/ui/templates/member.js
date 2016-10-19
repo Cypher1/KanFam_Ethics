@@ -29,19 +29,15 @@ Template.member.helpers({
     isLoggedAdmin(){
         //checks if the user that is currently logged in is an admin
         var groupId = Template.parentData(1)._id;
-        if(Groups.find({_id: groupId, admin:{$in : [Meteor.userId()]}}).count() >0){
-            return true;
-        }
+        return Groups.findOne({_id: groupId, admin: Meteor.userId()});
     },
     isMemberAdmin(){
         //checks if current member we're on is an admin
         var groupId = Template.parentData(1)._id;
-        if(Groups.find({_id: groupId, admin:{$in : [this.valueOf()]}}).count() >0){
-            return true;
-        }
+        return Groups.findOne({_id: groupId, admin: this.valueOf()});
     },
     isMe(){
-        return this.valueOf() == Meteor.userId()
+        return this.valueOf() == Meteor.userId();
     }
 
 });
@@ -52,7 +48,6 @@ Template.member.events({
         event.preventDefault();
         var groupId = Template.parentData(1)._id;
         var memberId = document.getElementById(this).value;
-       // console.log(Meteor.userId());
 
         //creates confimation alert
         swal({
@@ -78,13 +73,11 @@ Template.member.events({
         event.preventDefault();
         var groupId = Template.parentData(1)._id;
         var adminId = document.getElementById(this).value;
-
-        var isAdmin = Groups.find({_id: groupId, admin:{$in : [adminId]}}).count();
+        var isAdmin = Groups.findOne({_id: groupId, admin: adminId});
         remove = false;
         if(isAdmin){
             remove = true;
         }
-        console.log(remove);
         Meteor.call('groups.add_remove_admin',groupId, adminId, remove);
         
     }, 
