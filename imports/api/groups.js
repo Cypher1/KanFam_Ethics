@@ -99,7 +99,6 @@ Meteor.methods({
                 if (!group) {
                      throw new Meteor.Error('not-authorized');
                 }
-
             }
 
             Groups.update(groupId, {$pull: {members: memberId}});
