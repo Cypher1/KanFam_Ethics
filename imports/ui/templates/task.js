@@ -16,6 +16,7 @@ Template.task.helpers({
       if(this.progress >= 2){
         return true;
       }
+
     },
     checking(){
       if(this.progress >= 3){
@@ -46,7 +47,7 @@ Template.task.helpers({
       if(this.progress == 4){
         return true;
       }
-    },
+    }
 });
 
 Template.task.onRendered(function(){
@@ -111,30 +112,41 @@ Template.task.events({
 
     Meteor.call('tasks.addNote', this._id, note,owner);
   },
-  'click .toggle-doing'(){
-   if(this.progress >= 2){
+  'click .toggle-todo'(){
+
+    if(this.progress > 1){
       this.progress = 1;
-   }else{
-      this.progress = 2;
-   }
-    var owner = "";
-    if(FlowRouter.current().route.name == 'group_page'){ 
-            owner = FlowRouter.getParam('_id'); 
-     }
-
-     Meteor.call('tasks.setProgress',this._id, this.progress,owner);
-  },
-  'click .toggle-checking'(){
-
-    if(this.progress >= 3){
-      this.progress = 2;
-    }else{
-      this.progress = 3;
     }
     var owner = "";
     if(FlowRouter.current().route.name == 'group_page'){ 
             owner = FlowRouter.getParam('_id'); 
-     }
+    }
+    Meteor.call('tasks.setProgress',this._id, this.progress,owner);
+  },
+  'click .toggle-doing'(){
+
+    if(this.progress > 2 || this.progress == 1){
+      this.progress = 2;
+   }else{
+      this.progress = 1;
+   }
+    var owner = "";
+    if(FlowRouter.current().route.name == 'group_page'){ 
+            owner = FlowRouter.getParam('_id'); 
+    }
+
+    Meteor.call('tasks.setProgress',this._id, this.progress,owner);
+  },
+  'click .toggle-checking'(){
+    if(this.progress > 3 || this.progress <= 2){
+      this.progress = 3;
+    }else{
+      this.progress = 2;
+    }
+    var owner = "";
+    if(FlowRouter.current().route.name == 'group_page'){ 
+            owner = FlowRouter.getParam('_id'); 
+    }
     Meteor.call('tasks.setProgress',this._id, this.progress,owner);
   },
   'click .toggle-done'(){
@@ -147,7 +159,7 @@ Template.task.events({
     var owner = "";
     if(FlowRouter.current().route.name == 'group_page'){ 
             owner = FlowRouter.getParam('_id'); 
-     }
+    }
     Meteor.call('tasks.setProgress',this._id, this.progress,owner);
   },
   'submit .edit-task'(event){
@@ -164,12 +176,19 @@ Template.task.events({
   'submit .due-date'(event){
 
     event.preventDefault();
-    const temp = document.getElementById(this._id).value;
-    dueDate = new Date(temp);
+    const date_input = document.getElementById(this._id);
+
+    //if due date was cleared
+    if(date_input.value != ''){
+        dueDate = date_input.value;
+        dueDate = new Date(dueDate);
+    }else{
+        dueDate = undefined;
+    }
     var owner = "";
     if(FlowRouter.current().route.name == 'group_page'){ 
             owner = FlowRouter.getParam('_id'); 
-     }
+    }
     Meteor.call('tasks.setDueDate',this._id,dueDate,owner);
 
   },
@@ -177,14 +196,15 @@ Template.task.events({
     var owner = "";
     if(FlowRouter.current().route.name == 'group_page'){ 
             owner = FlowRouter.getParam('_id'); 
-     }
+    }
     Meteor.call('tasks.setPriority', this._id, !this.priority,owner);
   },
   'click .toggle-archive'(){
     var owner = "";
     if(FlowRouter.current().route.name == 'group_page'){ 
             owner = FlowRouter.getParam('_id'); 
-     }
+    }
     Meteor.call('tasks.setArchive',this._id, !this.archive,owner);
   }
 });
+
