@@ -61,7 +61,6 @@ Template.group.events({
         // TODO: store icon in db as BSON
         //Meteor.call('groups.setIcon')
     },
-
     'submit .new-member'(event) {
 
         // Prevent default browser from submit
@@ -70,17 +69,6 @@ Template.group.events({
         var newMemberId = event.target.memberId.value;
         // Add new members into the group's database
         Meteor.call('groups.add_remove_member', this._id, newMemberId, false);
-        // Clear the form
-        event.target.memberId.value = '';
-    },
-    'submit .new-admin'(event) {
-        console.log("in new-admin");
-        // Prevent default browser from submit
-        event.preventDefault();
-        // Get values from the form
-        var newAdminId = event.target.text.value;
-        // Add new members into the group's database
-        Meteor.call('groups.add_remove_admin', this._id, newAdminId, false);
         // Clear the form
         event.target.memberId.value = '';
     },
