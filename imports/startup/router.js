@@ -11,7 +11,9 @@ function checkLoggedIn (ctx) {
 
 Accounts.onLogin(function () {
     // Send the user to their dashboard
-    if(FlowRouter.current().route.name === "login") {
+    let signup = FlowRouter.current().route.name === "signup";
+    let login = FlowRouter.current().route.name === "login";
+    if(login || signup) {
         FlowRouter.go('dashboard')
     }
 })
@@ -41,14 +43,21 @@ FlowRouter.route('/login', {
     }
 });
 
-FlowRouter.route('/signUp', {
-    name: 'signUp',
+FlowRouter.route('/signup', {
+    name: 'signup',
     action: function() {
         if(!Meteor.userId()) {
-            BlazeLayout.render("mainLayout", {content: "signUp"});
+            BlazeLayout.render("mainLayout", {content: "signup"});
         } else {
             FlowRouter.go('/');
         }
+    }
+});
+
+FlowRouter.route('/feedback', {
+    name: 'feedback',
+    action: function() {
+        BlazeLayout.render("mainLayout", {content: "feedback"});
     }
 });
 
