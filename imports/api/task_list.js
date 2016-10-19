@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 import { Groups } from './groups.js';
+import { Tasks } from './tasks.js';
 import './helpers.js';
 
 export const TaskList = new Mongo.Collection('task_list');
@@ -27,12 +28,11 @@ Meteor.methods({
         if(owner != "") {
             owns = owner;
         }
-        if (list.owner !== owns) {
+        if (list.owner !== owns || (!this.userId)) {
             throw new Meteor.Error('not-authorized');
         }
     },
     'task_list.insert'(groupId,listName) {
-
         check(listName,String);
         var owns = this.userId;
         if(groupId != undefined) {
@@ -52,7 +52,6 @@ Meteor.methods({
         });
     },
     'task_list.setListName'(listId,listName,owner) {
-
         check(listId,String);
         Meteor.call('authListHelper',listId,owner);
         TaskList.update(listId,{$set: { listName: listName} });
@@ -61,6 +60,7 @@ Meteor.methods({
         check(listId, String);
         Meteor.call('authListHelper',listId,owner);
         TaskList.remove(listId);
+        Tasks.remove({parent: listId});
     },
     'task_list.showArchives'(listId, showing,owner) {
         check(listId,String);
@@ -68,5 +68,4 @@ Meteor.methods({
         Meteor.call('authListHelper',listId,owner);
         TaskList.update(listId,{$set: {showArchives: showing}});
     },
-
 });

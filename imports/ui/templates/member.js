@@ -1,6 +1,5 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
-
 import { Groups } from '../../api/groups.js';
 
 import './member.html';
@@ -11,15 +10,17 @@ Template.member.onCreated(function () {
 });
 
 Template.member.helpers({
-
+    members(){
+        return Groups.find().fetch();
+    },
 });
 
 Template.member.events({
+
 	'submit .remove-member'(event) {
         event.preventDefault();
         var groupId = Template.parentData(1)._id;
         var memberId = event.target.removeId.value;
-
         //creates confimation alert
         swal({
             html:true,
@@ -35,8 +36,9 @@ Template.member.events({
         function(isConfirm) { //if user clicked yes
             if(isConfirm) {
                 //Delete Group
-                Meteor.call('groups.add_member',groupId, memberId, true);
+                Meteor.call('groups.add_remove_member',groupId, memberId, true);
             }
         });
     },
+    
 })
