@@ -39,7 +39,11 @@ Template.member.helpers({
         if(Groups.find({_id: groupId, admin:{$in : [this.valueOf()]}}).count() >0){
             return true;
         }
+    },
+    isMe(){
+        return this.valueOf() == Meteor.userId()
     }
+
 });
 
 Template.member.events({
