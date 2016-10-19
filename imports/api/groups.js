@@ -78,6 +78,7 @@ Meteor.methods({
         check(memberId,String);
         check(remove,Boolean);
 
+        //check users are logged in
         if(!this.userId){
             throw new Meteor.Error('not-authorized');
         }
@@ -85,12 +86,12 @@ Meteor.methods({
         //if we want to remove the member
         if (remove) {
 
-            /* Check that user is admin in group */
+            //check that the user is admin in the group
             const group = Groups.findOne({_id: groupId, admin: this.userId});
             
             //only admins can remove members
             if (!group) {
-               
+                 throw new Meteor.Error('not-authorized');
             }
 
             Groups.update(groupId, {$pull: {members: memberId}});

@@ -20,13 +20,11 @@
                     </div>
                    </span>
                     <div class="row">
-        
                     <div class="col s8" style="padding:0px;">
                         <form class="edit-group-description">
                             <input class="flow-text left" name="text" type="text" style="font-size:15px;border:none;" value="{{description}}" placeholder="add description..."/>
                         </form>
                     </div>
-                  
                     </div>
                 {{#unless isActiveRoute 'group_page'}}
                 <div class="row">
@@ -53,7 +51,6 @@
                     {{/each}}
                     </div>
                 </div>
-
                 {{/if}} 
                 
                 <div class="progress no-margin">
@@ -65,21 +62,4 @@
     </div>
    </div>
 </div>
-
 </template>
-
-<!--
-                <div class="row">
-                     <form class="new-admin">
-                        <label>Add Admin</label>
-                        <input placeholder="Enter a userID" name="memberId" text="text"/>
-                    </form>
-
-                    <label>Admin</label>
-                    {{#each admin}} 
-                        {{> admin}}
-                    {{/each}}
-
-
-                </div>
--->
