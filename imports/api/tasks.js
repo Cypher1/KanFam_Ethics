@@ -11,7 +11,7 @@ if (Meteor.isServer) {
         if(!this.userId) {
             throw new Meteor.Error('not logged in');
         }
-        let mygroups = Groups.find({'members':this.userId});
+        let mygroups = Groups.find({'members.id':this.userId});
         let mygroup_ids = mygroups.fetch().map(function(group) {return group._id;});
         mygroup_ids.push(this.userId);
         return Tasks.find({owner: {$in: mygroup_ids}});
@@ -20,13 +20,14 @@ if (Meteor.isServer) {
 /* can do methods for new collection in here */
 Meteor.methods({
     'authHelper'(taskId, owner) {
-        //does authorization checks for all task related stuff
+
+        //If task belongs to dash - makes sure user is owner and is logged in 
         const task = Tasks.findOne(taskId);
         var owns = this.userId;
         if(owner != "") {
             owns = owner;
         }
-        if (task.owner !== owns) {
+        if (task.owner !== owns || (!this.userId)) {
             throw new Meteor.Error('not-authorized');
         }
     },
@@ -38,7 +39,6 @@ Meteor.methods({
         if (!this.userId) {
             throw new Meteor.Error('not-authorized');
         }
-
         let user = Meteor.users.findOne(this.userId);
         let identifier = user.username;
         if (!identifier) {
@@ -58,68 +58,83 @@ Meteor.methods({
             progress: 1,
             priority: false,
             archive: false,
-	    assignees: [identifier],
-
+	    assignees: [],
         });
     },
     'tasks.remove'(taskId, owner) {
         check(taskId, String);
         Meteor.call('authHelper', taskId, owner);
         Tasks.remove(taskId);
-    },    
+    },
     'tasks.addAssignee'(taskId,assign,owner) {
         check(taskId,String);
         Meteor.call('authHelper', taskId, owner);
 	const groupMembers = Groups.findOne(owner).members;
 	const taskAssignees = Tasks.findOne(taskId).assignees;
-	if ((groupMembers.indexOf(assign) != -1) && (taskAssignees.indexOf(assign) == -1)) {
-            Tasks.update(taskId,{$push: { assignees : assign} });
+	var newAssign = null;
+        for (i = 0; i < groupMembers.length; i++) {
+	    var member = groupMembers[i];
+	    if (member.name == assign) {
+		newAssign = member;
+		break;
+	    }
+	}
+	if (newAssign != null) {
+	    if (taskAssignees.indexOf(newAssign) == -1) {
+		Tasks.update(taskId,{$push: {assignees: newAssign}});
+	    };
 	}
     },
     'tasks.deleteAssignee'(taskId,assign,owner) {
         check(taskId,String);
         Meteor.call('authHelper', taskId, owner);
-        Tasks.update(taskId,{$pull: { assignees : assign} });
+	const groupMembers = Groups.findOne(owner).members;
+	var newAssign = null;
+        for (i = 0; i < groupMembers.length; i++) {
+	    var member = groupMembers[i];
+	    if (member.name == assign) {
+		newAssign = member;
+		break;
+	    }
+	}
+	
+        Tasks.update(taskId,{$pull: { assignees : member} });
     },
     'tasks.addNote'(taskId, notes, owner) {
         check(taskId, String);
+        check(notes, String);
         Meteor.call('authHelper', taskId, owner);
         Tasks.update(taskId, {$set: { taskNotes: notes} });
     },
     'tasks.editTask'(taskId, edit, owner) {
         check(taskId, String);
+        check(edit, String);
         Meteor.call('authHelper', taskId, owner);
         Tasks.update(taskId, {$set: { text: edit} });
     },
-    'tasks.deleteWithList'(listId) {
-        //Removes all the tasks in a list
-        check(listId, String);
-        Tasks.remove({parent: listId});
-    },
     'tasks.setDueDate'(taskId, dueDate, owner) {
         check(taskId, String);
-        check(owner, String);
-        check(dueDate, Date);
-        dueDate = dueDate.toISOString().slice(0,10);
+        if(dueDate != undefined){
+            check(dueDate, Date);
+            dueDate = dueDate.toISOString().slice(0,10);
+        }
         Meteor.call('authHelper', taskId, owner);
         Tasks.update(taskId, {$set: {dueDate: dueDate}});
     },
     'tasks.setProgress'(taskId, progress, owner) {
         check(taskId, String);
-        check(owner, String);
+        check(progress, Number);
         Meteor.call('authHelper', taskId, owner);
         Tasks.update(taskId, {$set:{progress: progress}});
     },
     'tasks.setPriority'(taskId, newPriority, owner) {
         check(taskId, String);
-        check(owner, String);
         check(newPriority, Boolean);
         Meteor.call('authHelper', taskId, owner);
         Tasks.update(taskId, {$set:{priority:newPriority}});
     },
     'tasks.setArchive'(taskId, newArchive, owner) {
         check(taskId, String);
-        check(owner, String);
         check(newArchive, Boolean);
         Meteor.call('authHelper', taskId, owner);
         Tasks.update(taskId, {$set:{archive:newArchive}});

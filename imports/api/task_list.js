@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
 import { Groups } from './groups.js';
+import { Tasks } from './tasks.js';
 
 export const TaskList = new Mongo.Collection('task_list');
 
@@ -11,7 +12,7 @@ if (Meteor.isServer) {
         if(!this.userId) {
             throw new Meteor.Error('not logged in');
         }
-        let mygroups = Groups.find({'members':this.userId});
+        let mygroups = Groups.find({'members.id':this.userId});
         let mygroup_ids = mygroups.fetch().map(function(group) {return group._id;});
         mygroup_ids.push(this.userId);
         return TaskList.find({owner: {$in: mygroup_ids}});
@@ -26,7 +27,7 @@ Meteor.methods({
         if(owner != "") {
             owns = owner;
         }
-        if (list.owner !== owns) {
+        if (list.owner !== owns || (!this.userId)) {
             throw new Meteor.Error('not-authorized');
         }
     },
@@ -70,6 +71,7 @@ Meteor.methods({
         check(listId, String);
         Meteor.call('authListHelper',listId,owner);
         TaskList.remove(listId);
+        Tasks.remove({parent: listId});
     },
     'task_list.showArchives'(listId, showing,owner) {
         check(listId,String);

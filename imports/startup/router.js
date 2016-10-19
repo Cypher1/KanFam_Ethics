@@ -41,6 +41,17 @@ FlowRouter.route('/login', {
     }
 });
 
+FlowRouter.route('/signUp', {
+    name: 'signUp',
+    action: function() {
+        if(!Meteor.userId()) {
+            BlazeLayout.render("mainLayout", {content: "signUp"});
+        } else {
+            FlowRouter.go('/');
+        }
+    }
+});
+
 // PRIVATE ROUTES
 var privateRoutes = FlowRouter.group({
     name: 'private',

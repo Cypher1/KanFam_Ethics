@@ -58,5 +58,5 @@ Template.all_groups.events({
         Meteor.call('groups.remove',group_id);
       }
     });
-  },
+  }
 });
