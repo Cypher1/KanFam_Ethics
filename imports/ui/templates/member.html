@@ -1,19 +1,17 @@
 <template name="member">
-  <form class="remove-member">
-    <ul class="header grey lighten-5 no-margin z-depth-0" style="border-left:none;border-right:none;">
-      <li>
-        <div class="row" style="margin:0px">
-          <div class="col s11">
-            <input disabled type="text" class="grey-text" name="removeId" value="{{this}}" style="border: none; font-size:13px; padding-left:3px; padding-top: 3px; padding-bottom: 3px;"/>
+      <div class="collection-item grey-lighten-4 no-padd no-margin">
+        <div class="row no-margin">
+          <div class="col s10">
+            <input disabled type="text" class="grey-text text-darken-2 no-padd no-margin" name="removeId" id="{{this}}" value="{{this}}" style="border: none; font-size:13px; padding-left:3px; padding-top: 3px; padding-bottom: 3px;"/>
           </div>
-          <div class="col s1">
-            <br>
-            <button type="submit" style="background:none!important; border:none; padding:0!important;">
-              <i class="remove-member tiny material-icons align right">clear</i>
-            </button>
+          <div class="col s2">
+              <a class="dropdown-member grey-text lighten-3" style="font-size:6px;" data-activates='member{{this}}'><i class="small material-icons align" >arrow_drop_down</i></a>
+               <ul id='member{{this}}' class='dropdown-content'>                 
+                <label class="center"><li class="toggle-admin center cyan-text text-darken-3">Make Admin</li></label>
+                <li class="divider"></li>
+                <label class="remove-member center"><li class="cyan-text text-darken-3"><input type="checkbox"/>Remove</li></label>
+              </ul>
           </div>
         </div>
-      </li>
-    </ul>
-  </form>
+      </div>
 </template>

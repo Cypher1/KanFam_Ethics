@@ -19,15 +19,15 @@
                         </div>
                     </div>
                    </span>
-                <div class="row">
+                    <div class="row">
         
-                    <div class="col s5" style="padding:0px;">
+                    <div class="col s8" style="padding:0px;">
                         <form class="edit-group-description">
                             <input class="flow-text left" name="text" type="text" style="font-size:15px;border:none;" value="{{description}}" placeholder="add description..."/>
                         </form>
                     </div>
                   
-                </div>
+                    </div>
                 {{#unless isActiveRoute 'group_page'}}
                 <div class="row">
                     <div class="col s2">
@@ -39,17 +39,21 @@
                 {{#if isActiveRoute 'group_page'}}
                 {{#if is_admin}}
                 <div class="row">
+                    <div class="col s12">
                     <form class="new-member">
                         <label>Add Member</label>
                         <input placeholder="Enter a userID" name="memberId" text="text"/>
                     </form>
+                    </div>
                 </div>
                 {{/if}}
                 <div class="row">
+                   <div class="col s12">
                     <label>Members</label>
                     {{#each members}} 
                         {{> member}}
                     {{/each}}
+                    </div>
                 </div>
 
                 {{/if}} 

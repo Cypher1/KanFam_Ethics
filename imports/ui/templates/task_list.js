@@ -8,7 +8,7 @@ import { Groups } from '../../api/groups.js';
 import './task.js';
 import './task_list.html';
 
-Template.task_list.rendered = function() {
+Template.task_list.onRendered(function(){
     this.$('.dropdown-button').dropdown({
         inDuration: 300,
         outDuration: 225,
@@ -17,7 +17,7 @@ Template.task_list.rendered = function() {
         gutter: 0, // Spacing from edge
         belowOrigin: false // Displays dropdown below the button
     });
-};
+});
 
 Template.task_list.onCreated(function bodyOnCreated() {
     this.state = new ReactiveDict();
