@@ -44,25 +44,23 @@ Meteor.methods({
         FlowRouter.go('/groups');
     },
     'groups.add_admin'(groupId, userId, remove) {
-      
         check(groupId,String);
         check(userId,String);
         check(remove,Boolean);
 
         /* Check that user is admin in group */
         const group = Groups.findOne({_id: groupId, admin: this.userId});
-        
         //if not logged in or not a current admin
         if (!this.userId || !group) {
             throw new Meteor.Error('not-authorized');
         }
         //get user that we are making admin
-        const user = Meteor.users.findOne({_id: userId});
+        const user = Meteor.users.findOne(userId);
         //check if that user exists
         if (!user) {
             throw new Meteor.Error('user does not exist');
         }
-        //if we 
+        //if we
         if (remove) {
             Groups.update(groupId, {$pull: {admin: userId}});
         } else {
@@ -70,14 +68,12 @@ Meteor.methods({
         }
     },
     'groups.add_remove_member'(groupId, memberId, remove) {
-      
         check(groupId,String);
         check(memberId,String);
         check(remove,Boolean);
 
         /* Check that user is admin in group */
         const group = Groups.findOne({_id: groupId, admin: this.userId});
-       
         if (!this.userId || !group) {
             throw new Meteor.Error('not-authorized');
         }
@@ -86,13 +82,12 @@ Meteor.methods({
         if (remove) {
             Groups.update(groupId, {$pull: {members: memberId}});
             Groups.update(groupId, {$pull: {admin: memberId}});
-            
             if(this.userId == memberId) {
                 FlowRouter.go('/groups');
             }
         } else {
             if(Meteor.isServer) {
-                const user = Meteor.users.findOne({_id: memberId});
+                const user = Meteor.users.findOne(memberId);
                 if (!user) {
                     throw new Meteor.Error('user does not exist');
                 }
@@ -110,7 +105,7 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
         Groups.update(groupId, {$set: {description: newDescription}});
-    }, 
+    },
     'groups.edit_name'(groupId, newName) {
 
         check(groupId,String);

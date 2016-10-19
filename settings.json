@@ -1,0 +1,14 @@
+{
+    "private": {
+        "google": {
+            "app_id": "947031846370-ip7nv605c1aob76cuclb9t358014hdbb.apps.googleusercontent.com",
+            "secret": "3cACZzhquYGLACL7mmKkBP8l"
+        },
+        "facebook": {
+            "app_id": "216600055381228",
+            "secret": "6378ec5d4349fe068fad567b8a750e6d"
+        }
+    },
+    "public": {
+    }
+}

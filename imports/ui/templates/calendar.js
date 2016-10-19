@@ -8,7 +8,7 @@ Template.calendar.onRendered( () => {
   $('#calendar').fullCalendar({
     // Function providing events reactive computation for fullcalendar plugin
     events: function(start, end, timezone, callback) {
-      var userId = Meteor.user()._id;
+      var userId = Meteor.userId();
       start = start.toDate();
       end = end.toDate();
       var events = [];
