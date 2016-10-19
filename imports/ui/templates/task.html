@@ -65,10 +65,11 @@
 <div class="collapsible-body grey lighten-5 black-text" style="{{#if archive}}visibility:collapse;{{/if}}">
         <p>
   <br>
+
   
   <!-- This is the assignees area. -->  
   {{#unless isActiveRoute 'dashboard'}}
-  This task is assigned to: {{#each assignees}} <br> {{this}} {{/each}}
+  This task is assigned to: {{#each assignees}} <br> {{this.name}} {{/each}}
   <form class="new-assign">
   <input type="text" name="text" class="no-margin"
   placeholder="Type to assign a new user" required

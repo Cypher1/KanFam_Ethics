@@ -110,6 +110,7 @@ Template.task.events({
 	  owner = FlowRouter.getParam('_id'); 
     }
     Meteor.call('tasks.addAssignee', this._id, assign, owner);
+      event.target.text.value ="";
   },
   'submit .delete-assign'(event) { 
     // Prevent default browser form submit
@@ -119,7 +120,8 @@ Template.task.events({
     if(FlowRouter.current().route.name == 'group_page'){ 
             owner = FlowRouter.getParam('_id'); 
     }
-    Meteor.call('tasks.deleteAssignee', this._id, assign, owner);
+      Meteor.call('tasks.deleteAssignee', this._id, assign, owner);
+      event.target.text.value ="";
   },
   'submit .new-note'(event) { 
     event.preventDefault();
@@ -227,3 +229,4 @@ Template.task.events({
     Meteor.call('tasks.setArchive',this._id, !this.archive,owner);
   }
 });
+

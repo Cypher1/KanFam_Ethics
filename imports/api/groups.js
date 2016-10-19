@@ -7,7 +7,7 @@ export const Groups = new Mongo.Collection('groups');
 if (Meteor.isServer) {
     /* This code only runs on the server */
     Meteor.publish('groups', function groupsPublication() {
-        return Groups.find({members: this.userId});
+        return Groups.find({"members.id" : this.userId});
     });
 }
 
@@ -22,6 +22,14 @@ Meteor.methods({
         }
 
         let user = Meteor.users.findOne(this.userId);
+	let identifier = user.username;
+        if (!identifier) {
+            if(user.profile) {
+                identifier = user.profile.name;
+            } else {
+                identifier = user.email;
+            }
+        }
         /* insert into collection with a name & description */
         Groups.insert({
             name: groupname,
@@ -29,7 +37,10 @@ Meteor.methods({
             createdAt: new Date(),
             owner: this.userId,
             admin: [this.userId],
-            members: [this.userId],
+            members: [{
+		"id": this.userId,
+		"name": identifier
+	    }],
             lists: [],
         });
     },
@@ -84,7 +95,7 @@ Meteor.methods({
 
         //if we want to remove the member
         if (remove) {
-            Groups.update(groupId, {$pull: {members: memberId}});
+            Groups.update(groupId, {$pull: {members: {id: memberId}}});
             Groups.update(groupId, {$pull: {admin: memberId}});
             
             if(this.userId == memberId) {
@@ -96,7 +107,15 @@ Meteor.methods({
                 if (!user) {
                     throw new Meteor.Error('user does not exist');
                 }
-                Groups.update(groupId, {$addToSet: {members: memberId}});
+		let identifier = user.username;
+		if (!identifier) {
+		    if(user.profile) {
+			identifier = user.profile.name;
+		    } else {
+			identifier = user.email;
+		    }
+		}
+                Groups.update(groupId, {$addToSet: {members: {"id":memberId,"name":identifier}}});
             }
         }
     },
