@@ -92,9 +92,14 @@ Meteor.methods({
             //check that the user is admin in the group
             const group = Groups.findOne({_id: groupId, admin: this.userId});
             
-            //only admins can remove members
-            if (!group) {
-                 throw new Meteor.Error('not-authorized');
+            //if the user is not trying to remove themselves (which they can always do)
+            if(this.userId != memberId){
+
+                //only admins can remove members
+                if (!group) {
+                     throw new Meteor.Error('not-authorized');
+                }
+
             }
 
             Groups.update(groupId, {$pull: {members: memberId}});

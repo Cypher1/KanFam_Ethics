@@ -1,29 +1,29 @@
 <template name="member">
-      <div class="collection-item grey lighten-4 no-padd no-margin">
-        <div class="row no-margin">
-          <div class="col s6">
-            <input disabled type="text" class="left grey-text text-darken-2 no-padd no-margin" name="removeId" id="{{this}}" value="{{this}}" style="border: none; font-size:12px; padding-left:3px; padding-top: 3px; padding-bottom: 3px;"/>
-          </div>
-          <div class="col s4">
-            <small class="left grey-text" style="padding-top:15px;visibility:{{#unless isMe}}hidden;{{/unless}}">(Me)</small>
-          </div>
-          <div class="col s1 no-margin">
-            <i class="right tiny material-icons align red-text text-darken-2" style="padding-top:15px;visibility:{{#unless isMemberAdmin}}hidden;{{/unless}}">vpn_key</i>
-          </div>
-          <div class="col s1 no-padd no-margin">
-              {{#if isLoggedAdmin}}
-              <a class="right dropdown-member grey-text lighten-3 no-padd" style="font-size:6px;;" data-activates='member{{this}}'><i class="small material-icons" style="padding-top:8px">arrow_drop_down</i></a>
-               <ul id='member{{this}}' class='dropdown-content'>                 
-                <label class="toggle-admin center"><li class="center cyan-text text-darken-3">{{#if isMemberAdmin}}Remove Admin{{else}}Make Admin{{/if}}</li></label>
-                <li class="divider"></li>
-                <label class="remove-member center"><li class="cyan-text text-darken-3"><input type="checkbox"/>Remove</li></label>
-              </ul>
-              {{else}}
-                {{#if isMe}}
-                  <a class="remove-member" style="font-size:10px;padding-top:8px;"><u>Remove me</u></a>
-                {{/if}}
-              {{/if}}
-          </div>
-        </div>
+  <div class="collection-item grey lighten-4 no-padd no-margin">
+    <div class="row no-margin">
+      <div class="col s6">
+        <input disabled type="text" class="left grey-text text-darken-2 no-padd no-margin" name="removeId" id="{{this}}" value="{{this}}" style="border: none; font-size:12px; padding-left:3px; padding-top: 3px; padding-bottom: 3px;"/>
       </div>
+      <div class="col s4">
+        <small class="left grey-text" style="padding-top:15px;visibility:{{#unless isMe}}hidden;{{/unless}}">(Me)</small>
+      </div>
+      <div class="col s1 no-margin">
+        <i class="right tiny material-icons align red-text text-darken-2" style="padding-top:15px;visibility:{{#unless isMemberAdmin}}hidden;{{/unless}}">vpn_key</i>
+      </div>
+      <div class="col s1 no-padd no-margin">
+        {{#if isLoggedAdmin}}
+        <a class="right dropdown-member grey-text lighten-3 no-padd" style="font-size:6px;;" data-activates='member{{this}}'><i class="small material-icons" style="padding-top:8px">arrow_drop_down</i></a>
+        <ul id='member{{this}}' class='dropdown-content'>                 
+          <label class="toggle-admin center"><li class="center cyan-text text-darken-3">{{#if isMemberAdmin}}Remove Admin{{else}}Make Admin{{/if}}</li></label>
+          <li class="divider"></li>
+          <label class="remove-member center"><li class="cyan-text text-darken-3"><input type="checkbox"/>Remove Member</li></label>
+        </ul>
+        {{else}}
+        {{#if isMe}}
+        <a class="remove-member" style="font-size:11px;padding-top:8px;padding-right:2px;"><u>Leave</u></a>
+        {{/if}}
+        {{/if}}
+      </div>
+    </div>
+  </div>
 </template>
