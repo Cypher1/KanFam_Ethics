@@ -1,16 +1,22 @@
 <template name="member">
-      <div class="collection-item grey-lighten-4 no-padd no-margin">
+      <div class="collection-item grey lighten-4 no-padd no-margin">
         <div class="row no-margin">
-          <div class="col s10">
+          <div class="col s8">
             <input disabled type="text" class="grey-text text-darken-2 no-padd no-margin" name="removeId" id="{{this}}" value="{{this}}" style="border: none; font-size:13px; padding-left:3px; padding-top: 3px; padding-bottom: 3px;"/>
           </div>
           <div class="col s2">
-              <a class="dropdown-member grey-text lighten-3" style="font-size:6px;" data-activates='member{{this}}'><i class="small material-icons align" >arrow_drop_down</i></a>
+            <i class="right tiny material-icons align red-text text-darken-2" style="visibility:{{#unless isMemberAdmin}}hidden{{/unless}}">vpn_key</i>
+          </div>
+
+          <div class="col s2">
+            <div style = "visibility:{{#unless isLoggedAdmin}}hidden{{/unless}}">
+              <a class="dropdown-member grey-text lighten-3" style="font-size:6px;" data-activates='member{{this}}'><i class="small material-icons align">arrow_drop_down</i></a>
                <ul id='member{{this}}' class='dropdown-content'>                 
-                <label class="center"><li class="toggle-admin center cyan-text text-darken-3">Make Admin</li></label>
+                <label class="toggle-admin center"><li class="center cyan-text text-darken-3">{{#if isAdmin}}Remove Admin{{else}}Make Admin{{/if}}</li></label>
                 <li class="divider"></li>
                 <label class="remove-member center"><li class="cyan-text text-darken-3"><input type="checkbox"/>Remove</li></label>
               </ul>
+            </div>
           </div>
         </div>
       </div>

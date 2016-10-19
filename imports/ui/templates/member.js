@@ -26,6 +26,20 @@ Template.member.helpers({
     members(){
         return Groups.find().fetch();
     },
+    isLoggedAdmin(){
+        //checks if the user that is currently logged in is an admin
+        var groupId = Template.parentData(1)._id;
+        if(Groups.find({_id: groupId, admin:{$in : [Meteor.userId()]}}).count() >0){
+            return true;
+        }
+    },
+    isMemberAdmin(){
+        //checks if current member we're on is an admin
+        var groupId = Template.parentData(1)._id;
+        if(Groups.find({_id: groupId, admin:{$in : [this.valueOf()]}}).count() >0){
+            return true;
+        }
+    }
 });
 
 Template.member.events({
@@ -34,13 +48,13 @@ Template.member.events({
         event.preventDefault();
         var groupId = Template.parentData(1)._id;
         var memberId = document.getElementById(this).value;
-        console.log(memberId);
+       // console.log(Meteor.userId());
 
         //creates confimation alert
         swal({
             html:true,
             title: "<h5>Delete Confirmation<h5>",
-          //  text: "Are you sure you want to remove the following member(s): " + memberId + "?",
+            text: "Are you sure you want to remove the following member(s): " + memberId + "?",
             confirmButtonColor: '#0097a7',
             confirmButtonText: 'Yes',
             showCancelButton: true,
@@ -55,5 +69,19 @@ Template.member.events({
             }
         });
     },
-    
-})
+    'click .toggle-admin'(event) {
+
+        event.preventDefault();
+        var groupId = Template.parentData(1)._id;
+        var adminId = document.getElementById(this).value;
+
+        var isAdmin = Groups.find({_id: groupId, admin:{$in : [adminId]}}).count();
+        remove = false;
+        if(isAdmin){
+            remove = true;
+        }
+        console.log(remove);
+        Meteor.call('groups.add_remove_admin',groupId, adminId, remove);
+        
+    }, 
+});

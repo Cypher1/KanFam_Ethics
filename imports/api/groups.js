@@ -49,6 +49,13 @@ Meteor.methods({
         check(adminId,String);
         check(remove,Boolean);
 
+        console.log("in add_remove_admin");
+/*
+        console.log(groupId);
+        console.log(adminId);
+        console.log(remove);
+        console.log(this.userId);
+*/
         /* Check that user is admin in group */
         const group = Groups.findOne({_id: groupId, admin: this.userId});
         
@@ -59,12 +66,9 @@ Meteor.methods({
         if (remove) {
             Groups.update(groupId, {$pull: {admin: adminId}});
         } else {
+          
             if(Meteor.isServer){
                 const user = Meteor.users.findOne({_id: adminId});
-                const isMember = Groups.findOne({_id: groupId, member: adminId});
-                if(isMember){
-                    throw new Meteor.Error('user is ')
-                }
 
                 if (!user) {
                     throw new Meteor.Error('user does not exist');
@@ -78,7 +82,6 @@ Meteor.methods({
         check(groupId,String);
         check(memberId,String);
         check(remove,Boolean);
-
         /* Check that user is admin in group */
         const group = Groups.findOne({_id: groupId, admin: this.userId});
        
