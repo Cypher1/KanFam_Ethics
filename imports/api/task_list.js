@@ -12,7 +12,7 @@ if (Meteor.isServer) {
         if(!this.userId) {
             throw new Meteor.Error('not logged in');
         }
-        let mygroups = Groups.find({'members':this.userId});
+        let mygroups = Groups.find({'members.id':this.userId});
         let mygroup_ids = mygroups.fetch().map(function(group) {return group._id;});
         mygroup_ids.push(this.userId);
         return TaskList.find({owner: {$in: mygroup_ids}});

@@ -3,6 +3,7 @@ import { Template } from 'meteor/templating';
 import { Tasks } from '../../api/tasks.js';
 
 import './task.html';
+import './assignee.js';
 
 
 Template.task.helpers({
@@ -100,6 +101,17 @@ Template.task.events({
           Meteor.call('tasks.remove', id,owner);
         }
      });
+  },
+  'submit .new-assign'(event) { 
+    // Prevent default browser form submit
+    event.preventDefault();
+    const assign = event.target.text.value;
+    var owner = "";
+    if(FlowRouter.current().route.name == 'group_page'){
+	  owner = FlowRouter.getParam('_id'); 
+    }
+    Meteor.call('tasks.addAssignee', this._id, assign, owner);
+      event.target.text.value ="";
   },
   'submit .new-note'(event) { 
     event.preventDefault();
