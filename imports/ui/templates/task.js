@@ -81,8 +81,6 @@ Template.task.onRendered(function(){
     });
 });
 
-
-
 Template.task.events({
 
   'click .delete'() {
@@ -191,7 +189,6 @@ Template.task.events({
     }
     Meteor.call('tasks.editTask', this._id,edit,owner);
   },
-
   'submit .due-date'(event){
 
     event.preventDefault();

@@ -52,6 +52,7 @@ Meteor.methods({
         check(groupId,String);
         check(adminId,String);
         check(remove,Boolean);
+        var admin_size = Groups.findOne(groupId).admin.length;
 
         /* Check that user is admin in group */
         const group = Groups.findOne({_id: groupId, admin: this.userId});
@@ -60,7 +61,13 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
         if (remove) {
+
+            //to remove an admin there must be more than 1 admin in the group
+            if(admin_size == 1){
+                throw new Meteor.Error('cannot remove last admin');
+            }
             Groups.update(groupId, {$pull: {admin: adminId}});
+
         } else {
             if(Meteor.isServer){
                 const user = Meteor.users.findOne({_id: adminId});
@@ -76,8 +83,8 @@ Meteor.methods({
         check(groupId,String);
         check(memberId,String);
         check(remove,Boolean);
-
-        //check users are logged in
+        var admin_size = Groups.findOne(groupId).admin.length;
+ 
         if(!this.userId){
             throw new Meteor.Error('not-authorized');
         }
@@ -87,10 +94,15 @@ Meteor.methods({
 
             //check that the user is admin in the group
             const group = Groups.findOne({_id: groupId, admin: this.userId});
+            const isAdmin = Groups.findOne({_id: groupId, admin: memberId});
+
+            //to remove an admin there must be more than 1 admin
+            if(admin_size == 1 && isAdmin){
+                throw new Meteor.Error('cannot remove last admin member');
+            }
 
             //if the user is not trying to remove themselves (which they can always do)
             if(this.userId != memberId){
-
                 //only admins can remove members
                 if (!group) {
                     throw new Meteor.Error('not-authorized');
@@ -99,6 +111,7 @@ Meteor.methods({
 
             Groups.update(groupId, {$pull: {members: memberId}});
             Groups.update(groupId, {$pull: {admin: memberId}});
+
             if(this.userId == memberId) {
                 FlowRouter.go('/groups');
             }
