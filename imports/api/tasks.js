@@ -59,12 +59,30 @@ Meteor.methods({
             progress: 1,
             priority: false,
             archive: false,
+	    assignees: [],
         });
     },
     'tasks.remove'(taskId, owner) {
         check(taskId, String);
         Meteor.call('authHelper', taskId, owner);
         Tasks.remove(taskId);
+    },
+
+    'tasks.addAssignee'(taskId,assigneeId,owner) {
+        check(taskId,String);
+        check(assigneeId,String);
+        Meteor.call('authHelper', taskId, owner);
+	const groupMembers = Groups.findOne(owner).members;
+	const taskAssignees = Tasks.findOne(taskId).assignees;
+	if ((groupMembers.indexOf(assigneeId) != -1) && (taskAssignees.indexOf(assigneeId) == -1)) {
+	    Tasks.update(taskId,{$push: {assignees: assigneeId}});
+	}
+    },
+    'tasks.deleteAssignee'(taskId,assigneeId,owner) {
+        check(taskId,String);
+        check(assigneeId,String);
+        Meteor.call('authHelper', taskId, owner);
+        Tasks.update(taskId,{$pull: { assignees : assigneeId} });
     },
     'tasks.addNote'(taskId, notes, owner) {
         check(taskId, String);
