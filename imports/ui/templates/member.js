@@ -50,13 +50,6 @@ Template.member.helpers({
     isMe(){
         return this.valueOf() == Meteor.userId();
     },
-    memberSize(){
-        var groupId = Template.parentData(1)._id;
-        var member_size = Groups.findOne(groupId).members.length;
-        console.log("member size:");
-        console.log(member_size);
-    }
-
 });
 
 Template.member.events({
@@ -65,6 +58,7 @@ Template.member.events({
         event.preventDefault();
         var groupId = Template.parentData(1)._id;
         var memberId = document.getElementById(this).value;
+       
         var isAdmin = Groups.findOne({_id: groupId, admin: memberId});
         var admin_size = Groups.findOne(groupId).admin.length;
 
