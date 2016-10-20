@@ -72,15 +72,19 @@ Meteor.methods({
         check(taskId,String);
         check(assigneeId,String);
         Meteor.call('authHelper', taskId, owner);
-	const groupMembers = Groups.findOne(owner).members;
-	const taskAssignees = Tasks.findOne(taskId).assignees;
-	if ((groupMembers.indexOf(assigneeId) != -1) && (taskAssignees.indexOf(assigneeId) == -1)) {
-	    Tasks.update(taskId,{$push: {assignees: assigneeId}});
-	}
+    	const groupMembers = Groups.findOne(owner).members;
+    	const taskAssignees = Tasks.findOne(taskId).assignees;
+        if ((groupMembers.indexOf(assigneeId) != -1) && (taskAssignees.indexOf(assigneeId) == -1)) {
+    	    Tasks.update(taskId,{$push: {assignees: assigneeId}});
+    	}
     },
     'tasks.deleteAssignee'(taskId,assigneeId,owner) {
         check(taskId,String);
         check(assigneeId,String);
+        var isAdmin = Groups.findOne({_id: owner, admin: this.userId});
+        if(!isAdmin){
+            throw new Meteor.Error('not-authorized');
+        }
         Meteor.call('authHelper', taskId, owner);
         Tasks.update(taskId,{$pull: { assignees : assigneeId} });
     },

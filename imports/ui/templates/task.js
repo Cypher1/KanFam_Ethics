@@ -80,7 +80,7 @@ Template.task.onRendered(function(){
       container: 'body',
       onClose: function(){
 
-        console.log(Blaze.getData(Template.instance().data()));
+      
 
          // $("#dueDate").submit();
       //  $('#due-date').trigger('customEvent');
