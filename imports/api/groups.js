@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
+import { Tasks } from './tasks.js';
+import { TaskList } from './task_list.js';
 
 export const Groups = new Mongo.Collection('groups');
 
@@ -40,12 +42,15 @@ Meteor.methods({
         if (!this.userId || !group) {
             throw new Meteor.Error('not-authorized');
         }
+
+        Tasks.remove({owner: groupId});
+        TaskList.remove({owner: groupId});
         Groups.remove(groupId);
         FlowRouter.go('/groups');
     },
-    'groups.add_admin'(groupId, userId, remove) {
+    'groups.add_remove_admin'(groupId, adminId, remove) {
         check(groupId,String);
-        check(userId,String);
+        check(adminId,String);
         check(remove,Boolean);
 
         /* Check that user is admin in group */
@@ -54,17 +59,17 @@ Meteor.methods({
         if (!this.userId || !group) {
             throw new Meteor.Error('not-authorized');
         }
-        //get user that we are making admin
-        const user = Meteor.users.findOne(userId);
-        //check if that user exists
-        if (!user) {
-            throw new Meteor.Error('user does not exist');
-        }
-        //if we
         if (remove) {
-            Groups.update(groupId, {$pull: {admin: userId}});
+            Groups.update(groupId, {$pull: {admin: adminId}});
         } else {
-            Groups.update(groupId, {$addToSet: {admin: userId}});
+            if(Meteor.isServer){
+                const user = Meteor.users.findOne({_id: adminId});
+
+                if (!user) {
+                    throw new Meteor.Error('user does not exist');
+                }
+                Groups.update(groupId, {$addToSet: {admin: adminId}});
+            }
         }
     },
     'groups.add_remove_member'(groupId, memberId, remove) {
@@ -72,14 +77,26 @@ Meteor.methods({
         check(memberId,String);
         check(remove,Boolean);
 
-        /* Check that user is admin in group */
-        const group = Groups.findOne({_id: groupId, admin: this.userId});
-        if (!this.userId || !group) {
+        //check users are logged in
+        if(!this.userId){
             throw new Meteor.Error('not-authorized');
         }
 
         //if we want to remove the member
         if (remove) {
+
+            //check that the user is admin in the group
+            const group = Groups.findOne({_id: groupId, admin: this.userId});
+
+            //if the user is not trying to remove themselves (which they can always do)
+            if(this.userId != memberId){
+
+                //only admins can remove members
+                if (!group) {
+                    throw new Meteor.Error('not-authorized');
+                }
+            }
+
             Groups.update(groupId, {$pull: {members: memberId}});
             Groups.update(groupId, {$pull: {admin: memberId}});
             if(this.userId == memberId) {

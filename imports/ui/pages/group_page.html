@@ -1,12 +1,16 @@
 <template name="group_page">
   {{#with get_group}}
-  <div class="container">
-    <br>
-    <div class="center">
-      {{>group}}
+  <div class="row" >
+    <div class="col s7">
+      <br>
+      <br>
+      {{> all_lists}}
     </div>
-    <br>
-    {{>all_lists}}
+    <div class="right col s5 no-margin no-padd">
+      <br>
+      <br>
+      {{> group}}
+    </div>
   </div>
   {{/with}}
 </template>
