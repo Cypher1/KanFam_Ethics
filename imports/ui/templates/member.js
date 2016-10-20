@@ -64,7 +64,7 @@ Template.member.events({
 
         //if the user being removed is the only admin left
         if(isAdmin && admin_size == 1){
-            sweetAlert("Cannot Remove Member", "There must always be at least one group administrator", "error");
+            sweetAlert("Cannot Remove Member", "There must always be at least one group administrator. Please make another member an administrator before removing this member.", "error");
         }else{
             //creates confimation alert
             swal({
@@ -102,7 +102,7 @@ Template.member.events({
         if((remove && admin_size > 1) || !remove){
             Meteor.call('groups.add_remove_admin',groupId, adminId, remove);
         }else{
-            sweetAlert("Cannot Remove Admin", "There must always be at least one group administrator", "error");
+            sweetAlert("Cannot Remove Admin", "There must always be at least one group administrator. Please make another member an admin before removing admin privileges on this member.", "error");
         }
 
 

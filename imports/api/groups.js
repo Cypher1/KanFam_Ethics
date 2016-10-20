@@ -53,10 +53,8 @@ Meteor.methods({
         check(groupId,String);
         check(adminId,String);
         check(remove,Boolean);
-
         var member_size = Groups.findOne(groupId).members.length;
-      //  console.log("member size: ");
-      //  console.log(member_size);
+        var admin_size = Groups.findOne(groupId).admin.length;
 
         /* Check that user is admin in group */
         const group = Groups.findOne({_id: groupId, admin: this.userId});
@@ -66,7 +64,13 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
         if (remove) {
+
+            //to remove an admin there must be more than 1 admin in the group
+            if(admin_size == 1){
+                throw new Meteor.Error('cannot remove last admin');
+            }
             Groups.update(groupId, {$pull: {admin: adminId}});
+
         } else {
           
             if(Meteor.isServer){
@@ -84,11 +88,8 @@ Meteor.methods({
         check(groupId,String);
         check(memberId,String);
         check(remove,Boolean);
-
-       // var member_size = Groups.findOne(groupId).members.length;
-       // console.log("member size:");
-       // console.log(member_size);
-        //check users are logged in
+        var admin_size = Groups.findOne(groupId).admin.length;
+ 
         if(!this.userId){
             throw new Meteor.Error('not-authorized');
         }
@@ -98,10 +99,14 @@ Meteor.methods({
 
             //check that the user is admin in the group
             const group = Groups.findOne({_id: groupId, admin: this.userId});
+
+            //to remove an admin there must be more than 1 admin
+            if(admin_size == 1){
+                throw new Meteor.Error('cannot remove last admin member');
+            }
             
             //if the user is not trying to remove themselves (which they can always do)
             if(this.userId != memberId){
-
                 //only admins can remove members
                 if (!group) {
                      throw new Meteor.Error('not-authorized');
