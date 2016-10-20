@@ -60,7 +60,7 @@ Template.member.helpers({
 
 Template.member.events({
 
-	'click .remove-member'(event) {
+    'click .remove-member'(event) {
         event.preventDefault();
         var groupId = Template.parentData(1)._id;
         var memberId = document.getElementById(this).value;

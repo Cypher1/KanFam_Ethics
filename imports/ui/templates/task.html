@@ -64,6 +64,9 @@
 <div class="collapsible-body grey lighten-5 black-text" style="{{#if archive}}visibility:collapse;{{/if}}">
         <p>
   <br>
+
+
+  
   <!-- This is the "add notes" text area -->
         <div class="card-panel" style="overflow-x:auto;">
           <form class="new-note" id="tNotes">
@@ -105,7 +108,21 @@
          <form class="due-date">
           <input type="date" name="text" id="{{_id}}" class="datepicker" placeholder="Due date..." value="{{dueDate}}"/>
           <button class="btn waves-effect waves-light cyan darken-2" type="submit" name="action">Set Date</button>
-        </form> 
+      </form>
+      <br>
+      
+  <!-- This is the assigning users section -->
+  {{#unless isActiveRoute 'dashboard'}}
+  <form class="new-assign">
+  <input type="text" name="text" class="no-margin"
+  placeholder="Type to assign a new user" required
+  oninvalid="this.setCustomValidity('Please enter a task name')"
+  oninput="setCustomValidity('')"/>
+  </form>
+  {{#each assignees}}
+    {{> assignee}}
+  {{/each}}
+  {{/unless}}
         </p>
       </div>
     </li>
