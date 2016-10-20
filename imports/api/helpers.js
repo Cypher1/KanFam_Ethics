@@ -8,10 +8,13 @@ user_name = function(user_id) {
   return Session.get(user_id+".username");
 }
 
-id_by_name = function(user_name) {
-  Meteor.call('user.id_by_name', user_name, function (error, result) {
-    Session.set(user_name+".id", result);
-  });
+id_by_name = function(user_name, callback) {
+  if(!callback) {
+    callback = function (error, result) {
+      Session.set(user_name+".id", result);
+    };
+  }
+  Meteor.call('user.id_by_name', user_name, callback);
   return Session.get(user_name+".id");
 }
 
