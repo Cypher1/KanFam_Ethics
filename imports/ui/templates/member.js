@@ -5,10 +5,6 @@ import { Groups } from '../../api/groups.js';
 import './member.html';
 import '../../api/groups.js';
 
-function init_dropdown() {
-
-}
-
 Template.dropdown.onRendered(function(){
 
     this.$('.dropdown-member').dropdown({
@@ -34,7 +30,6 @@ Template.dropdown.helpers({
         var groupId = Template.parentData(1)._id;
         return Groups.findOne({_id: groupId, admin: this.valueOf()});
     }
-
 });
 
 Template.member.helpers({
@@ -55,9 +50,6 @@ Template.member.helpers({
     isMe(){
         return this.valueOf() == Meteor.userId();
     },
-    isLast(){
-      //  return 
-    },
     memberSize(){
         var groupId = Template.parentData(1)._id;
         var member_size = Groups.findOne(groupId).members.length;
@@ -73,25 +65,32 @@ Template.member.events({
         event.preventDefault();
         var groupId = Template.parentData(1)._id;
         var memberId = document.getElementById(this).value;
+        var isAdmin = Groups.findOne({_id: groupId, admin: memberId});
+        var admin_size = Groups.findOne(groupId).admin.length;
 
-        //creates confimation alert
-        swal({
-            html:true,
-            title: "<h5>Delete Confirmation<h5>",
-            text: "Are you sure you want to remove the following member(s): " + memberId + "?",
-            confirmButtonColor: '#0097a7',
-            confirmButtonText: 'Yes',
-            showCancelButton: true,
-            cancelButtonText: "No",
-            closeOnConfirm: true,
-            closeOnCancel: true,
-        },
-        function(isConfirm) { //if user clicked yes
-            if(isConfirm) {
-                //Delete Group
-                Meteor.call('groups.add_remove_member',groupId, memberId, true);
-            }
-        });
+        //if the user being removed is the only admin left
+        if(isAdmin && admin_size == 1){
+            sweetAlert("Cannot Remove Member", "There must always be at least one group administrator", "error");
+        }else{
+            //creates confimation alert
+            swal({
+                html:true,
+                title: "<h5>Delete Confirmation<h5>",
+                text: "Are you sure you want to remove the following member(s): " + memberId + "?",
+                confirmButtonColor: '#0097a7',
+                confirmButtonText: 'Yes',
+                showCancelButton: true,
+                cancelButtonText: "No",
+                closeOnConfirm: true,
+                closeOnCancel: true,
+            },
+            function(isConfirm) { //if user clicked yes
+                if(isConfirm) {
+                    //Delete Group
+                    Meteor.call('groups.add_remove_member',groupId, memberId, true);
+                }
+            });
+        }
     },
     'click .toggle-admin'(event) {
 
@@ -99,30 +98,19 @@ Template.member.events({
         var groupId = Template.parentData(1)._id;
         var adminId = document.getElementById(this).value;
         var isAdmin = Groups.findOne({_id: groupId, admin: adminId});
-        //is the logged in user an admin
-        var isUserAdmin = Groups.findOne({_id: groupId, admin: Meteor.userId()});
-
-        var member_size = Groups.findOne(groupId).members.length;
         var admin_size = Groups.findOne(groupId).admin.length;
-      //  console.log("member size:");
-      //  console.log(member_size);
-      //  console.log("admin size:");
-      //  console.log(admin_size);
 
+        remove = false;
+        if(isAdmin){
+         remove = true;
+        }  
         //makes sure that there is always at least one admin
-        if(member_size > 1){
-
-            remove = false;
-            if(isAdmin){
-             remove = true;
-            }
-
-            //only remove admin if the current number of admins is greater than 1
-            if((remove && admin_size > 1) || (!remove && admin_size >= 1)){
-                Meteor.call('groups.add_remove_admin',groupId, adminId, remove);
-            }
-  
+        if((remove && admin_size > 1) || !remove){
+            Meteor.call('groups.add_remove_admin',groupId, adminId, remove);
+        }else{
+            sweetAlert("Cannot Remove Admin", "There must always be at least one group administrator", "error");
         }
+
 
 
     }, 
