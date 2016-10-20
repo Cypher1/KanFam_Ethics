@@ -21,7 +21,6 @@ Template.assignee.events({
         var isAdmin = Groups.findOne({_id: owner, admin: Meteor.userId()});
 
         if(isAdmin){
-
             swal({
                 html:true,
                 title: "<h5>Delete Confirmation<h5>",

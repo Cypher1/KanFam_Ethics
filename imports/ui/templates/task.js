@@ -81,7 +81,6 @@ Template.task.onRendered(function(){
     });
 });
 
-
 Template.task.events({
 
   'click .delete'() {
