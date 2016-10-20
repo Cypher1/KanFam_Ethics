@@ -16,8 +16,10 @@
                                 {{/if}}
                             </div>
                             <div class="col s7">
+                                {{#if isActiveRoute 'groups'}}
                                 {{#if is_admin}}
                                 <i class="remove-group tiny material-icons align right">clear</i>
+                                {{/if}}
                                 {{/if}}
                                 <img class="right z-depth-1" src="/resources/house.jpg" width="60" height="60">
                             </div>

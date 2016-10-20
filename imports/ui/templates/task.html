@@ -110,7 +110,7 @@
           <button class="btn waves-effect waves-light cyan darken-2" type="submit" name="action">Set Date</button>
    <!--   </form> -->
       <br>
-      
+      <br>
   <!-- This is the assigning users section -->
   {{#unless isActiveRoute 'dashboard'}}
   <form class="new-assign">
@@ -119,6 +119,7 @@
   oninvalid="this.setCustomValidity('Please enter a task name')"
   oninput="setCustomValidity('')"/>
   </form>
+  <br>
   {{#each assignees}}
     {{> assignee}}
   {{/each}}
