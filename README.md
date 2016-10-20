@@ -21,7 +21,7 @@ KanFam uses is written in JavaScript using a Meteor stack.
     ```
 - Start meteor with
     ```
-    meteor
+    meteor --settings settings.json
     ```
 
 ### Project Structure
@@ -43,3 +43,5 @@ KanFam uses is written in JavaScript using a Meteor stack.
     - Modules that meteor imports from npm
 - /package.json
     - Settings for npm (allows npm start)
+- /settings.json
+    - Settings for meteor (allows sign in via Google and Facebook)
