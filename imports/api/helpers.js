@@ -1,16 +1,21 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 
-user_identifier = function() {
-    let user_info = Meteor.user();
-    if(user_info) {
-      if(user_info.username) return user_info.username;
-      if(user_info.profile) {
-          if(user_info.profile.name) return user_info.profile.name;
-      }
-    }
+user_name = function(user_id) {
+  Meteor.call('user.name', user_id, function (error, result) {
+    Session.set(user_id+".username", result);
+  });
+  return Session.get(user_id+".username");
+}
+
+id_by_name = function(user_name) {
+  Meteor.call('user.id_by_name', user_name, function (error, result) {
+    Session.set(user_name+".id", result);
+  });
+  return Session.get(user_name+".id");
 }
 
 if(Meteor.isClient) {
-  Template.registerHelper('user_identifier', user_identifier);
+  Template.registerHelper('user_name', user_name);
+  Template.registerHelper('id_by_name', id_by_name);
 }

@@ -49,14 +49,12 @@ Meteor.methods({
         FlowRouter.go('/groups');
     },
     'groups.add_remove_admin'(groupId, adminId, remove) {
-      
         check(groupId,String);
         check(adminId,String);
         check(remove,Boolean);
 
         /* Check that user is admin in group */
         const group = Groups.findOne({_id: groupId, admin: this.userId});
-        
         //if not logged in or not a current admin
         if (!this.userId || !group) {
             throw new Meteor.Error('not-authorized');
@@ -64,7 +62,6 @@ Meteor.methods({
         if (remove) {
             Groups.update(groupId, {$pull: {admin: adminId}});
         } else {
-          
             if(Meteor.isServer){
                 const user = Meteor.users.findOne({_id: adminId});
 
@@ -76,7 +73,6 @@ Meteor.methods({
         }
     },
     'groups.add_remove_member'(groupId, memberId, remove) {
-      
         check(groupId,String);
         check(memberId,String);
         check(remove,Boolean);
@@ -91,25 +87,24 @@ Meteor.methods({
 
             //check that the user is admin in the group
             const group = Groups.findOne({_id: groupId, admin: this.userId});
-            
+
             //if the user is not trying to remove themselves (which they can always do)
             if(this.userId != memberId){
 
                 //only admins can remove members
                 if (!group) {
-                     throw new Meteor.Error('not-authorized');
+                    throw new Meteor.Error('not-authorized');
                 }
             }
 
             Groups.update(groupId, {$pull: {members: memberId}});
             Groups.update(groupId, {$pull: {admin: memberId}});
-            
             if(this.userId == memberId) {
                 FlowRouter.go('/groups');
             }
         } else {
             if(Meteor.isServer) {
-                const user = Meteor.users.findOne({_id: memberId});
+                const user = Meteor.users.findOne(memberId);
                 if (!user) {
                     throw new Meteor.Error('user does not exist');
                 }
@@ -127,7 +122,7 @@ Meteor.methods({
             throw new Meteor.Error('not-authorized');
         }
         Groups.update(groupId, {$set: {description: newDescription}});
-    }, 
+    },
     'groups.edit_name'(groupId, newName) {
 
         check(groupId,String);
