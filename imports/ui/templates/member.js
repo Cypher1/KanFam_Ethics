@@ -5,8 +5,12 @@ import { Groups } from '../../api/groups.js';
 import './member.html';
 import '../../api/groups.js';
 
+function init_dropdown() {
 
-Template.member.onRendered(function(){
+}
+
+Template.dropdown.onRendered(function(){
+
     this.$('.dropdown-member').dropdown({
         inDuration: 300,
         outDuration: 225,
@@ -15,6 +19,7 @@ Template.member.onRendered(function(){
         gutter: 0, // Spacing from edge
         belowOrigin: false, // Displays dropdown below the button
     });
+
 });
 
 
@@ -22,11 +27,22 @@ Template.member.onCreated(function () {
     Meteor.subscribe('groups');
 });
 
+Template.dropdown.helpers({
+
+    isMemberAdmin(){
+        //checks if current member we're on is an admin
+        var groupId = Template.parentData(1)._id;
+        return Groups.findOne({_id: groupId, admin: this.valueOf()});
+    }
+
+});
+
 Template.member.helpers({
     members(){
         return Groups.find().fetch();
     },
     isLoggedAdmin(){
+
         //checks if the user that is currently logged in is an admin
         var groupId = Template.parentData(1)._id;
         return Groups.findOne({_id: groupId, admin: Meteor.userId()});
