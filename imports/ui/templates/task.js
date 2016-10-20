@@ -78,40 +78,7 @@ Template.task.onRendered(function(){
       formatSubmit: 'yyyy-mm-dd',
       hiddenName: true,
       container: 'body',
-      onClose: function(){
-
-      
-
-         // $("#dueDate").submit();
-      //  $('#due-date').trigger('customEvent');
-
-
-      }
     });
-/*
-    Tracker.autorun( () => {
-      Meteor.subscribe("tasks");
-    $('.datepicker').pickadate({
-      selectMonths: true, // Creates a dropdown to control month
-      selectYears: 16,       // Creates a dropdown of 15 years to control year
-      dateMin: [2000,01,01],
-      format: 'yyyy-mm-dd',
-      formatSubmit: 'yyyy-mm-dd',
-      hiddenName: true,
-      container: 'body',
-      onClose: function(){
-
-        console.log("rerednered");
-
-         // $("#dueDate").submit();
-       // $("datepicker").trigger("submit");
-
-      }
-
-    });
-   // $( '#calendar' ).fullCalendar( 'refetchEvents' );
-  });
-*/
 });
 
 
@@ -223,10 +190,8 @@ Template.task.events({
     }
     Meteor.call('tasks.editTask', this._id,edit,owner);
   },
+  'submit .due-date'(event){
 
-  'customEvent #due-date'(event){
-
-    console.log("in due date");
     event.preventDefault();
     const date_input = document.getElementById(this._id);
 

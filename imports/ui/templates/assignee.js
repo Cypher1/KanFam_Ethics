@@ -8,7 +8,6 @@ import './assignee.html';
 Template.assignee.events({
 	'submit .delete-assign'(event) { 
 
-
         // Prevent default browser form submit
         event.preventDefault();
         const assignId = event.target.text.value;

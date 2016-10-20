@@ -32,7 +32,6 @@ Template.group.helpers({
     },
 });
 
-
 Template.group.events({
     'submit .edit-group-name'(event) {
         // Prevent default browser form submit

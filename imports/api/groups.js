@@ -95,9 +95,10 @@ Meteor.methods({
 
             //check that the user is admin in the group
             const group = Groups.findOne({_id: groupId, admin: this.userId});
+            const isAdmin = Groups.findOne({_id: groupId, admin: memberId});
 
             //to remove an admin there must be more than 1 admin
-            if(admin_size == 1){
+            if(admin_size == 1 && isAdmin){
                 throw new Meteor.Error('cannot remove last admin member');
             }
 
@@ -111,6 +112,7 @@ Meteor.methods({
 
             Groups.update(groupId, {$pull: {members: memberId}});
             Groups.update(groupId, {$pull: {admin: memberId}});
+
             if(this.userId == memberId) {
                 FlowRouter.go('/groups');
             }

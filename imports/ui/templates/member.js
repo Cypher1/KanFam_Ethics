@@ -7,7 +7,6 @@ import '../../api/groups.js';
 
 Template.dropdown.onRendered(function(){
 
-<<<<<<< HEAD
     this.$('.dropdown-member').dropdown({
         inDuration: 300,
         outDuration: 225,
@@ -87,30 +86,23 @@ Template.member.events({
             });
         }
     },
-    function(isConfirm) { //if user clicked yes
-      if(isConfirm) {
-        //Delete Group
-        Meteor.call('groups.add_remove_member',groupId, memberId, true);
-      }
-    });
-  },
-  'click .toggle-admin'(event) {
+    'click .toggle-admin'(event) {
 
-    event.preventDefault();
-    var groupId = Template.parentData(1)._id;
-    var adminId = document.getElementById(this).id;
-    var isAdmin = Groups.findOne({_id: groupId, admin: adminId});
-    var admin_size = Groups.findOne(groupId).admin.length;
-   
-    remove = false;
-    if(isAdmin) {
-      remove = true;
-    }
-    //makes sure that there is always at least one admin
-    if((remove && admin_size > 1) || !remove){
-         Meteor.call('groups.add_remove_admin',groupId, adminId, remove);
-    }else{
-        sweetAlert("Cannot Remove Admin", "There must always be at least one group administrator. Please make another member an admin before removing admin privileges on this member.", "error");
-    }
+        event.preventDefault();
+        var groupId = Template.parentData(1)._id;
+        var adminId = document.getElementById(this).id;
+        var isAdmin = Groups.findOne({_id: groupId, admin: adminId});
+        var admin_size = Groups.findOne(groupId).admin.length;
+       
+        remove = false;
+        if(isAdmin) {
+          remove = true;
+        }
+        //makes sure that there is always at least one admin
+        if((remove && admin_size > 1) || !remove){
+             Meteor.call('groups.add_remove_admin',groupId, adminId, remove);
+        }else{
+            sweetAlert("Cannot Remove Admin", "There must always be at least one group administrator. Please make another member an admin before removing admin privileges on this member.", "error");
+        }
   },
 });
