@@ -52,7 +52,6 @@ Meteor.methods({
         check(groupId,String);
         check(adminId,String);
         check(remove,Boolean);
-        var member_size = Groups.findOne(groupId).members.length;
         var admin_size = Groups.findOne(groupId).admin.length;
 
         /* Check that user is admin in group */

@@ -13,7 +13,6 @@ Template.assignee.events({
         const assignId = event.target.text.value;
         const taskId = Template.parentData(1)._id;
         
-       
         var owner = "";
         if(FlowRouter.current().route.name == 'group_page'){ 
                 owner = FlowRouter.getParam('_id'); 
