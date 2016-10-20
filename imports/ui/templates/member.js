@@ -7,6 +7,7 @@ import '../../api/groups.js';
 
 Template.dropdown.onRendered(function(){
 
+<<<<<<< HEAD
     this.$('.dropdown-member').dropdown({
         inDuration: 300,
         outDuration: 225,
@@ -15,12 +16,11 @@ Template.dropdown.onRendered(function(){
         gutter: 0, // Spacing from edge
         belowOrigin: false, // Displays dropdown below the button
     });
-
 });
 
 
 Template.member.onCreated(function () {
-    Meteor.subscribe('groups');
+  Meteor.subscribe('groups');
 });
 
 Template.dropdown.helpers({
@@ -33,23 +33,23 @@ Template.dropdown.helpers({
 });
 
 Template.member.helpers({
-    members(){
-        return Groups.find().fetch();
-    },
-    isLoggedAdmin(){
 
-        //checks if the user that is currently logged in is an admin
-        var groupId = Template.parentData(1)._id;
-        return Groups.findOne({_id: groupId, admin: Meteor.userId()});
-    },
-    isMemberAdmin(){
-        //checks if current member we're on is an admin
-        var groupId = Template.parentData(1)._id;
-        return Groups.findOne({_id: groupId, admin: this.valueOf()});
-    },
-    isMe(){
-        return this.valueOf() == Meteor.userId();
-    },
+  members() {
+    return Groups.find().fetch();
+  },
+  isLoggedAdmin() {
+    //checks if the user that is currently logged in is an admin
+    var groupId = Template.parentData(1)._id;
+    return Groups.findOne({_id: groupId, admin: Meteor.userId()});
+  },
+  isMemberAdmin() {
+    //checks if current member we're on is an admin
+    var groupId = Template.parentData(1)._id;
+    return Groups.findOne({_id: groupId, admin: this.valueOf()});
+  },
+  isMe() {
+    return this.valueOf() == Meteor.userId();
+  }
 });
 
 Template.member.events({
@@ -57,7 +57,8 @@ Template.member.events({
     'click .remove-member'(event) {
         event.preventDefault();
         var groupId = Template.parentData(1)._id;
-        var memberId = document.getElementById(this).value;
+        var memberId = document.getElementById(this).id;
+        var memberName = document.getElementById(this).value;
        
         var isAdmin = Groups.findOne({_id: groupId, admin: memberId});
         var admin_size = Groups.findOne(groupId).admin.length;
@@ -70,7 +71,7 @@ Template.member.events({
             swal({
                 html:true,
                 title: "<h5>Delete Confirmation<h5>",
-                text: "Are you sure you want to remove the following member(s): " + memberId + "?",
+                text: "Are you sure you want to remove the following member(s): " + memberName + "?",
                 confirmButtonColor: '#0097a7',
                 confirmButtonText: 'Yes',
                 showCancelButton: true,
@@ -86,26 +87,30 @@ Template.member.events({
             });
         }
     },
-    'click .toggle-admin'(event) {
+    function(isConfirm) { //if user clicked yes
+      if(isConfirm) {
+        //Delete Group
+        Meteor.call('groups.add_remove_member',groupId, memberId, true);
+      }
+    });
+  },
+  'click .toggle-admin'(event) {
 
-        event.preventDefault();
-        var groupId = Template.parentData(1)._id;
-        var adminId = document.getElementById(this).value;
-        var isAdmin = Groups.findOne({_id: groupId, admin: adminId});
-        var admin_size = Groups.findOne(groupId).admin.length;
-
-        remove = false;
-        if(isAdmin){
-         remove = true;
-        }  
-        //makes sure that there is always at least one admin
-        if((remove && admin_size > 1) || !remove){
-            Meteor.call('groups.add_remove_admin',groupId, adminId, remove);
-        }else{
-            sweetAlert("Cannot Remove Admin", "There must always be at least one group administrator. Please make another member an admin before removing admin privileges on this member.", "error");
-        }
-
-
-
-    }, 
+    event.preventDefault();
+    var groupId = Template.parentData(1)._id;
+    var adminId = document.getElementById(this).id;
+    var isAdmin = Groups.findOne({_id: groupId, admin: adminId});
+    var admin_size = Groups.findOne(groupId).admin.length;
+   
+    remove = false;
+    if(isAdmin) {
+      remove = true;
+    }
+    //makes sure that there is always at least one admin
+    if((remove && admin_size > 1) || !remove){
+         Meteor.call('groups.add_remove_admin',groupId, adminId, remove);
+    }else{
+        sweetAlert("Cannot Remove Admin", "There must always be at least one group administrator. Please make another member an admin before removing admin privileges on this member.", "error");
+    }
+  },
 });
