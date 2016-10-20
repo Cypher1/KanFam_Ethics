@@ -54,6 +54,15 @@ Template.member.helpers({
     },
     isMe(){
         return this.valueOf() == Meteor.userId();
+    },
+    isLast(){
+      //  return 
+    },
+    memberSize(){
+        var groupId = Template.parentData(1)._id;
+        var member_size = Groups.findOne(groupId).members.length;
+        console.log("member size:");
+        console.log(member_size);
     }
 
 });
@@ -90,11 +99,31 @@ Template.member.events({
         var groupId = Template.parentData(1)._id;
         var adminId = document.getElementById(this).value;
         var isAdmin = Groups.findOne({_id: groupId, admin: adminId});
-        remove = false;
-        if(isAdmin){
-            remove = true;
+        //is the logged in user an admin
+        var isUserAdmin = Groups.findOne({_id: groupId, admin: Meteor.userId()});
+
+        var member_size = Groups.findOne(groupId).members.length;
+        var admin_size = Groups.findOne(groupId).admin.length;
+      //  console.log("member size:");
+      //  console.log(member_size);
+      //  console.log("admin size:");
+      //  console.log(admin_size);
+
+        //makes sure that there is always at least one admin
+        if(member_size > 1){
+
+            remove = false;
+            if(isAdmin){
+             remove = true;
+            }
+
+            //only remove admin if the current number of admins is greater than 1
+            if((remove && admin_size > 1) || (!remove && admin_size >= 1)){
+                Meteor.call('groups.add_remove_admin',groupId, adminId, remove);
+            }
+  
         }
-        Meteor.call('groups.add_remove_admin',groupId, adminId, remove);
-        
+
+
     }, 
 });

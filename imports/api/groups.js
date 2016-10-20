@@ -54,6 +54,10 @@ Meteor.methods({
         check(adminId,String);
         check(remove,Boolean);
 
+        var member_size = Groups.findOne(groupId).members.length;
+      //  console.log("member size: ");
+      //  console.log(member_size);
+
         /* Check that user is admin in group */
         const group = Groups.findOne({_id: groupId, admin: this.userId});
         
@@ -81,6 +85,9 @@ Meteor.methods({
         check(memberId,String);
         check(remove,Boolean);
 
+       // var member_size = Groups.findOne(groupId).members.length;
+       // console.log("member size:");
+       // console.log(member_size);
         //check users are logged in
         if(!this.userId){
             throw new Meteor.Error('not-authorized');
