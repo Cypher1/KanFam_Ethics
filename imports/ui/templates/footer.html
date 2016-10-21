@@ -2,26 +2,9 @@
   <footer class="page-footer blue-grey lighten-1" style="margin-top: 0px">
     <div class="container">
       <div class="row">
-        <div class="col s4">
-          <div class="icon-block">
-            <h2 class="center white-text"><i class="fa fa-facebook" aria-hidden="true"></i></h2>
-          </div>
-        </div>
-        <div class="col s4">
-          <div class="icon-block">
-            <a href="https://twitter.com/KanFam_agile">
-              <h2 class="center white-text"><i class="fa fa-google" aria-hidden="true"></i></h2>
-            </a>
-          </div>
-        </div>
-        <div class="col s4">
-          <div class="icon-block">
-            <a href="https://twitter.com/KanFam_agile">
-              <h2 class="center white-text">
-                <i class="fa fa-twitter" aria-hidden="true"></i></h2>
-            </a>
-          </div>
-        </div>
+        {{> footer_icon icon="fa-facebook" link="https://facebook.com" }}
+        {{> footer_icon icon="fa-google" link="https://google.com" }}
+        {{> footer_icon icon="fa-twitter" link="https://twitter.com/KanFam_agile" }}
       </div>
     </div>
     <div class="footer-copyright blue-grey darken-1">
@@ -35,4 +18,12 @@
       </div>
     </div>
   </footer>
+</template>
+
+<template name="footer_icon">
+  <div class="col s4">
+    <div class="icon-block">
+      <a href="{{link}}"><h2 class="footer-icon center white-text"><i class="fa {{icon}}" aria-hidden="true"></i></h2></a>
+    </div>
+  </div>
 </template>

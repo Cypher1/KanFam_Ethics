@@ -1,33 +1,51 @@
 <template name="loginSignup">
   {{#unless hide}}
-    <div class="at-form">
-      {{#if showTitle}}
-        {{> atTitle}}
-      {{/if}}
-      {{#if showError}}
-        {{> atError}}
-      {{/if}}
-      {{#if showResult}}
-        {{> atResult}}
-      {{/if}}
-      {{#if showPwdForm}}
-        {{> atPwdForm}}
-      {{/if}}
-      {{#if showTermsLink}}
-        {{> atTermsLink}}
-      {{/if}}
-      {{#if showServicesSeparator}}
-        {{> atSep}}
-      {{/if}}
-      {{#if showOauthServices}}
-        {{> myOauth}}
-      {{/if}}
-      {{#if showSignInLink}}
-        {{> atSigninLink}}
-      {{/if}}
-      {{#if showSignUpLink}}
-        {{> atSignupLink}}
-      {{/if}}
-    </div>
+  <div class="at-form">
+    {{#if showTitle}}
+    {{> atTitle}}
+    {{/if}}
+    {{#if showError}}
+    {{> atError}}
+    {{/if}}
+    {{#if showResult}}
+    {{> atResult}}
+    {{/if}}
+    {{#if showPwdForm}}
+    {{> atPwdForm}}
+    {{/if}}
+    {{#if showTermsLink}}
+    {{> atTermsLink}}
+    {{/if}}
+    {{#if showServicesSeparator}}
+    {{> atSep}}
+    {{/if}}
+    {{#if showOauthServices}}
+    {{> myOauth}}
+    {{/if}}
+    {{#if showSignInLink}}
+    {{> logInLink}}
+    {{/if}}
+    {{#if showSignUpLink}}
+    {{> signUpLink}}
+    {{/if}}
+  </div>
   {{/unless}}
+</template>
+
+<template name="signUpLink">
+  <div class="at-signup-link">
+    <p>
+    Don't have an account?
+    <a href="/signup" id="at-signUp" class="at-link at-signup">Sign up</a>
+    </p>
+  </div>
+</template>
+
+<template name="logInLink">
+  <div class="at-signin-link">
+    <p>
+    Already have an account?
+    <a href="/login" id="at-signIn" class="at-link at-signup">Log in</a>
+    </p>
+  </div>
 </template>

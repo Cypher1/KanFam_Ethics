@@ -1,11 +1,15 @@
 <template name="navlist">
   {{#if currentUser }}
-  <li class="{{isActiveRoute 'dashboard'}}"><a href="/dashboard"><i class="material-icons right">dashboard</i>Dash</a></li>
-  <li class="{{isActiveRoute regex='^groups|group_page'}}"><a href="/groups"><i class="material-icons right">group</i>Groups</a></li>
-  <li class="{{isActiveRoute 'calendar'}}"><a href="/calendar"><i class="material-icons right">today</i>Calendar</a></li>
-  <li><a href="/logout"><i class="material-icons right rotated">file_upload</i>Logout</a></li>
+  {{> nav_item route="dashboard" icon="dashboard" name="Dash"}}
+  {{> nav_item route="groups" regex='^groups|group_page' icon="group" name="Groups"}}
+  {{> nav_item route="calendar" icon="today" name="Calendar"}}
+  {{> nav_item route="logout" icon="file_upload" class="rotated" name="Logout"}}
   {{else}}
-  <li class="{{isActiveRoute 'signup'}}"><a href="/signup"><i class="material-icons right">perm_identity</i>Sign Up</a></li>
-  <li class="{{isActiveRoute 'login'}}"><a href="/login"><i class="material-icons right rotated">file_download</i>Login</a></li>
+  {{> nav_item route="signup" icon="perm_identity" name="Sign Up"}}
+  {{> nav_item route="login" icon="file_download" class="rotated" name="Login"}}
   {{/if}}
+</template>
+
+<template name="nav_item">
+  <li class="{{isActiveRoute route regex=regex}}"><a href="/{{route}}"><i class="material-icons right {{class}}">{{icon}}</i>{{name}}</a></li>
 </template>
