@@ -39,6 +39,7 @@ email@1.1.17
 es5-shim@4.6.14_1
 facebook@1.2.9
 fastclick@1.0.12
+force-ssl@1.0.12
 fortawesome:fontawesome@4.5.0
 fourseven:scss@3.9.0
 geojson-utils@1.0.9
@@ -64,8 +65,8 @@ meteorhacks:fast-render@2.16.0
 meteorhacks:inject-data@2.0.0
 meteorhacks:meteorx@1.4.1
 meteorhacks:picker@1.0.3
-minifier-css@1.2.14_1
 meteorhacks:ssr@2.2.0
+minifier-css@1.2.14_1
 minifier-js@1.2.14_1
 minimongo@1.0.17
 mobile-experience@1.0.4
