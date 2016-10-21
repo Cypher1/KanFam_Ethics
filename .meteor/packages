@@ -40,3 +40,4 @@ email
 meteorhacks:ssr
 service-configuration
 session
+force-ssl

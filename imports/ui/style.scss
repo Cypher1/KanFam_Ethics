@@ -42,6 +42,13 @@ main {
     flex: 1 0 auto;
 };
 
+.nav-wrapper .brand-logo img {
+    height: 58px;
+    padding-top: 4px;
+    padding-right: 2px;
+    margin-bottom: -15px;
+}
+
 .parallax img {
     @media #{$small-and-down} { max-width: 200%; }
     @media #{$medium-and-up} { width: 100%; }
