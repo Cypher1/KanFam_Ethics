@@ -10,8 +10,15 @@ Template.assignee.events({
 
         // Prevent default browser form submit
         event.preventDefault();
-        const assignId = event.target.text.value;
+      //  const assignId = event.target.text.value;
         const taskId = Template.parentData(1)._id;
+        const assignId = document.getElementById(this).id;
+        const assignName = document.getElementById(this).value;
+
+        const temp = Meteor.call('user.id_by_name',assignName);
+        console.log(temp);
+        const temp2 = Meteor.call('user.name',assignId);
+        console.log(temp2);
         
         var owner = "";
         if(FlowRouter.current().route.name == 'group_page'){ 
