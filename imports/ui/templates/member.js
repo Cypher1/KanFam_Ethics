@@ -58,7 +58,6 @@ Template.member.events({
         var groupId = Template.parentData(1)._id;
         var memberId = document.getElementById(this).id;
         var memberName = document.getElementById(this).value;
-       
         var isAdmin = Groups.findOne({_id: groupId, admin: memberId});
         var admin_size = Groups.findOne(groupId).admin.length;
 

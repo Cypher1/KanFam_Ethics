@@ -10,9 +10,10 @@ Template.assignee.events({
 
         // Prevent default browser form submit
         event.preventDefault();
-        const assignId = event.target.text.value;
         const taskId = Template.parentData(1)._id;
-        
+        const assignId = document.getElementById(this).id;
+        const assignName = document.getElementById(this).value;
+
         var owner = "";
         if(FlowRouter.current().route.name == 'group_page'){ 
                 owner = FlowRouter.getParam('_id'); 
@@ -24,7 +25,7 @@ Template.assignee.events({
             swal({
                 html:true,
                 title: "<h5>Delete Confirmation<h5>",
-                text: "Are you sure you want to remove the following assignee: " + assignId + "?",
+                text: "Are you sure you want to remove the following assignee: " + assignName + "?",
                 confirmButtonColor: '#0097a7',
                 confirmButtonText: 'Yes',
                 showCancelButton: true,
