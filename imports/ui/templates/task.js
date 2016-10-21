@@ -108,15 +108,20 @@ Template.task.events({
      });
   },
     'submit .new-assign'(event) { 
-    // Prevent default browser form submit
-    event.preventDefault();
-    const assigneeId = event.target.text.value;
-    var owner = "";
-    if(FlowRouter.current().route.name == 'group_page'){
-	  owner = FlowRouter.getParam('_id'); 
-    }
-    Meteor.call('tasks.addAssignee', this._id, assigneeId, owner);
-    event.target.text.value ="";
+
+      event.preventDefault();
+      const assigneeName = event.target.text.value;
+      const taskId = this._id;
+      
+      //get the assignees id from their username 
+      Meteor.call('user.id_by_name', assigneeName, function(error,assigneeId) {      
+        var owner = "";
+        if(FlowRouter.current().route.name == 'group_page'){
+  	     owner = FlowRouter.getParam('_id'); 
+        }
+        Meteor.call('tasks.addAssignee', taskId, assigneeId, owner);
+      });
+      event.target.text.value ="";
   },
   'submit .new-note'(event) { 
     event.preventDefault();

@@ -63,11 +63,17 @@ Template.group.events({
     'submit .new-member'(event) {
         // Prevent default browser from submit
         event.preventDefault();
-        // Get values from the form
-        var newMemberId = event.target.memberId.value;
-        // Add new members into the group's database
-        Meteor.call('groups.add_remove_member', this._id, newMemberId, false);
-        // Clear the form
+        var newMemberName = event.target.memberId.value;
+        const groupId = this._id;
+        //get the new members id from their username 
+        Meteor.call('user.id_by_name', newMemberName, function(error,newMemberId) { 
+           Meteor.call('groups.add_remove_member', groupId, newMemberId, false);
+        });
         event.target.memberId.value = '';
     },
 });
+
+
+
+
+
