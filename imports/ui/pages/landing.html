@@ -9,19 +9,18 @@
       KanFam - It’s kanban, for your fam.
       <br><br>
       KanFam is a service that brings principles from the kanban project management technique into an accessible format for families of all shapes and sizes.</p>
+      <div class="center"><img src="/logo.png" height="120px"/></div>
     </div>
-    <div class="row container">
-      <div class="col s3 offset-s5">
-        {{#if currentUser }}
-        <a class="btn waves-effect waves-light" href="/dashboard">View dash
-          <i class="material-icons right">dashboard</i>
-        </a>
-        {{else}}
-        <a class="btn waves-effect waves-light" href="/login">Log In
-          <i class="material-icons right">perm_identity</i>
-        </a>
-        {{/if}}
-      </div>
+    <div class="center">
+      {{#if currentUser }}
+      <a class="btn waves-effect waves-light" href="/dashboard">View dash
+        <i class="material-icons right">dashboard</i>
+      </a>
+      {{else}}
+      <a class="btn waves-effect waves-light" href="/login">Log In
+        <i class="material-icons right">perm_identity</i>
+      </a>
+      {{/if}}
     </div>
   </div>
   <div class="parallax-container">
