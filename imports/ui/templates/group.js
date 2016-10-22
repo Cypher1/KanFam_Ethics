@@ -41,7 +41,7 @@ Template.group.events({
         // Insert a task into the collection
         Meteor.call('groups.edit_name', this._id, name_edit);
     },
-    'submit .edit-group-description'(event){
+    'submit .edit-group-description'(event) {
 
         // Prevent default browser form submit
         event.preventDefault();
@@ -49,6 +49,30 @@ Template.group.events({
         const descrip_edit = event.target.text.value;
         // Insert a task into the collection
         Meteor.call('groups.edit_description', this._id,descrip_edit);
+    },
+    'click .remove-group'(event) {
+        event.preventDefault();
+        var group_id = this._id;
+        var group_name = this.name;
+
+        //creates confimation alert
+        swal({
+            html:true,
+            title: "<h5>Delete Confirmation<h5>",
+            text: "Are you sure you want to delete the group: " +group_name+ "?",
+            confirmButtonColor: '#0097a7',
+            confirmButtonText: 'Yes',
+            showCancelButton: true,
+            cancelButtonText: "No",
+            closeOnConfirm: true,
+            closeOnCancel: true,
+        },
+        function(isConfirm) { //if user clicked yes
+            if(isConfirm) {
+                //Delete Group
+                Meteor.call('groups.remove',group_id);
+            }
+        });
     },
     'submit .setIcon'(event) {
         // Prevent default browser from submit
@@ -65,9 +89,9 @@ Template.group.events({
         event.preventDefault();
         var newMemberName = event.target.memberId.value;
         const groupId = this._id;
-        //get the new members id from their username 
-        Meteor.call('user.id_by_name', newMemberName, function(error,newMemberId) { 
-           Meteor.call('groups.add_remove_member', groupId, newMemberId, false);
+        //get the new members id from their username
+        Meteor.call('user.id_by_name', newMemberName, function(error,newMemberId) {
+            Meteor.call('groups.add_remove_member', groupId, newMemberId, false);
         });
         event.target.memberId.value = '';
     },
