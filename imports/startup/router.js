@@ -61,6 +61,20 @@ FlowRouter.route('/feedback', {
     }
 });
 
+FlowRouter.route('/terms-of-use', {
+    name: 'terms',
+    action: function() {
+        BlazeLayout.render("mainLayout", {content: "terms"});
+    }
+});
+
+FlowRouter.route('/privacy', {
+    name: 'privacy',
+    action: function() {
+        BlazeLayout.render("mainLayout", {content: "privacy"});
+    }
+});
+
 // PRIVATE ROUTES
 var privateRoutes = FlowRouter.group({
     name: 'private',
