@@ -8,12 +8,11 @@ Template.calendar.onRendered( () => {
   $('#calendar').fullCalendar({
     // Function providing events reactive computation for fullcalendar plugin
     events: function(start, end, timezone, callback) {
-      var userId = Meteor.userId();
       start = start.toDate();
       end = end.toDate();
       var events = [];
       var colors = ["#e64a19", "#f57c00", "#42A5F5", "#7cb342"];
-      var tasks = Tasks.find({"owner": userId}, {"dueDate":{$exists: true, $gt: start, $lt: end}}).fetch();
+      var tasks = Tasks.find({}, {"dueDate":{$exists: true, $gt: start, $lt: end}}).fetch();
       if (tasks) {
         for(var i in tasks) {
           var task = tasks[i];
