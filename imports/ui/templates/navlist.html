@@ -1,7 +1,7 @@
 <template name="navlist">
   {{#if currentUser }}
   {{> nav_item route="dashboard" icon="dashboard" name="Dash"}}
-  {{> nav_item route="groups" regex='^groups|group_page' icon="group" name="Groups"}}
+  {{> nav_item_regex route="groups" regex='^groups|group_page' icon="group" name="Groups"}}
   {{> nav_item route="calendar" icon="today" name="Calendar"}}
   {{> nav_item route="logout" icon="file_upload" class="rotated" name="Logout"}}
   {{else}}
@@ -11,5 +11,8 @@
 </template>
 
 <template name="nav_item">
-  <li class="{{isActiveRoute route regex=regex}}"><a href="/{{route}}"><i class="material-icons right {{class}}">{{icon}}</i>{{name}}</a></li>
+  <li class="{{isActiveRoute route}}"><a href="/{{route}}"><i class="material-icons right {{class}}">{{icon}}</i>{{name}}</a></li>
+</template>
+<template name="nav_item_regex">
+  <li class="{{isActiveRoute regex=regex}}"><a href="/{{route}}"><i class="material-icons right {{class}}">{{icon}}</i>{{name}}</a></li>
 </template>
