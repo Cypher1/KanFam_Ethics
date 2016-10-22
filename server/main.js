@@ -10,7 +10,7 @@ Meteor.startup(() => {
     service: "google"
   }, {
     $set: {
-      client_id: Meteor.settings.google.app_id,
+      clientId: Meteor.settings.google.app_id,
       loginStyle: "popup",
       secret: Meteor.settings.google.secret
     }
