@@ -3,23 +3,20 @@
     <div class="card">
       <div class="card-content">
         <div class="center card-title">Privacy Policy</div>
-        <div class="container">
-          <ul>
-            {{> privacy_item action="will never" item="disclose any of your data other than your username."}}
-            {{> privacy_item action="will only" item="use your username for group membership."}}
-            {{> privacy_item action="will never" item="store your passwords in plain text."}}
-            {{> privacy_item action="do" item="use industry standards for password storage."}}
-          </ul>
-          <br>
-          <p>
-          You can help us to protect your privacy by:
-          <ul>
-            <li>logging in with Google or Facebook</li>
-            <li>using strong <strong>unique</strong> passwords</li>
-            <li>logging out of public computers</li>
-          </ul>
-          </p>
-        </div>
+        <ul>
+          {{> privacy_item action="will never" item="disclose any of your data other than your username."}}
+          {{> privacy_item action="will only" item="use your username for group membership."}}
+          {{> privacy_item action="will never" item="store your passwords in plain text."}}
+          {{> privacy_item action="do" item="use industry standards for password storage."}}
+        </ul>
+        <p style="margin-top:15px">
+        You can help us to protect your privacy by:
+        </p>
+        <ul class="container">
+          {{> list_item text="logging in with Google or Facebook"}}
+          {{> list_item text="using strong <strong>unique</strong> passwords"}}
+          {{> list_item text="logging out of public computers"}}
+        </ul>
       </div>
       <div class="center card-action">
         <a class="no-margin cyan-text text-darken-2" href="/terms-of-use">Terms of Use</a>
@@ -29,11 +26,13 @@
 </template>
 
 <template name="privacy_item">
-  {{> list_item text=(We <strong>{{action}}</strong> {{item}})}}
+  <li style="list-style-type: disc; margin-left: 1em;">
+    We <strong>{{action}}</strong> {{item}}
+  </li>
 </template>
 
 <template name="list_item">
-  <li style="list-style-type: circle;">
-    {{text}}
+  <li style="list-style-type: disc;">
+    {{{text}}}
   </li>
 </template>
