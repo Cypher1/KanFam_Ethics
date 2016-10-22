@@ -11,7 +11,10 @@
 </template>
 
 <template name="nav_item">
-  <li class="{{isActiveRoute route regex=regex}}"><a href="/{{route}}"><i class="material-icons right {{class}}">{{icon}}</i>{{name}}</a></li>
+  <li class="{{isActiveRoute route}}"><a href="/{{route}}"><i class="material-icons right {{class}}">{{icon}}</i>{{name}}</a></li>
+</template>
+<template name="nav_item_regex">
+  <li class="{{isActiveRoute regex=regex}}"><a href="/{{route}}"><i class="material-icons right {{class}}">{{icon}}</i>{{name}}</a></li>
 </template>
 <template name="nav_item_regex">
   <li class="{{isActiveRoute regex=regex}}"><a href="/{{route}}"><i class="material-icons right {{class}}">{{icon}}</i>{{name}}</a></li>
